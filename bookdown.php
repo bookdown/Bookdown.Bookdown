@@ -28,5 +28,5 @@ foreach ($items as $item) {
     $pad = str_pad('', ($item->getDepth() - 1) * 4);
     echo $pad . $item->getCount() . '. '
         . $item->getName() . ': '
-        . $item->getParent()->getOrigin() . PHP_EOL;
+        . $item->getAbsoluteHref() . PHP_EOL;
 }

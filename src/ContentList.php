@@ -21,6 +21,11 @@ class ContentList
         return $this->items;
     }
 
+    public function getFirst()
+    {
+        return reset($this->items);
+    }
+
     public function getLast()
     {
         return end($this->items);

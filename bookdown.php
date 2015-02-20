@@ -14,13 +14,8 @@ spl_autoload_register(function ($class) {
     require __DIR__ . "/src/{$file}.php";
 });
 
-$contentList = new Bookdown\Content\ContentList();
-$contentListBuilder = new Bookdown\Content\ContentListBuilder(
-    $contentList,
-    new Bookdown\Content\ContentFactory
-);
-
-$contentListBuilder($origin);
+$contentList = new Bookdown\Content\ContentList(new Bookdown\Content\ContentFactory);
+$contentList->fill($origin);
 
 $items = $contentList->getItems();
 $root = array_shift($items);

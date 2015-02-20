@@ -1,0 +1,8 @@
+{
+    "title": "Kernel Packages",
+    "content": {
+        "project": "project.md",
+        "cli": "cli.md",
+        "web": "web.md"
+    }
+}

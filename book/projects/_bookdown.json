@@ -1,0 +1,8 @@
+{
+    "title": "Project Packages",
+    "content": {
+        "cli": "cli.md",
+        "web": "web.md",
+        "framework": "framework.md"
+    }
+}

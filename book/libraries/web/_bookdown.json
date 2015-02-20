@@ -1,0 +1,8 @@
+{
+    "title": "Aura.Web",
+    "content": {
+        "intro": "intro.md",
+        "request": "request.md",
+        "response": "response.md"
+    }
+}

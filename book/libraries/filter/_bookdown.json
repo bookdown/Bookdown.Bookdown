@@ -1,0 +1,8 @@
+{
+    "title": "Aura.Filter",
+    "content": {
+        "intro": "intro.md",
+        "sanitize": "sanitize.md",
+        "validate": "validate.md"
+    }
+}

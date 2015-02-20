@@ -98,10 +98,7 @@ class ContentItem
 
     public function getAbsoluteHref()
     {
-        $base = '';
-        if ($this->hasParent()) {
-            $base = $this->getParent()->getAbsoluteHref();
-        }
+        $base = $this->getParent()->getAbsoluteHref();
         return $base . $this->getName() . '.html';
     }
 }

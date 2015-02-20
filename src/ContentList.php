@@ -6,9 +6,8 @@ class ContentList
     protected $items = array();
     protected $contentFactory;
 
-    public function __construct(
-        ContentFactory $contentFactory
-    ) {
+    public function __construct(ContentFactory $contentFactory)
+    {
         $this->contentFactory = $contentFactory;
     }
 
@@ -17,19 +16,20 @@ class ContentList
         $base = $this->getBase($bookdownFile);
         $json = $this->getJson($bookdownFile);
 
-        $content = $this->addContentIndex($json, $base, $name, $parent, $count);
-        $parent = $this->getLast();
+        $index = $this->addContentIndex($json, $base, $name, $parent, $count);
 
         $count = 0;
-        foreach ($content as $name => $origin) {
+        foreach ($json->content as $name => $origin) {
             $count ++;
             $origin = $this->fixOrigin($origin, $base);
             if ($this->isJson($origin)) {
-                $this->fill($origin, $name, $parent, $count);
+                $this->fill($origin, $name, $index, $count);
             } else {
-                $this->addContentItem($name, $origin, $parent, $count);
+                $this->addContentItem($name, $origin, $index, $count);
             }
         }
+
+        return $index;
     }
 
     public function getItems()
@@ -37,32 +37,22 @@ class ContentList
         return $this->items;
     }
 
-    public function getFirst()
+    protected function getJson($bookdownFile)
     {
-        return reset($this->items);
-    }
-
-    public function getLast()
-    {
-        return end($this->items);
-    }
-
-    protected function getJson($bookdown)
-    {
-        $data = file_get_contents($bookdown);
+        $data = file_get_contents($bookdownFile);
         $json = json_decode($data);
 
         if (! $json->content) {
-            echo "$bookdownFile malformed.";
+            echo "{$bookdownFile} malformed.";
             exit(1);
         }
 
         return $json;
     }
 
-    protected function getBase($bookdown)
+    protected function getBase($bookdownFile)
     {
-        return dirname($bookdown) . DIRECTORY_SEPARATOR;
+        return dirname($bookdownFile) . DIRECTORY_SEPARATOR;
     }
 
     protected function fixOrigin($origin, $base)
@@ -87,27 +77,30 @@ class ContentList
     {
         $item = $this->contentFactory->newContentItem($name, $origin, null, $parent, $count);
         $this->append($item);
+        return $item;
     }
 
     protected function addContentIndex($json, $base, $name, $parent, $count)
     {
-        $content = $json->content;
-
         $origin = $base . 'index.md';
-        if (isset($content->index)) {
-            $origin = $content->index;
-            unset($content->index);
+        if (isset($json->content->index)) {
+            $origin = $json->content->index;
+            unset($json->content->index);
         }
 
-        $item = $this->contentFactory->newContentIndex($name, $origin, $json->title, $parent, $count);
-        $this->append($item);
+        if ($parent) {
+            $item = $this->contentFactory->newContentIndex($name, $origin, $json->title, $parent, $count);
+        } else {
+            $item = $this->contentFactory->newContentRoot($name, $origin, $json->title, $parent, $count);
+        }
 
-        return $content;
+        $this->append($item);
+        return $item;
     }
 
     protected function append(ContentItem $item)
     {
-        $prev = $this->getLast();
+        $prev = end($this->items);
         if ($prev) {
             $prev->setNext($item);
             $item->setPrev($prev);

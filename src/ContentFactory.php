@@ -12,4 +12,9 @@ class ContentFactory
     {
         return new ContentIndex($name, $origin, $title, $parent, $count);
     }
+
+    public function newContentRoot($name, $origin, $title, $parent, $count)
+    {
+        return new ContentRoot($name, $origin, $title, $parent, $count);
+    }
 }

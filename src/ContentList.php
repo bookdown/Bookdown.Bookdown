@@ -7,7 +7,7 @@ class ContentList
 
     public function append(ContentItem $item)
     {
-        $prev = end($this->items);
+        $prev = $this->getLast();
         if ($prev) {
             $prev->setNext($item);
             $item->setPrev($prev);
@@ -19,5 +19,10 @@ class ContentList
     public function getItems()
     {
         return $this->items;
+    }
+
+    public function getLast()
+    {
+        return end($this->items);
     }
 }

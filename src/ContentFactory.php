@@ -3,8 +3,8 @@ namespace Bookdown\Content;
 
 class ContentFactory
 {
-    public function newContentItem($name, $origin, $depth, $count)
+    public function newContentItem($name, $origin, $parent, $count)
     {
-        return new ContentItem($name, $origin, $depth, $count);
+        return new ContentItem($name, $origin, $parent, $count);
     }
 }

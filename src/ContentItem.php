@@ -5,18 +5,19 @@ class ContentItem
 {
     protected $name;
     protected $origin;
-    protected $depth;
     protected $count;
+    protected $prev;
+    protected $next;
 
     public function __construct(
         $name,
         $origin,
-        $depth,
+        $parent,
         $count
     ) {
         $this->name = $name;
         $this->origin = $origin;
-        $this->depth = $depth;
+        $this->parent = $parent;
         $this->count = $count;
     }
 
@@ -30,9 +31,20 @@ class ContentItem
         return $this->origin;
     }
 
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
     public function getDepth()
     {
-        return $this->depth;
+        $depth = 0;
+        $parent = $this->getParent();
+        while ($parent) {
+            $depth ++;
+            $parent = $parent->getParent();
+        }
+        return $depth;
     }
 
     public function getCount()

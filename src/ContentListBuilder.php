@@ -13,21 +13,22 @@ class ContentListBuilder
         $this->contentFactory = $contentFactory;
     }
 
-    public function __invoke($bookdownFile, $name = '', $depth = 1, $count = 0)
+    public function __invoke($bookdownFile, $name = '', $parent = null, $count = 0)
     {
         $base = $this->getBase($bookdownFile);
         $json = $this->getJson($bookdownFile);
 
-        $content = $this->addContentIndex($json, $base, $name, $depth, $count);
+        $content = $this->addContentIndex($json, $base, $name, $parent, $count);
+        $parent = $this->contentList->getLast();
 
         $count = 0;
         foreach ($content as $name => $origin) {
             $count ++;
             $origin = $this->fixOrigin($origin, $base);
             if ($this->isJson($origin)) {
-                $this->__invoke($origin, $name, $depth + 1, $count);
+                $this->__invoke($origin, $name, $parent, $count);
             } else {
-                $this->addContentItem($name, $origin, $depth, $count);
+                $this->addContentItem($name, $origin, $parent, $count);
             }
         }
     }
@@ -68,13 +69,13 @@ class ContentListBuilder
         return substr($origin, -5) == '.json';
     }
 
-    protected function addContentItem($name, $origin, $depth, $count)
+    protected function addContentItem($name, $origin, $parent, $count)
     {
-        $item = $this->contentFactory->newContentItem($name, $origin, $depth, $count);
+        $item = $this->contentFactory->newContentItem($name, $origin, $parent, $count);
         $this->contentList->append($item);
     }
 
-    protected function addContentIndex($json, $base, $name, $depth, $count)
+    protected function addContentIndex($json, $base, $name, $parent, $count)
     {
         $content = $json->content;
 
@@ -84,7 +85,7 @@ class ContentListBuilder
             unset($content->index);
         }
 
-        $item = $this->contentFactory->newContentItem($name, $origin, $depth - 1, $count);
+        $item = $this->contentFactory->newContentItem($name, $origin, $parent, $count);
         $this->contentList->append($item);
 
         return $content;

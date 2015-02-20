@@ -23,9 +23,10 @@ $contentListBuilder = new Bookdown\Content\ContentListBuilder(
 $contentListBuilder($origin);
 
 $items = $contentList->getItems();
+$root = array_shift($items);
 foreach ($items as $item) {
-    $pad = str_pad('', $item->getDepth() * 4);
+    $pad = str_pad('', ($item->getDepth() - 1) * 4);
     echo $pad . $item->getCount() . '. '
         . $item->getName() . ': '
-        . $item->getOrigin() . PHP_EOL;
+        . $item->getParent()->getOrigin() . PHP_EOL;
 }

@@ -85,7 +85,7 @@ class ContentListBuilder
             unset($content->index);
         }
 
-        $item = $this->contentFactory->newContentItem($name, $origin, $parent, $count);
+        $item = $this->contentFactory->newContentIndex($name, $origin, $parent, $count);
         $this->contentList->append($item);
 
         return $content;

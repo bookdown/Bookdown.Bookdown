@@ -7,4 +7,9 @@ class ContentFactory
     {
         return new ContentItem($name, $origin, $parent, $count);
     }
+
+    public function newContentIndex($name, $origin, $parent, $count)
+    {
+        return new ContentIndex($name, $origin, $parent, $count);
+    }
 }

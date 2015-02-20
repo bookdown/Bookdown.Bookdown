@@ -27,6 +27,6 @@ $root = array_shift($items);
 foreach ($items as $item) {
     $pad = str_pad('', ($item->getDepth() - 1) * 4);
     echo $pad . $item->getCount() . '. '
-        . $item->getName() . ': '
+        . $item->getTitle() . ': '
         . $item->getAbsoluteHref() . PHP_EOL;
 }

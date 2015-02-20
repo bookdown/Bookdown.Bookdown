@@ -71,7 +71,7 @@ class ContentListBuilder
 
     protected function addContentItem($name, $origin, $parent, $count)
     {
-        $item = $this->contentFactory->newContentItem($name, $origin, $parent, $count);
+        $item = $this->contentFactory->newContentItem($name, $origin, null, $parent, $count);
         $this->contentList->append($item);
     }
 
@@ -85,7 +85,7 @@ class ContentListBuilder
             unset($content->index);
         }
 
-        $item = $this->contentFactory->newContentIndex($name, $origin, $parent, $count);
+        $item = $this->contentFactory->newContentIndex($name, $origin, $json->title, $parent, $count);
         $this->contentList->append($item);
 
         return $content;

@@ -76,7 +76,7 @@ class ContentList
 
     protected function addContentItem($name, $origin, $parent, $count)
     {
-        $item = $this->contentFactory->newContentItem($name, $origin, null, $parent, $count);
+        $item = $this->contentFactory->newContentItem($name, $origin, $parent, $count);
         $this->append($item);
         return $item;
     }
@@ -90,11 +90,12 @@ class ContentList
         }
 
         if ($parent) {
-            $item = $this->contentFactory->newContentIndex($name, $origin, $json->title, $parent, $count);
+            $item = $this->contentFactory->newContentIndex($name, $origin, $parent, $count);
         } else {
-            $item = $this->contentFactory->newContentRoot($name, $origin, $json->title, $parent, $count);
+            $item = $this->contentFactory->newContentRoot($name, $origin, $parent, $count);
         }
 
+        $item->setTitle($json->title);
         $this->append($item);
         return $item;
     }

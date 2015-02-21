@@ -14,13 +14,11 @@ class ContentItem
     public function __construct(
         $name,
         $origin,
-        $title,
         $parent,
         $count
     ) {
         $this->name = $name;
         $this->origin = $origin;
-        $this->title = $title;
         $this->parent = $parent;
         $this->count = $count;
     }
@@ -33,6 +31,11 @@ class ContentItem
     public function getOrigin()
     {
         return $this->origin;
+    }
+
+    public function setTitle($title)
+    {
+        $this->title = $title;
     }
 
     public function getTitle()

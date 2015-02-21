@@ -8,13 +8,18 @@ class ContentRoot extends ContentIndex
         return '/';
     }
 
+    public function getNumber()
+    {
+        return '';
+    }
+
     public function getOriginData()
     {
         return null;
     }
 
-    public function getNumber()
+    public function getTargetFile()
     {
-        return '';
+        return DIRECTORY_SEPARATOR . 'index.html';
     }
 }

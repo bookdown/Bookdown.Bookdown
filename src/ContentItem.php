@@ -114,4 +114,27 @@ class ContentItem
         }
         return "{$base}{$count}.";
     }
+
+    public function getOriginData()
+    {
+        $level = error_reporting(0);
+        $data = file_get_contents($this->getOrigin());
+        error_reporting($level);
+
+        if ($data !== false) {
+            return $data;
+        }
+
+        $error = error_get_last();
+        throw new Exception($error['message']);
+    }
+
+    public function getTargetFile()
+    {
+        $base = rtrim(
+            dirname($this->getParent()->getTargetFile()),
+            DIRECTORY_SEPARATOR
+        );
+        return $base . DIRECTORY_SEPARATOR . $this->getName() . '.html';
+    }
 }

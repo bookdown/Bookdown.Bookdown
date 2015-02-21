@@ -20,4 +20,26 @@ class ContentIndex extends ContentItem
     {
         return $this->children;
     }
+
+    public function getOriginData()
+    {
+        if (! $this->getOrigin()) {
+            return '';
+        }
+
+        return parent::getOriginData();
+    }
+
+
+    public function getTargetFile()
+    {
+        $base = rtrim(
+            dirname($this->getParent()->getTargetFile()),
+            DIRECTORY_SEPARATOR
+        );
+
+        return $base
+            . DIRECTORY_SEPARATOR . $this->getName()
+            . DIRECTORY_SEPARATOR . 'index.html';
+    }
 }

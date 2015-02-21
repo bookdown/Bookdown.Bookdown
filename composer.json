@@ -1,0 +1,10 @@
+{
+    "require": {
+        "league/commonmark": "~0.7"
+    },
+    "autoload": {
+        "psr-4": {
+            "Bookdown\\Content\\": "src/"
+        }
+    }
+}

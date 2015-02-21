@@ -83,7 +83,7 @@ class ContentList
 
     protected function addContentIndex($json, $base, $name, $parent, $count)
     {
-        $origin = $base . 'index.md';
+        $origin = '';
         if (isset($json->content->index)) {
             $origin = $json->content->index;
             unset($json->content->index);

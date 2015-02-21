@@ -23,12 +23,13 @@ class ContentList
             $count ++;
             $origin = $this->fixOrigin($origin, $base);
             if ($this->isJson($origin)) {
-                $this->fill($origin, $name, $index, $count);
+                $child = $this->fill($origin, $name, $index, $count);
             } else {
-                $this->addContentItem($name, $origin, $index, $count);
+                $child = $this->addContentItem($name, $origin, $index, $count);
             }
         }
 
+        $index->addChild($child);
         return $index;
     }
 

@@ -12,4 +12,9 @@ class ContentRoot extends ContentIndex
     {
         return null;
     }
+
+    public function getNumber()
+    {
+        return '';
+    }
 }

@@ -101,4 +101,14 @@ class ContentItem
         $base = $this->getParent()->getAbsoluteHref();
         return $base . $this->getName() . '.html';
     }
+
+    public function getNumber()
+    {
+        $base = $this->getParent()->getNumber();
+        $count = $this->getCount();
+        if (! $count) {
+            $count = '';
+        }
+        return "{$base}{$count}.";
+    }
 }

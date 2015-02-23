@@ -1,29 +1,21 @@
 <?php
 namespace Bookdown\Content;
 
-use League\CommonMark\CommonMarkConverter;
-
 class Processor
 {
-    protected $converter;
+    protected $converters;
 
-    public function __construct(CommonMarkConverter $converter)
+    public function __construct(array $processors = null)
     {
-        $this->converter = $converter;
+        $this->processors = $processors;
     }
 
-    public function __invoke(ContentList $list, $target)
+    public function __invoke(ContentList $list)
     {
-        $items = $list->getItems();
-        foreach ($items as $item) {
-            $text = $item->getOriginData();
-            $html = $this->converter->convertToHtml($text);
-            $file = $target . $item->getTargetFile();
-            $dir = dirname($file);
-            if (! is_dir($dir)) {
-                mkdir($dir, 0777, true);
+        foreach ($this->processors as $processor) {
+            foreach ($list->getItems() as $item) {
+                $processor($item);
             }
-            file_put_contents($file, $html);
         }
     }
 }

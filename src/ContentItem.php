@@ -10,6 +10,7 @@ class ContentItem
     protected $prev;
     protected $next;
     protected $title;
+    protected $processResult = array();
 
     public function __construct(
         $name,
@@ -136,5 +137,20 @@ class ContentItem
             DIRECTORY_SEPARATOR
         );
         return $base . DIRECTORY_SEPARATOR . $this->getName() . '.html';
+    }
+
+    public function setProcessResult($process, $result)
+    {
+        $this->processResult[$process] = $result;
+    }
+
+    public function hasProcessResult($process)
+    {
+        return isset($this->processResult[$process]);
+    }
+
+    public function getProcessResult($process, $result)
+    {
+        return $this->processResult($process);
     }
 }

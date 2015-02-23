@@ -20,6 +20,8 @@ $processor = new Bookdown\Content\Processor(array(
     ),
     // extract and number headings
     new Bookdown\Content\HeadingsProcessor(),
+    // add TOC pages
+    new Bookdown\Content\TocProcessor(),
 ));
 
 $processor($contentList);

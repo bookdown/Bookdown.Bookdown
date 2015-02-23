@@ -149,8 +149,8 @@ class ContentItem
         return isset($this->processResult[$process]);
     }
 
-    public function getProcessResult($process, $result)
+    public function getProcessResult($process)
     {
-        return $this->processResult($process);
+        return $this->processResult[$process];
     }
 }

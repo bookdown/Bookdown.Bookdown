@@ -31,9 +31,9 @@ class ContentList
             } else {
                 $child = $this->addContentItem($name, $origin, $index, $count);
             }
+            $index->addChild($child);
         }
 
-        $index->addChild($child);
         return $index;
     }
 

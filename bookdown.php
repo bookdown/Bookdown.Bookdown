@@ -13,11 +13,13 @@ $contentList = new Bookdown\Content\ContentList(
 );
 $contentList->fill($origin);
 
-$processors = array(
+$processor = new Bookdown\Content\Processor(array(
+    // basic HTML conversion
     new Bookdown\Content\HtmlProcessor(
         new League\CommonMark\CommonMarkConverter()
-    )
-);
-$processor = new Bookdown\Content\Processor($processors);
+    ),
+    // extract and number headings
+    new Bookdown\Content\HeadingsProcessor(),
+));
 
 $processor($contentList);

@@ -119,12 +119,14 @@ class HeadingsProcessor
 
         // strip the leading <hN> and the closing </hN>
         // this assumes the <hN> tag has no attributes
-        $text = substr($node->C14N(), 4, -5);
+        $title = substr($node->C14N(), 4, -5);
 
         return (object) array(
             'number' => $number,
+            'level' => substr_count($number, '.'),
             'id' => $id,
-            'text' => $text,
+            'href' => $this->item->getAbsoluteHref() . '#' . $id,
+            'title' => $title,
         );
     }
 

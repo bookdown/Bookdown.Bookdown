@@ -5,10 +5,14 @@ class ContentList
 {
     protected $items = array();
     protected $contentFactory;
+    protected $targetBase;
 
-    public function __construct(ContentFactory $contentFactory)
-    {
+    public function __construct(
+        ContentFactory $contentFactory,
+        $targetBase
+    ) {
         $this->contentFactory = $contentFactory;
+        $this->targetBase = $targetBase;
     }
 
     public function fill($bookdownFile, $name = '', $parent = null, $count = 0)
@@ -93,6 +97,7 @@ class ContentList
             $item = $this->contentFactory->newContentIndex($name, $origin, $parent, $count);
         } else {
             $item = $this->contentFactory->newContentRoot($name, $origin, $parent, $count);
+            $item->setTargetBase($this->targetBase);
         }
 
         $item->setTitle($json->title);

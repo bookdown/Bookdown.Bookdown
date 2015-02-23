@@ -3,6 +3,8 @@ namespace Bookdown\Content;
 
 class ContentRoot extends ContentIndex
 {
+    protected $targetBase;
+
     public function getAbsoluteHref()
     {
         return '/';
@@ -20,6 +22,11 @@ class ContentRoot extends ContentIndex
 
     public function getTargetFile()
     {
-        return DIRECTORY_SEPARATOR . 'index.html';
+        return $this->targetBase . DIRECTORY_SEPARATOR . 'index.html';
+    }
+
+    public function setTargetBase($targetBase)
+    {
+        $this->targetBase = $targetBase;
     }
 }

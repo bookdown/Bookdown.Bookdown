@@ -22,6 +22,8 @@ $processor = new Bookdown\Content\Processor(array(
     new Bookdown\Content\HeadingsProcessor(),
     // add TOC pages
     new Bookdown\Content\TocProcessor(),
+    // add nav header and footer
+    new Bookdown\Content\NavProcessor(),
 ));
 
 $processor($contentList);

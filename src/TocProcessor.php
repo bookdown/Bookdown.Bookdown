@@ -7,6 +7,12 @@ class TocProcessor
     protected $entries;
     protected $html;
     protected $baseLevel;
+    protected $headingFactory;
+
+    public function __construct(HeadingFactory $headingFactory)
+    {
+        $this->headingFactory = $headingFactory;
+    }
 
     public function __invoke(ContentPage $page)
     {
@@ -43,7 +49,7 @@ class TocProcessor
     {
         $number = $index->getNumber();
 
-        $this->entries[] = new Heading(
+        $this->entries[] = $this->headingFactory->newInstance(
             $index->getNumber(),
             $index->getTitle(),
             $index->getAbsoluteHref()

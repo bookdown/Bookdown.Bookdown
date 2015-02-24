@@ -30,7 +30,6 @@ class ContentIndex extends ContentPage
         return parent::getOriginData();
     }
 
-
     public function getTargetFile()
     {
         $base = rtrim(

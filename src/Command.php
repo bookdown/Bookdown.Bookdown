@@ -45,10 +45,10 @@ class Command
             new HtmlProcessor(new CommonMarkConverter()),
 
             // extract and number headings
-            new HeadingsProcessor(),
+            new HeadingsProcessor(new HeadingFactory()),
 
             // add TOC pages
-            new TocProcessor(),
+            new TocProcessor(new HeadingFactory()),
 
             // final layout
             new LayoutProcessor($view, $templates),

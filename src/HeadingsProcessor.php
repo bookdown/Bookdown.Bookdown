@@ -18,6 +18,13 @@ class HeadingsProcessor
 
     protected $headings = array();
 
+    protected $headingFactory;
+
+    public function __construct(HeadingFactory $headingFactory)
+    {
+        $this->headingFactory = $headingFactory;
+    }
+
     public function __invoke(ContentPage $page)
     {
         $this->reset($page);
@@ -121,7 +128,7 @@ class HeadingsProcessor
         // lose the trailing dot for the ID
         $id = substr($number, 0, -1);
 
-        return new Heading(
+        return $this->headingFactory->newInstance(
             $number,
             $title,
             $this->page->getAbsoluteHref(),

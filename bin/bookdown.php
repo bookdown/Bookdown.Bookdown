@@ -6,6 +6,6 @@ try {
     $command($_SERVER);
     exit(0);
 } catch (Exception $e) {
-    echo $e->getMessage() . PHP_EOL;
+    echo $e . PHP_EOL;
     exit(1);
 }

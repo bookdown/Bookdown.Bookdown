@@ -43,12 +43,10 @@ class TocProcessor
     {
         $number = $index->getNumber();
 
-        $this->entries[] = (object) array(
-            'number' => $number,
-            'level' => substr_count($number, '.'),
-            'id' => '',
-            'href' => $index->getAbsoluteHref(),
-            'title' => $index->getTitle(),
+        $this->entries[] = new Heading(
+            $index->getNumber(),
+            $index->getTitle(),
+            $index->getAbsoluteHref()
         );
 
         $this->addEntries($index);
@@ -79,7 +77,7 @@ class TocProcessor
         $this->html[] = '<dl>';
 
         $entry = reset($this->entries);
-        $this->baseLevel = $entry->level;
+        $this->baseLevel = $entry->getLevel();
         $level = $this->baseLevel;
         foreach ($this->entries as $entry) {
             $level = $this->buildHtmlEntry($level, $entry);
@@ -94,16 +92,16 @@ class TocProcessor
 
     protected function buildHtmlEntry($level, $entry)
     {
-        while ($entry->level > $level) {
+        while ($entry->getLevel() > $level) {
             $level = $this->beginList($level);
         }
 
-        while ($entry->level < $level) {
+        while ($entry->getLevel() < $level) {
             $level = $this->endList($level);
         }
 
-        $this->html[] = $this->getPad($level) . "<dt>{$entry->number} "
-                . "<a href=\"{$entry->href}\">{$entry->title}</a>"
+        $this->html[] = $this->getPad($level) . "<dt>{$entry->getNumber()} "
+                . "<a href=\"{$entry->getHref()}\">{$entry->getTitle()}</a>"
                 . "</dt>";
 
         return $level;

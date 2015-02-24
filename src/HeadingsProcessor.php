@@ -105,8 +105,8 @@ class HeadingsProcessor
     {
         $heading = $this->newHeading($node);
         $this->headings[] = $heading;
-        $node->nodeValue = "{$heading->number} {$node->nodeValue}";
-        $node->setAttribute('id', $heading->id);
+        $node->nodeValue = $heading->getNumber() . " {$node->nodeValue}";
+        $node->setAttribute('id', $heading->getId());
     }
 
     protected function newHeading(DomNode $node)
@@ -114,19 +114,18 @@ class HeadingsProcessor
         // the full heading number
         $number = $this->getHeadingNumber($node);
 
-        // lose the trailing dot for the ID
-        $id = substr($number, 0, -1);
-
         // strip the leading <hN> and the closing </hN>
         // this assumes the <hN> tag has no attributes
         $title = substr($node->C14N(), 4, -5);
 
-        return (object) array(
-            'number' => $number,
-            'level' => substr_count($number, '.'),
-            'id' => $id,
-            'href' => $this->page->getAbsoluteHref() . '#' . $id,
-            'title' => $title,
+        // lose the trailing dot for the ID
+        $id = substr($number, 0, -1);
+
+        return new Heading(
+            $number,
+            $title,
+            $this->page->getAbsoluteHref(),
+            $id
         );
     }
 

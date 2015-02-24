@@ -2,7 +2,7 @@
 
 > **WARNING:** This project is incomplete and still under heavy development. Use at your own risk.
 
-Bookdown is a Markdown-oriented static-site generator geared toward "DocBook-like" documentation, as opposed to blogs or other kinds of static sites.
+Bookdown is a Markdown-oriented static-page generator geared toward "DocBook-like" documentation, as opposed to blogs or other kinds of static sites.
 
 Bookdown aims to emulate DocBook HTML presentation, replacing DocBook markup aspects with Markdown, and replacing DocBook organizational elements with JSON. Each individual Markdown file is treated as a "page" and each directory of Markdown files is treated as a "collection of pages". (This project does not deal in semantic notions of "chapters", "sections," "articles," and so on -- a pages are pages are pages.)
 

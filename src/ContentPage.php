@@ -1,7 +1,7 @@
 <?php
 namespace Bookdown\Content;
 
-class ContentItem
+class ContentPage
 {
     protected $name;
     protected $origin;
@@ -57,10 +57,10 @@ class ContentItem
     public function getDepth()
     {
         $depth = 0;
-        $item = $this;
-        while ($item->hasParent()) {
+        $page = $this;
+        while ($page->hasParent()) {
             $depth ++;
-            $item = $item->getParent();
+            $page = $page->getParent();
         }
         return $depth;
     }

@@ -3,7 +3,7 @@ namespace Bookdown\Content;
 
 class NavProcessor
 {
-    protected $item;
+    protected $page;
 
     protected $header;
 
@@ -11,9 +11,9 @@ class NavProcessor
 
     protected $strtr;
 
-    public function __invoke(ContentItem $item)
+    public function __invoke(ContentPage $page)
     {
-        $this->item = $item;
+        $this->page = $page;
         $this->setStrtr();
         $this->setHeader();
         $this->setFooter();
@@ -23,8 +23,8 @@ class NavProcessor
     protected function setStrtr()
     {
         $this->strtr = array(
-            '{NUMBER}' => $this->item->getNumber(),
-            '{TITLE}' => $this->item->getTitle(),
+            '{NUMBER}' => $this->page->getNumber(),
+            '{TITLE}' => $this->page->getTitle(),
             '{PREV_HREF}' => null,
             '{PREV_NUMBER}' => null,
             '{PREV_TITLE}' => null,
@@ -36,21 +36,21 @@ class NavProcessor
             '{NEXT_TITLE}' => null,
         );
 
-        $prev = $this->item->getPrev();
+        $prev = $this->page->getPrev();
         if ($prev) {
             $this->strtr['{PREV_HREF}'] = $prev->getAbsoluteHref();
             $this->strtr['{PREV_NUMBER}'] = $prev->getNumber();
             $this->strtr['{PREV_TITLE}'] = $prev->getTitle();
         }
 
-        $next = $this->item->getNext();
+        $next = $this->page->getNext();
         if ($next) {
             $this->strtr['{NEXT_HREF}'] = $next->getAbsoluteHref();
             $this->strtr['{NEXT_NUMBER}'] = $next->getNumber();
             $this->strtr['{NEXT_TITLE}'] = $next->getTitle();
         }
 
-        $parent = $this->item->getParent();
+        $parent = $this->page->getParent();
         if ($parent) {
             $this->strtr['{PARENT_HREF}'] = $parent->getAbsoluteHref();
             $this->strtr['{PARENT_NUMBER}'] = $parent->getNumber();
@@ -103,7 +103,7 @@ TPL;
 
     protected function wrapHtml()
     {
-        $file = $this->item->getTargetFile();
+        $file = $this->page->getTargetFile();
         $html = file_get_contents($file);
         $html = $this->header . PHP_EOL
             . trim($html) . PHP_EOL

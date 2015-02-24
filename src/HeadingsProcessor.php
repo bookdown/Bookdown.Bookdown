@@ -8,7 +8,7 @@ use DomXpath;
 
 class HeadingsProcessor
 {
-    protected $item;
+    protected $page;
 
     protected $html;
 
@@ -18,9 +18,9 @@ class HeadingsProcessor
 
     protected $headings = array();
 
-    public function __invoke(ContentItem $item)
+    public function __invoke(ContentPage $page)
     {
-        $this->reset($item);
+        $this->reset($page);
 
         $this->loadHtml();
         if (! $this->html) {
@@ -31,12 +31,12 @@ class HeadingsProcessor
         $this->processHeadingNodes();
         $this->saveHtml();
 
-        $item->setProcessResult(__CLASS__, $this->headings);
+        $page->setProcessResult(__CLASS__, $this->headings);
     }
 
-    protected function reset($item)
+    protected function reset($page)
     {
-        $this->item = $item;
+        $this->page = $page;
         $this->html = null;
         $this->doc = null;
         $this->counts = array(
@@ -51,12 +51,12 @@ class HeadingsProcessor
 
     protected function loadHtml()
     {
-        $this->html = file_get_contents($this->item->getTargetFile());
+        $this->html = file_get_contents($this->page->getTargetFile());
     }
 
     protected function saveHtml()
     {
-        file_put_contents($this->item->getTargetFile(), $this->html);
+        file_put_contents($this->page->getTargetFile(), $this->html);
     }
 
     protected function loadDomDocument()
@@ -84,13 +84,13 @@ class HeadingsProcessor
 
     protected function setItemTitle(DomNodeList $nodes)
     {
-        if ($this->item->getTitle()) {
+        if ($this->page->getTitle()) {
             return;
         }
 
         $node = $nodes->item(0);
         if ($node) {
-            $this->item->setTitle($node->nodeValue);
+            $this->page->setTitle($node->nodeValue);
         }
     }
 
@@ -125,7 +125,7 @@ class HeadingsProcessor
             'number' => $number,
             'level' => substr_count($number, '.'),
             'id' => $id,
-            'href' => $this->item->getAbsoluteHref() . '#' . $id,
+            'href' => $this->page->getAbsoluteHref() . '#' . $id,
             'title' => $title,
         );
     }
@@ -140,7 +140,7 @@ class HeadingsProcessor
             }
             $string .= "{$count}.";
         }
-        return $this->item->getNumber() . $string;
+        return $this->page->getNumber() . $string;
     }
 
     protected function setCounts(DomNode $node)

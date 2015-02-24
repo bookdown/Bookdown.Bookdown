@@ -3,11 +3,11 @@ namespace Bookdown\Content;
 
 class LayoutProcessor
 {
-    protected $item;
+    protected $page;
 
-    public function __invoke(ContentItem $item)
+    public function __invoke(ContentPage $page)
     {
-        $file = $item->getTargetFile();
+        $file = $page->getTargetFile();
         $content = file_get_contents($file);
         $tpl = <<<TPL
 <html>
@@ -21,7 +21,7 @@ class LayoutProcessor
 TPL;
 
         $strtr = array(
-            '{TITLE}' => $item->getTitle(),
+            '{TITLE}' => $page->getTitle(),
             '{CONTENT}' => $content,
         );
 

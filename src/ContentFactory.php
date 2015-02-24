@@ -3,9 +3,9 @@ namespace Bookdown\Content;
 
 class ContentFactory
 {
-    public function newContentItem($name, $origin, $parent, $count)
+    public function newContentPage($name, $origin, $parent, $count)
     {
-        return new ContentItem($name, $origin, $parent, $count);
+        return new ContentPage($name, $origin, $parent, $count);
     }
 
     public function newContentIndex($name, $origin, $parent, $count)

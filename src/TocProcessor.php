@@ -8,13 +8,13 @@ class TocProcessor
     protected $html;
     protected $baseLevel;
 
-    public function __invoke(ContentItem $item)
+    public function __invoke(ContentPage $page)
     {
-        if (! $item instanceof ContentIndex) {
+        if (! $page instanceof ContentIndex) {
             return;
         }
 
-        $this->reset($item);
+        $this->reset($page);
         $this->addEntries($this->index);
         $this->buildHtmlEntries();
         $this->prependHtml();
@@ -54,13 +54,13 @@ class TocProcessor
         $this->addEntries($index);
     }
 
-    protected function addItem($item)
+    protected function addItem($page)
     {
-        if (! $item->hasProcessResult('Bookdown\Content\HeadingsProcessor')) {
+        if (! $page->hasProcessResult('Bookdown\Content\HeadingsProcessor')) {
             return;
         }
 
-        $entrys = $item->getProcessResult('Bookdown\Content\HeadingsProcessor');
+        $entrys = $page->getProcessResult('Bookdown\Content\HeadingsProcessor');
         foreach ($entrys as $entry) {
             $this->entries[] = $entry;
         }

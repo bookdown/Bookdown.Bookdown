@@ -12,12 +12,12 @@ class HtmlProcessor
         $this->commonMarkConverter = $commonMarkConverter;
     }
 
-    public function __invoke($item)
+    public function __invoke($page)
     {
-        $text = $item->getOriginData();
+        $text = $page->getOriginData();
         $html = $this->commonMarkConverter->convertToHtml($text);
 
-        $file = $item->getTargetFile();
+        $file = $page->getTargetFile();
         $dir = dirname($file);
         if (! is_dir($dir)) {
             mkdir($dir, 0777, true);

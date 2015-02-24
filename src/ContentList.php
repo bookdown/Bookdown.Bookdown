@@ -3,7 +3,7 @@ namespace Bookdown\Content;
 
 class ContentList
 {
-    protected $items = array();
+    protected $pages = array();
     protected $contentFactory;
     protected $targetBase;
 
@@ -29,7 +29,7 @@ class ContentList
             if ($this->isJson($origin)) {
                 $child = $this->__invoke($origin, $name, $index, $count);
             } else {
-                $child = $this->addContentItem($name, $origin, $index, $count);
+                $child = $this->addContentPage($name, $origin, $index, $count);
             }
             $index->addChild($child);
         }
@@ -39,7 +39,7 @@ class ContentList
 
     public function getItems()
     {
-        return $this->items;
+        return $this->pages;
     }
 
     protected function getJson($bookdownFile)
@@ -78,11 +78,11 @@ class ContentList
         return substr($origin, -5) == '.json';
     }
 
-    protected function addContentItem($name, $origin, $parent, $count)
+    protected function addContentPage($name, $origin, $parent, $count)
     {
-        $item = $this->contentFactory->newContentItem($name, $origin, $parent, $count);
-        $this->append($item);
-        return $item;
+        $page = $this->contentFactory->newContentPage($name, $origin, $parent, $count);
+        $this->append($page);
+        return $page;
     }
 
     protected function addContentIndex($json, $base, $name, $parent, $count)
@@ -94,25 +94,25 @@ class ContentList
         }
 
         if ($parent) {
-            $item = $this->contentFactory->newContentIndex($name, $origin, $parent, $count);
+            $page = $this->contentFactory->newContentIndex($name, $origin, $parent, $count);
         } else {
-            $item = $this->contentFactory->newContentRoot($name, $origin, $parent, $count);
-            $item->setTargetBase($this->targetBase);
+            $page = $this->contentFactory->newContentRoot($name, $origin, $parent, $count);
+            $page->setTargetBase($this->targetBase);
         }
 
-        $item->setTitle($json->title);
-        $this->append($item);
-        return $item;
+        $page->setTitle($json->title);
+        $this->append($page);
+        return $page;
     }
 
-    protected function append(ContentItem $item)
+    protected function append(ContentPage $page)
     {
-        $prev = end($this->items);
+        $prev = end($this->pages);
         if ($prev) {
-            $prev->setNext($item);
-            $item->setPrev($prev);
+            $prev->setNext($page);
+            $page->setPrev($prev);
         }
 
-        $this->items[] = $item;
+        $this->pages[] = $page;
     }
 }

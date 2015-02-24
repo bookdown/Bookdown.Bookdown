@@ -3,7 +3,7 @@ namespace Bookdown\Content;
 
 class Processor
 {
-    protected $converters;
+    protected $processors;
 
     public function __construct(array $processors = null)
     {

@@ -75,11 +75,7 @@ class TocProcessor
 
     protected function buildHtmlEntries()
     {
-        $this->html[] =
-            '<h1>' . $this->index->getNumber() . ' '
-            . $this->index->getTitle() . '</h1>'
-        ;
-
+        $this->html[] = '<h1>' . $this->index->getNumberAndTitle() . '</h1>';
         $this->html[] = '<dl>';
 
         $entry = reset($this->entries);

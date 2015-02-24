@@ -1,31 +1,30 @@
 <?php
 namespace Bookdown\Content;
 
+use Aura\View\View;
+
 class LayoutProcessor
 {
-    protected $page;
+    public function __construct(View $view, array $templates)
+    {
+        $this->view = $view;
+
+        $registry = $this->view->getViewRegistry();
+        foreach ($templates as $name => $file) {
+            $registry->set($name, $file);
+        }
+
+        // use the first template as the view file
+        reset($templates);
+        $this->view->setView(key($templates));
+    }
 
     public function __invoke(ContentPage $page)
     {
         $file = $page->getTargetFile();
-        $content = file_get_contents($file);
-        $tpl = <<<TPL
-<html>
-<head>
-    <title>{TITLE}</title>
-</head>
-<body>
-{CONTENT}
-</body>
-</html>
-TPL;
-
-        $strtr = array(
-            '{TITLE}' => $page->getTitle(),
-            '{CONTENT}' => $content,
-        );
-
-        $html = strtr($tpl, $strtr);
+        $this->view->page = $page;
+        $this->view->html = file_get_contents($file);
+        $html = $this->view->__invoke();
         file_put_contents($file, $html);
     }
 }

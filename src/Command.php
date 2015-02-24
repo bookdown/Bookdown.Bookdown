@@ -2,6 +2,8 @@
 namespace Bookdown\Content;
 
 use League\CommonMark\CommonMarkConverter;
+use Aura\View\ViewFactory;
+use Aura\Html\HelperLocatorFactory;
 
 class Command
 {
@@ -24,6 +26,19 @@ class Command
         $contentList = new ContentList(new ContentFactory(), $target);
         $contentList($origin);
 
+        $helpersFactory = new HelperLocatorFactory();
+        $helpers = $helpersFactory->newInstance();
+
+        $viewFactory = new ViewFactory();
+        $view = $viewFactory->newInstance($helpers);
+
+        $templatesDir = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'layouts';
+        $templates = array(
+            'default' => "{$templatesDir}/default.php",
+            'navheader' => "{$templatesDir}/navheader.php",
+            'navfooter' => "{$templatesDir}/navfooter.php",
+        );
+
         $processor = new Processor(array(
 
             // basic HTML conversion
@@ -35,12 +50,8 @@ class Command
             // add TOC pages
             new TocProcessor(),
 
-            // add nav header and footer
-            new NavProcessor(),
-
             // final layout
-            new LayoutProcessor(),
-
+            new LayoutProcessor($view, $templates),
         ));
 
         $processor($contentList);

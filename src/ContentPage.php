@@ -116,6 +116,11 @@ class ContentPage
         return "{$base}{$count}.";
     }
 
+    public function getNumberAndTitle()
+    {
+        return trim($this->getNumber() . ' ' . $this->getTitle());
+    }
+
     public function getOriginData()
     {
         $level = error_reporting(0);

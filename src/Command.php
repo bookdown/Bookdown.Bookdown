@@ -5,8 +5,22 @@ use League\CommonMark\CommonMarkConverter;
 
 class Command
 {
-    public function __invoke($origin, $target)
+    public function __invoke($server)
     {
+        if (! isset($server['argv'][1])) {
+            throw new Exception(
+                "Please enter an origin bookdown.json file as the first argument."
+            );
+        }
+        $origin = $server['argv'][1];
+
+        if (! isset($server['argv'][2])) {
+            throw new Exception(
+                "Please enter a writable target directory as the second argument."
+            );
+        }
+        $target = $server['argv'][2];
+
         $contentList = new ContentList(new ContentFactory(), $target);
         $contentList($origin);
 

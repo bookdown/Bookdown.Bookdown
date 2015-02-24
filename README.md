@@ -44,6 +44,10 @@ Note that the `bookdown.json` file need not be named `bookdown.json` per se; any
 
 (In no particular order.)
 
+- Extract file-reading and file-writing to an injectable Fileio class.
+
+- Generate output via an injected output callable, so that any command/console system can handle output.
+
 - Use templates to customize the layout surrounding the rendered HTML, the navigational elements, and/or the table of contents listing
 
 - Allow bookdown.json to specify `tocdepth`, indicating how many levels to show on the table of contents

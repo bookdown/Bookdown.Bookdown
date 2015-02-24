@@ -15,7 +15,7 @@ class ContentList
         $this->targetBase = $targetBase;
     }
 
-    public function fill($bookdownFile, $name = '', $parent = null, $count = 0)
+    public function __invoke($bookdownFile, $name = '', $parent = null, $count = 0)
     {
         $base = $this->getBase($bookdownFile);
         $json = $this->getJson($bookdownFile);
@@ -27,7 +27,7 @@ class ContentList
             $count ++;
             $origin = $this->fixOrigin($origin, $base);
             if ($this->isJson($origin)) {
-                $child = $this->fill($origin, $name, $index, $count);
+                $child = $this->__invoke($origin, $name, $index, $count);
             } else {
                 $child = $this->addContentItem($name, $origin, $index, $count);
             }

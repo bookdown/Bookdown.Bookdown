@@ -6,5 +6,8 @@
         "psr-4": {
             "Bookdown\\Content\\": "src/"
         }
-    }
+    },
+    "bin": [
+        "bin/bookdown.php"
+    ]
 }

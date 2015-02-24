@@ -32,7 +32,7 @@ class NavProcessor
             '{PARENT_NUMBER}' => null,
             '{PARENT_TITLE}' => null,
             '{NEXT_HREF}' => null,
-            '{NEXT_HREF}' => null,
+            '{NEXT_NUMBER}' => null,
             '{NEXT_TITLE}' => null,
         );
 

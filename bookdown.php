@@ -24,6 +24,8 @@ $processor = new Bookdown\Content\Processor(array(
     new Bookdown\Content\TocProcessor(),
     // add nav header and footer
     new Bookdown\Content\NavProcessor(),
+    // final layout
+    new Bookdown\Content\LayoutProcessor(),
 ));
 
 $processor($contentList);

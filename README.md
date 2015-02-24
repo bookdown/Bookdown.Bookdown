@@ -46,9 +46,9 @@ Note that the `bookdown.json` file need not be named `bookdown.json` per se; any
 
 - Extract file-reading and file-writing to an injectable Fileio class.
 
-- Generate output via an injected output callable, so that any command/console system can handle output.
+- Generate output via an injected output callable, so that any command/console system can display output (or so a logging system can log output).
 
-- Use templates to customize the layout surrounding the rendered HTML, the navigational elements, and/or the table of contents listing
+- Use templates for the table of contents listings instead of embedding it, perhaps as a helper
 
 - Allow bookdown.json to specify `tocdepth`, indicating how many levels to show on the table of contents
 
@@ -64,4 +64,4 @@ Note that the `bookdown.json` file need not be named `bookdown.json` per se; any
 
 - Take a PHPDocumentor structure.xml file and convert to Markdown files for conversion through Bookdown
 
-- Honor other config options from the bookdown.json
+- A link-rewrite processor

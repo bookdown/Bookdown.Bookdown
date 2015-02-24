@@ -60,8 +60,8 @@ class TocProcessor
             return;
         }
 
-        $entrys = $page->getProcessResult('Bookdown\Content\HeadingsProcessor');
-        foreach ($entrys as $entry) {
+        $entries = $page->getProcessResult('Bookdown\Content\HeadingsProcessor');
+        foreach ($entries as $entry) {
             $this->entries[] = $entry;
         }
     }

@@ -32,7 +32,7 @@ class Command
         $viewFactory = new ViewFactory();
         $view = $viewFactory->newInstance($helpers);
 
-        $templatesDir = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'layouts';
+        $templatesDir = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'templates';
         $templates = array(
             'default' => "{$templatesDir}/default.php",
             'navheader' => "{$templatesDir}/navheader.php",

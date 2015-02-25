@@ -1,6 +1,7 @@
 <?php
-namespace Bookdown\Content;
+namespace Bookdown\Bookdown\Processor;
 
+use Bookdown\Bookdown\Content\Page;
 use League\CommonMark\CommonMarkConverter;
 
 class HtmlProcessor
@@ -12,14 +13,14 @@ class HtmlProcessor
         $this->commonMarkConverter = $commonMarkConverter;
     }
 
-    public function __invoke(ContentPage $page)
+    public function __invoke(Page $page)
     {
         $text = $this->readOriginFile($page);
         $html = $this->commonMarkConverter->convertToHtml($text);
         $this->saveTargetFile($page, $html);
     }
 
-    protected function readOriginFile(ContentPage $page)
+    protected function readOriginFile(Page $page)
     {
         $file = $page->getOrigin();
         if (! $file) {
@@ -38,7 +39,7 @@ class HtmlProcessor
         throw new Exception($error['message']);
     }
 
-    protected function saveTargetFile(ContentPage $page, $html)
+    protected function saveTargetFile(Page $page, $html)
     {
         $file = $page->getTargetFile();
         $dir = dirname($file);

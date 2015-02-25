@@ -1,7 +1,7 @@
 <?php
-namespace Bookdown\Content;
+namespace Bookdown\Bookdown\Content;
 
-class ContentPage
+class Page
 {
     protected $name;
     protected $origin;
@@ -132,5 +132,15 @@ class ContentPage
     public function getHeadings()
     {
         return $this->headings;
+    }
+
+    public function isIndex()
+    {
+        return false;
+    }
+
+    public function isRoot()
+    {
+        return false;
     }
 }

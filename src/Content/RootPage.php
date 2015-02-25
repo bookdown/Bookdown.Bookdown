@@ -1,7 +1,7 @@
 <?php
-namespace Bookdown\Content;
+namespace Bookdown\Bookdown\Content;
 
-class ContentRoot extends ContentIndex
+class RootPage extends IndexPage
 {
     protected $targetBase;
 
@@ -23,5 +23,10 @@ class ContentRoot extends ContentIndex
     public function setTargetBase($targetBase)
     {
         $this->targetBase = $targetBase;
+    }
+
+    public function isRoot()
+    {
+        return true;
     }
 }

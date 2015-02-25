@@ -1,17 +1,17 @@
 <?php
-namespace Bookdown\Content;
+namespace Bookdown\Bookdown\Content;
 
-class ContentCollector
+class PageCollector
 {
     protected $pages = array();
-    protected $contentFactory;
+    protected $PageFactory;
     protected $targetBase;
 
     public function __construct(
-        ContentFactory $contentFactory,
+        PageFactory $PageFactory,
         $targetBase
     ) {
-        $this->contentFactory = $contentFactory;
+        $this->PageFactory = $PageFactory;
         $this->targetBase = $targetBase;
     }
 
@@ -20,7 +20,7 @@ class ContentCollector
         $base = $this->getBase($bookdownFile);
         $json = $this->getJson($bookdownFile);
 
-        $index = $this->addContentIndex($json, $base, $name, $parent, $count);
+        $index = $this->addIndexPage($json, $base, $name, $parent, $count);
 
         $count = 0;
         foreach ($json->content as $name => $origin) {
@@ -29,7 +29,7 @@ class ContentCollector
             if ($this->isJson($origin)) {
                 $child = $this->__invoke($origin, $name, $index, $count);
             } else {
-                $child = $this->addContentPage($name, $origin, $index, $count);
+                $child = $this->addPage($name, $origin, $index, $count);
             }
             $index->addChild($child);
         }
@@ -78,14 +78,14 @@ class ContentCollector
         return substr($origin, -5) == '.json';
     }
 
-    protected function addContentPage($name, $origin, $parent, $count)
+    protected function addPage($name, $origin, $parent, $count)
     {
-        $page = $this->contentFactory->newContentPage($name, $origin, $parent, $count);
+        $page = $this->PageFactory->newPage($name, $origin, $parent, $count);
         $this->append($page);
         return $page;
     }
 
-    protected function addContentIndex($json, $base, $name, $parent, $count)
+    protected function addIndexPage($json, $base, $name, $parent, $count)
     {
         $origin = '';
         if (isset($json->content->index)) {
@@ -94,9 +94,9 @@ class ContentCollector
         }
 
         if ($parent) {
-            $page = $this->contentFactory->newContentIndex($name, $origin, $parent, $count);
+            $page = $this->PageFactory->newIndexPage($name, $origin, $parent, $count);
         } else {
-            $page = $this->contentFactory->newContentRoot($name, $origin, $parent, $count);
+            $page = $this->PageFactory->newRootPage($name, $origin, $parent, $count);
             $page->setTargetBase($this->targetBase);
         }
 
@@ -105,7 +105,7 @@ class ContentCollector
         return $page;
     }
 
-    protected function append(ContentPage $page)
+    protected function append(Page $page)
     {
         $prev = end($this->pages);
         if ($prev) {

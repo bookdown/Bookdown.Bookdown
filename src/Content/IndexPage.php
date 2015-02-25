@@ -1,7 +1,7 @@
 <?php
-namespace Bookdown\Content;
+namespace Bookdown\Bookdown\Content;
 
-class ContentIndex extends ContentPage
+class IndexPage extends Page
 {
     protected $children;
 
@@ -48,5 +48,10 @@ class ContentIndex extends ContentPage
     public function getTocEntries()
     {
         return $this->tocEntries;
+    }
+
+    public function isIndex()
+    {
+        return true;
     }
 }

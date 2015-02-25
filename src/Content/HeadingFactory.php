@@ -1,5 +1,5 @@
 <?php
-namespace Bookdown\Content;
+namespace Bookdown\Bookdown\Content;
 
 class HeadingFactory
 {

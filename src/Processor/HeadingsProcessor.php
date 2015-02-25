@@ -1,6 +1,8 @@
 <?php
-namespace Bookdown\Content;
+namespace Bookdown\Bookdown\Processor;
 
+use Bookdown\Bookdown\Content\Page;
+use Bookdown\Bookdown\Content\HeadingFactory;
 use DomDocument;
 use DomNode;
 use DomNodeList;
@@ -25,7 +27,7 @@ class HeadingsProcessor
         $this->headingFactory = $headingFactory;
     }
 
-    public function __invoke(ContentPage $page)
+    public function __invoke(Page $page)
     {
         $this->reset($page);
 
@@ -39,7 +41,7 @@ class HeadingsProcessor
         $page->setHeadings($this->headings);
     }
 
-    protected function reset($page)
+    protected function reset(Page $page)
     {
         $this->page = $page;
         $this->html = null;
@@ -53,7 +55,7 @@ class HeadingsProcessor
         );
         $this->headings = array();
 
-        if ($this->page instanceof ContentIndex) {
+        if ($this->page->isIndex()) {
             $this->headings[] = $this->headingFactory->newInstance(
                 $this->page->getNumber(),
                 $this->page->getTitle(),

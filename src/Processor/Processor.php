@@ -1,5 +1,7 @@
 <?php
-namespace Bookdown\Content;
+namespace Bookdown\Bookdown\Processor;
+
+use Bookdown\Bookdown\Content\RootPage;
 
 class Processor
 {
@@ -10,7 +12,7 @@ class Processor
         $this->processors = $processors;
     }
 
-    public function __invoke(ContentRoot $root)
+    public function __invoke(RootPage $root)
     {
         foreach ($this->processors as $processor) {
             $page = $root;

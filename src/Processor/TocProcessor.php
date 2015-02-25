@@ -1,13 +1,16 @@
 <?php
-namespace Bookdown\Content;
+namespace Bookdown\Bookdown\Processor;
+
+use Bookdown\Bookdown\Content\Page;
+use Bookdown\Bookdown\Content\IndexPage;
 
 class TocProcessor
 {
     protected $tocEntries;
 
-    public function __invoke(ContentPage $page)
+    public function __invoke(Page $page)
     {
-        if (! $page instanceof ContentIndex) {
+        if (! $page->isIndex()) {
             return;
         }
 
@@ -16,14 +19,14 @@ class TocProcessor
         $page->setTocEntries($this->tocEntries);
     }
 
-    protected function addTocEntries(ContentIndex $index)
+    protected function addTocEntries(IndexPage $index)
     {
         foreach ($index->getChildren() as $child) {
             $headings = $child->getHeadings();
             foreach ($headings as $heading) {
                 $this->tocEntries[] = $heading;
             }
-            if ($child instanceof ContentIndex) {
+            if ($child->isIndex()) {
                 $this->addTocEntries($child);
             }
         }

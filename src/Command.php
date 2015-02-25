@@ -1,9 +1,11 @@
 <?php
-namespace Bookdown\Content;
+namespace Bookdown\Bookdown;
 
+use Aura\Html;
+use Aura\View;
+use Bookdown\Bookdown\Content;
+use Bookdown\Bookdown\Processor;
 use League\CommonMark\CommonMarkConverter;
-use Aura\View\ViewFactory;
-use Aura\Html\HelperLocatorFactory;
 
 class Command
 {
@@ -23,13 +25,13 @@ class Command
         }
         $target = $server['argv'][2];
 
-        $ContentCollector = new ContentCollector(new ContentFactory(), $target);
-        $root = $ContentCollector($origin);
+        $pageCollector = new Content\PageCollector(new Content\PageFactory(), $target);
+        $root = $pageCollector($origin);
 
-        $helpersFactory = new HelperLocatorFactory();
+        $helpersFactory = new Html\HelperLocatorFactory();
         $helpers = $helpersFactory->newInstance();
 
-        $viewFactory = new ViewFactory();
+        $viewFactory = new View\ViewFactory();
         $view = $viewFactory->newInstance($helpers);
 
         $templatesDir = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'templates';
@@ -40,19 +42,19 @@ class Command
             'toc' => "{$templatesDir}/toc.php",
         );
 
-        $processor = new Processor(array(
+        $processor = new Processor\Processor(array(
 
             // basic HTML conversion
-            new HtmlProcessor(new CommonMarkConverter()),
+            new Processor\HtmlProcessor(new CommonMarkConverter()),
 
             // extract and number headings
-            new HeadingsProcessor(new HeadingFactory()),
+            new Processor\HeadingsProcessor(new Content\HeadingFactory()),
 
             // add TOC entries
-            new TocProcessor(),
+            new Processor\TocProcessor(),
 
             // final layout
-            new LayoutProcessor($view, $templates),
+            new Processor\LayoutProcessor($view, $templates),
         ));
 
         $processor($root);

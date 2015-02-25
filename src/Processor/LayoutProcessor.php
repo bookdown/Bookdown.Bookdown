@@ -1,7 +1,8 @@
 <?php
-namespace Bookdown\Content;
+namespace Bookdown\Bookdown\Processor;
 
 use Aura\View\View;
+use Bookdown\Bookdown\Content\Page;
 
 class LayoutProcessor
 {
@@ -19,7 +20,7 @@ class LayoutProcessor
         $this->view->setView(key($templates));
     }
 
-    public function __invoke(ContentPage $page)
+    public function __invoke(Page $page)
     {
         $file = $page->getTargetFile();
         $this->view->page = $page;

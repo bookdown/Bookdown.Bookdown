@@ -6,7 +6,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Bookdown\\Content\\": "src/"
+            "Bookdown\\Bookdown\\": "src/"
         }
     },
     "bin": [

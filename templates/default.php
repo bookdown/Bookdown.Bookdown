@@ -7,7 +7,7 @@
 
 <?= $this->render('navheader'); ?>
 
-<?= $this->page instanceof Bookdown\Content\ContentIndex
+<?= $this->page->isIndex()
     ? $this->render('toc')
     : '' ;
 ?>

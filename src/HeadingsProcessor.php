@@ -36,7 +36,7 @@ class HeadingsProcessor
             $this->saveHtml();
         }
 
-        $page->setProcessResult(__CLASS__, $this->headings);
+        $page->setHeadings($this->headings);
     }
 
     protected function reset($page)

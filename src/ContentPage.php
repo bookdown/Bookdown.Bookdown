@@ -10,7 +10,7 @@ class ContentPage
     protected $prev;
     protected $next;
     protected $title;
-    protected $processResult = array();
+    protected $headings = array();
 
     public function __construct(
         $name,
@@ -144,18 +144,18 @@ class ContentPage
         return $base . DIRECTORY_SEPARATOR . $this->getName() . '.html';
     }
 
-    public function setProcessResult($process, $result)
+    public function setHeadings(array $headings)
     {
-        $this->processResult[$process] = $result;
+        $this->headings = $headings;
     }
 
-    public function hasProcessResult($process)
+    public function hasHeadings()
     {
-        return isset($this->processResult[$process]);
+        return (bool) $this->headings;
     }
 
-    public function getProcessResult($process)
+    public function getHeadings()
     {
-        return $this->processResult[$process];
+        return $this->headings;
     }
 }

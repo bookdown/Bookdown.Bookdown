@@ -41,11 +41,11 @@ class TocProcessor
 
     protected function addItem($page)
     {
-        if (! $page->hasProcessResult('Bookdown\Content\HeadingsProcessor')) {
+        if (! $page->hasHeadings()) {
             return;
         }
 
-        $entries = $page->getProcessResult('Bookdown\Content\HeadingsProcessor');
+        $entries = $page->getHeadings();
         foreach ($entries as $entry) {
             $this->entries[] = $entry;
         }

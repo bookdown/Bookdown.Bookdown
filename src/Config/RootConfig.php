@@ -5,14 +5,14 @@ use Bookdown\Bookdown\Exception;
 
 class RootConfig extends Config
 {
-    protected $template;
     protected $target;
+    protected $templateBuilder;
 
     protected function init()
     {
         parent::init();
         $this->initTarget();
-        $this->initTemplate();
+        $this->initTemplateBuilder();
     }
 
     protected function initTarget()
@@ -24,22 +24,30 @@ class RootConfig extends Config
         $this->target = rtrim($this->fixPath($this->json->target), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
     }
 
-    protected function initTemplate()
+    protected function initTemplateBuilder()
     {
-        if (! isset($this->json->template)) {
-            throw new Exception("No template listed in '{$this->file}'.");
+        if (! isset($this->json->templateBuilder)) {
+            $this->templateBuilder = 'Bookdown\Bookdown\Template\TemplateBuilder';
+            return;
         }
 
-        $this->template = $this->fixPath($this->json->template);
+        $this->templateFactory = $this->json->templateBuilder;
     }
 
-    public function getTemplate()
+    public function getTemplateBuilder()
     {
-        return $this->template;
+        return $this->templateBuilder;
     }
 
     public function getTarget()
     {
         return $this->target;
+    }
+
+    public function get($key)
+    {
+        if (isset($this->json->$key)) {
+            return $this->json->$key;
+        }
     }
 }

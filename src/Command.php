@@ -1,10 +1,9 @@
 <?php
 namespace Bookdown\Bookdown;
 
-use Aura\Html;
-use Aura\View;
 use Bookdown\Bookdown\Config;
 use Bookdown\Bookdown\Content;
+use Bookdown\Bookdown\Template;
 use Bookdown\Bookdown\Processor;
 use League\CommonMark\CommonMarkConverter;
 
@@ -59,22 +58,22 @@ class Command
             new Processor\HtmlProcessor(new CommonMarkConverter()),
             new Processor\HeadingsProcessor(new Content\HeadingFactory()),
             new Processor\TocProcessor(),
-            new Processor\LayoutProcessor($this->newView()),
+            new Processor\LayoutProcessor($this->newTemplate()),
         ));
     }
 
-    protected function newView()
+    protected function newTemplate()
     {
-        $helpersFactory = new Html\HelperLocatorFactory();
-        $helpers = $helpersFactory->newInstance();
+        $config = $this->root->getConfig();
 
-        $viewFactory = new View\ViewFactory();
-        $view = $viewFactory->newInstance($helpers);
+        $class = $config->getTemplateBuilder();
+        $factory = new $class();
+        if (! $factory instanceof \Bookdown\Bookdown\Template\TemplateBuilderInterface) {
+            throw new Exception(
+                "'{$class}' does not implement TemplateBuilderInterface."
+            );
+        }
 
-        $template = $this->root->getConfig()->getTemplate();
-        $view->getViewRegistry()->set('__bookdown__', $template);
-        $view->setView('__bookdown__');
-
-        return $view;
+        return $factory->newInstance($config);
     }
 }

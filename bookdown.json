@@ -6,6 +6,5 @@
         "kernels": "./book/kernels/_bookdown.json",
         "projects": "./book/projects/_bookdown.json"
     },
-    "template": "./templates/default.php",
     "target": "./html/"
 }

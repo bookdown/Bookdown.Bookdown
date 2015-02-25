@@ -1,22 +1,20 @@
 <?php
 namespace Bookdown\Bookdown\Processor;
 
-use Aura\View\View;
 use Bookdown\Bookdown\Content\Page;
+use Bookdown\Bookdown\Template\TemplateInterface;
 
 class LayoutProcessor
 {
-    public function __construct(View $view)
+    public function __construct(TemplateInterface $template)
     {
-        $this->view = $view;
+        $this->template = $template;
     }
 
     public function __invoke(Page $page)
     {
-        $file = $page->getTargetFile();
-        $this->view->page = $page;
-        $this->view->html = file_get_contents($file);
-        $html = $this->view->__invoke();
-        file_put_contents($file, $html);
+        $this->template->setPage($page);
+        $html = $this->template->render();
+        file_put_contents($page->getTargetFile(), $html);
     }
 }

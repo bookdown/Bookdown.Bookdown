@@ -5,6 +5,5 @@
         "bundles": "./book/bundles/_bookdown.json",
         "kernels": "./book/kernels/_bookdown.json",
         "projects": "./book/projects/_bookdown.json"
-    },
-    "target": "./html/"
+    }
 }

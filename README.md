@@ -14,7 +14,7 @@ To see a demonstration of Bookdown, clone this repository, then:
 
 1. issue `composer install` to install the dependencies, and
 
-2. issue `php bin/bookdown.php {$origin} {$target}` to run the generator.
+2. issue `php bin/bookdown.php {$origin}` to run the generator.
 
 The `{$origin}` is a top-level `bookdown.json` file, and the `{$target}` is a directory to which the HTML files will be rendered.
 
@@ -32,8 +32,7 @@ Each directory should have a `bookdown.json` file with a "title" string value (t
         "getting-started": "beginners/bookdown.json",
         "advanced-topics": "advanced/bookdown.json",
         "conclusion": "end.md",
-    },
-    "target": "../_site/"
+    }
 }
 ```
 
@@ -53,9 +52,7 @@ Note that the `bookdown.json` file need not be named `bookdown.json` per se; any
 
 - Allow bookdown.json to specify `numbering`, indicating how to number the pages at this level (decimal, upper-alpha, lower-alpha, upper-roman, lower-roman)
 
-- Allow bookdown.json to specify authors, editors, and other meta-data
-
-- Render authors, editors, and other meta-data on TOC index pages
+- Allow bookdown.json to specify authors, editors, and other meta-data, then render the meta-data on TOC index pages
 
 - Add a sidebar-style navigational element
 

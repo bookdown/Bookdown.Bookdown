@@ -19,11 +19,12 @@ class RootConfig extends Config
 
     protected function initTarget()
     {
-        if (! isset($this->json->target)) {
-            throw new Exception("No target specified in '{$this->file}'.");
+        $target = '_site';
+        if (isset($this->json->target)) {
+            $target = $this->json->target;
         }
 
-        $this->target = rtrim($this->fixPath($this->json->target), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+        $this->target = rtrim($this->fixPath($target), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
     }
 
     protected function initConverterBuilder()

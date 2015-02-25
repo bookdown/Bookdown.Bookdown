@@ -9,11 +9,6 @@ class TocProcessor
     protected $baseLevel;
     protected $headingFactory;
 
-    public function __construct(HeadingFactory $headingFactory)
-    {
-        $this->headingFactory = $headingFactory;
-    }
-
     public function __invoke(ContentPage $page)
     {
         if (! $page instanceof ContentIndex) {
@@ -37,15 +32,9 @@ class TocProcessor
     protected function addEntries(ContentIndex $index)
     {
         foreach ($index->getChildren() as $child) {
+            $this->addItem($child);
             if ($child instanceof ContentIndex) {
-                $this->entries[] = $this->headingFactory->newInstance(
-                    $child->getNumber(),
-                    $child->getTitle(),
-                    $child->getAbsoluteHref()
-                );
                 $this->addEntries($child);
-            } else {
-                $this->addItem($child);
             }
         }
     }

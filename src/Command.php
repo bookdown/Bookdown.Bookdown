@@ -48,7 +48,7 @@ class Command
             new HeadingsProcessor(new HeadingFactory()),
 
             // add TOC pages
-            new TocProcessor(new HeadingFactory()),
+            new TocProcessor(),
 
             // final layout
             new LayoutProcessor($view, $templates),

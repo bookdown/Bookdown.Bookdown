@@ -52,6 +52,14 @@ class HeadingsProcessor
             'h6' => 0,
         );
         $this->headings = array();
+
+        if ($this->page instanceof ContentIndex) {
+            $this->headings[] = $this->headingFactory->newInstance(
+                $this->page->getNumber(),
+                $this->page->getTitle(),
+                $this->page->getAbsoluteHref()
+            );
+        }
     }
 
     protected function loadHtml()

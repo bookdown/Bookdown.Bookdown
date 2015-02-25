@@ -1,7 +1,7 @@
 <?php
 namespace Bookdown\Bookdown\Content;
 
-use Bookdown\Bookdown\ConfigBuilder;
+use Bookdown\Bookdown\Config\ConfigBuilder;
 
 class PageCollector
 {

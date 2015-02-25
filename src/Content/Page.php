@@ -1,7 +1,7 @@
 <?php
 namespace Bookdown\Bookdown\Content;
 
-use Bookdown\Bookdown\Config;
+use Bookdown\Bookdown\Config\Config;
 
 class Page
 {

@@ -3,6 +3,7 @@ namespace Bookdown\Bookdown;
 
 use Aura\Html;
 use Aura\View;
+use Bookdown\Bookdown\Config;
 use Bookdown\Bookdown\Content;
 use Bookdown\Bookdown\Processor;
 use League\CommonMark\CommonMarkConverter;
@@ -40,7 +41,7 @@ class Command
     protected function collectPages()
     {
         $pageCollector = new Content\PageCollector(
-            new ConfigBuilder(),
+            new Config\ConfigBuilder(),
             new Content\PageFactory(),
             $this->target
         );

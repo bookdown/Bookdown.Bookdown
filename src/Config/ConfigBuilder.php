@@ -1,5 +1,5 @@
 <?php
-namespace Bookdown\Bookdown;
+namespace Bookdown\Bookdown\Config;
 
 class ConfigBuilder
 {

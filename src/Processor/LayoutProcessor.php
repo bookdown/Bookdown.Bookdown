@@ -6,18 +6,9 @@ use Bookdown\Bookdown\Content\Page;
 
 class LayoutProcessor
 {
-    public function __construct(View $view, array $templates)
+    public function __construct(View $view)
     {
         $this->view = $view;
-
-        $registry = $this->view->getViewRegistry();
-        foreach ($templates as $name => $file) {
-            $registry->set($name, $file);
-        }
-
-        // use the first template as the view file
-        reset($templates);
-        $this->view->setView(key($templates));
     }
 
     public function __invoke(Page $page)

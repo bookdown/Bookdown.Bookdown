@@ -1,0 +1,11 @@
+{
+    "title": "Aura for PHP",
+    "content": {
+        "libraries": "./book/libraries/_bookdown.json",
+        "bundles": "./book/bundles/_bookdown.json",
+        "kernels": "./book/kernels/_bookdown.json",
+        "projects": "./book/projects/_bookdown.json"
+    },
+    "template": "./templates/default.php",
+    "target": "./html/"
+}

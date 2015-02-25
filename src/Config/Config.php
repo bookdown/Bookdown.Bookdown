@@ -1,6 +1,8 @@
 <?php
 namespace Bookdown\Bookdown\Config;
 
+use Bookdown\Bookdown\Exception;
+
 class Config
 {
     protected $file;

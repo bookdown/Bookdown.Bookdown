@@ -27,12 +27,13 @@ Each directory should have a `bookdown.json` file with a "title" string value (t
 ```json
 {
     "title": "My Project Manual",
-    "content": [
+    "content": {
         "overview": "overview.md",
         "getting-started": "beginners/bookdown.json",
         "advanced-topics": "advanced/bookdown.json",
         "conclusion": "end.md",
-    ]
+    },
+    "target": "../_site/"
 }
 ```
 
@@ -63,6 +64,3 @@ Note that the `bookdown.json` file need not be named `bookdown.json` per se; any
 - Take a PHPDocumentor structure.xml file and convert to Markdown files for conversion through Bookdown
 
 - A link-rewrite processor
-
-- Allow specifying templates from the top bookdown.json file
-

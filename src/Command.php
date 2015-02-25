@@ -11,7 +11,6 @@ use League\CommonMark\CommonMarkConverter;
 class Command
 {
     protected $origin;
-    protected $target;
     protected $root;
 
     public function __invoke($server)
@@ -28,7 +27,14 @@ class Command
                 "Please enter an origin bookdown.json file as the first argument."
             );
         }
-        $this->origin = $server['argv'][1];
+
+        $file = $server['argv'][1];
+        $this->origin = realpath($file);
+        if (! $this->origin) {
+            throw new Exception(
+                "Could not resolve '{$file}' to a real path."
+            );
+        }
     }
 
     protected function collectPages()
@@ -49,14 +55,11 @@ class Command
 
     protected function newProcessor()
     {
-        $view = $this->newView();
-        $templates = $this->root->getConfig()->getTemplates();
-
         return new Processor\Processor(array(
             new Processor\HtmlProcessor(new CommonMarkConverter()),
             new Processor\HeadingsProcessor(new Content\HeadingFactory()),
             new Processor\TocProcessor(),
-            new Processor\LayoutProcessor($view, $templates),
+            new Processor\LayoutProcessor($this->newView()),
         ));
     }
 
@@ -64,7 +67,14 @@ class Command
     {
         $helpersFactory = new Html\HelperLocatorFactory();
         $helpers = $helpersFactory->newInstance();
+
         $viewFactory = new View\ViewFactory();
-        return $viewFactory->newInstance($helpers);
+        $view = $viewFactory->newInstance($helpers);
+
+        $template = $this->root->getConfig()->getTemplate();
+        $view->getViewRegistry()->set('__bookdown__', $template);
+        $view->setView('__bookdown__');
+
+        return $view;
     }
 }

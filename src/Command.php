@@ -37,6 +37,7 @@ class Command
             'default' => "{$templatesDir}/default.php",
             'navheader' => "{$templatesDir}/navheader.php",
             'navfooter' => "{$templatesDir}/navfooter.php",
+            'toc' => "{$templatesDir}/toc.php",
         );
 
         $processor = new Processor(array(
@@ -47,7 +48,7 @@ class Command
             // extract and number headings
             new HeadingsProcessor(new HeadingFactory()),
 
-            // add TOC pages
+            // add TOC entries
             new TocProcessor(),
 
             // final layout

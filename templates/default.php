@@ -7,6 +7,11 @@
 
 <?= $this->render('navheader'); ?>
 
+<?= $this->page instanceof Bookdown\Content\ContentIndex
+    ? $this->render('toc')
+    : '' ;
+?>
+
 <?= $this->html; ?>
 
 <?= $this->render('navfooter'); ?>

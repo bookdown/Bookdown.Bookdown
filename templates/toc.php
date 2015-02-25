@@ -1,0 +1,39 @@
+<?php
+use Aura\Html\Escaper as e;
+
+if (! $this->page->hasTocEntries()) {
+    return;
+}
+?>
+
+<h1><?= e::h($this->page->getNumberAndTitle()); ?></h1>
+<dl>
+<?php
+$entries = $this->page->getTocEntries();
+$baseLevel = reset($entries)->getLevel();
+$lastLevel = $baseLevel;
+$currLevel = $lastLevel;
+
+foreach ($entries as $entry) {
+
+    while ($entry->getLevel() > $currLevel) {
+        echo "<dd><dl>" . PHP_EOL;
+        $currLevel ++;
+    }
+
+    while ($entry->getLevel() < $currLevel) {
+        $currLevel --;
+        echo "</dl></dd>" . PHP_EOL;
+    }
+
+    echo "<dt>{$entry->getNumber()} "
+        . $this->anchor($entry->getHref(), $entry->getTitle())
+        . "</dt>" . PHP_EOL;
+}
+
+while ($currLevel > $baseLevel) {
+    $currLevel --;
+    echo "</dl></dd>" . PHP_EOL;
+}
+?>
+</dl>

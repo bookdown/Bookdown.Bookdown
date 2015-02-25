@@ -5,6 +5,8 @@ class ContentIndex extends ContentPage
 {
     protected $children;
 
+    protected $tocEntries;
+
     public function getAbsoluteHref()
     {
         $base = $this->getParent()->getAbsoluteHref();
@@ -40,5 +42,20 @@ class ContentIndex extends ContentPage
         return $base
             . DIRECTORY_SEPARATOR . $this->getName()
             . DIRECTORY_SEPARATOR . 'index.html';
+    }
+
+    public function setTocEntries($tocEntries)
+    {
+        $this->tocEntries = $tocEntries;
+    }
+
+    public function hasTocEntries()
+    {
+        return (bool) $this->tocEntries;
+    }
+
+    public function getTocEntries()
+    {
+        return $this->tocEntries;
     }
 }

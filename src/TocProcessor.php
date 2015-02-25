@@ -38,24 +38,16 @@ class TocProcessor
     {
         foreach ($index->getChildren() as $child) {
             if ($child instanceof ContentIndex) {
-                $this->addIndex($child);
+                $this->entries[] = $this->headingFactory->newInstance(
+                    $child->getNumber(),
+                    $child->getTitle(),
+                    $child->getAbsoluteHref()
+                );
+                $this->addEntries($child);
             } else {
                 $this->addItem($child);
             }
         }
-    }
-
-    protected function addIndex($index)
-    {
-        $number = $index->getNumber();
-
-        $this->entries[] = $this->headingFactory->newInstance(
-            $index->getNumber(),
-            $index->getTitle(),
-            $index->getAbsoluteHref()
-        );
-
-        $this->addEntries($index);
     }
 
     protected function addItem($page)
@@ -86,46 +78,30 @@ class TocProcessor
         $this->baseLevel = $entry->getLevel();
         $level = $this->baseLevel;
         foreach ($this->entries as $entry) {
-            $level = $this->buildHtmlEntry($level, $entry);
+            while ($entry->getLevel() > $level) {
+                $pad = $this->getPad($level);
+                $this->html[] = "$pad<dd><dl>";
+                $level ++;
+            }
+
+            while ($entry->getLevel() < $level) {
+                $level --;
+                $pad = $this->getPad($level);
+                $this->html[] = "{$pad}</dl></dd>";
+            }
+
+            $this->html[] = $this->getPad($level) . "<dt>{$entry->getNumber()} "
+                    . "<a href=\"{$entry->getHref()}\">{$entry->getTitle()}</a>"
+                    . "</dt>";
         }
 
         while ($level > $this->baseLevel) {
-            $level = $this->endList($level);
+            $level --;
+            $pad = $this->getPad($level);
+            $this->html[] = "{$pad}</dl></dd>";
         }
 
         $this->html[] = '</dl>';
-    }
-
-    protected function buildHtmlEntry($level, $entry)
-    {
-        while ($entry->getLevel() > $level) {
-            $level = $this->beginList($level);
-        }
-
-        while ($entry->getLevel() < $level) {
-            $level = $this->endList($level);
-        }
-
-        $this->html[] = $this->getPad($level) . "<dt>{$entry->getNumber()} "
-                . "<a href=\"{$entry->getHref()}\">{$entry->getTitle()}</a>"
-                . "</dt>";
-
-        return $level;
-    }
-
-    protected function beginList($level)
-    {
-        $pad = $this->getPad($level);
-        $this->html[] = "$pad<dd><dl>";
-        return $level + 1;
-    }
-
-    protected function endList($level)
-    {
-        $level = $level - 1;
-        $pad = $this->getPad($level);
-        $this->html[] = "{$pad}</dl></dd>";
-        return $level;
     }
 
     protected function getPad($level)

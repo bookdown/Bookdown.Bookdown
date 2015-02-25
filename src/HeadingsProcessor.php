@@ -30,13 +30,11 @@ class HeadingsProcessor
         $this->reset($page);
 
         $this->loadHtml();
-        if (! $this->html) {
-            return;
+        if ($this->html) {
+            $this->loadDomDocument();
+            $this->processHeadingNodes();
+            $this->saveHtml();
         }
-
-        $this->loadDomDocument();
-        $this->processHeadingNodes();
-        $this->saveHtml();
 
         $page->setProcessResult(__CLASS__, $this->headings);
     }

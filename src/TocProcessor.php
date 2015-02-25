@@ -32,22 +32,13 @@ class TocProcessor
     protected function addEntries(ContentIndex $index)
     {
         foreach ($index->getChildren() as $child) {
-            $this->addItem($child);
+            $entries = $child->getHeadings();
+            foreach ($entries as $entry) {
+                $this->entries[] = $entry;
+            }
             if ($child instanceof ContentIndex) {
                 $this->addEntries($child);
             }
-        }
-    }
-
-    protected function addItem($page)
-    {
-        if (! $page->hasHeadings()) {
-            return;
-        }
-
-        $entries = $page->getHeadings();
-        foreach ($entries as $entry) {
-            $this->entries[] = $entry;
         }
     }
 

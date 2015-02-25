@@ -9,54 +9,68 @@ use League\CommonMark\CommonMarkConverter;
 
 class Command
 {
+    protected $origin;
+    protected $target;
+    protected $root;
+
     public function __invoke($server)
+    {
+        $this->init($server);
+        $this->collectPages();
+        $this->processPages();
+    }
+
+    protected function init($server)
     {
         if (! isset($server['argv'][1])) {
             throw new Exception(
                 "Please enter an origin bookdown.json file as the first argument."
             );
         }
-        $origin = $server['argv'][1];
+        $this->origin = $server['argv'][1];
 
         if (! isset($server['argv'][2])) {
             throw new Exception(
                 "Please enter a writable target directory as the second argument."
             );
         }
-        $target = $server['argv'][2];
+        $this->target = $server['argv'][2];
+    }
 
-        $pageCollector = new Content\PageCollector(new Content\PageFactory(), $target);
-        $root = $pageCollector($origin);
-
-        $helpersFactory = new Html\HelperLocatorFactory();
-        $helpers = $helpersFactory->newInstance();
-
-        $viewFactory = new View\ViewFactory();
-        $view = $viewFactory->newInstance($helpers);
-
-        $templatesDir = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'templates';
-        $templates = array(
-            'default' => "{$templatesDir}/default.php",
-            'navheader' => "{$templatesDir}/navheader.php",
-            'navfooter' => "{$templatesDir}/navfooter.php",
-            'toc' => "{$templatesDir}/toc.php",
+    protected function collectPages()
+    {
+        $pageCollector = new Content\PageCollector(
+            new ConfigBuilder(),
+            new Content\PageFactory(),
+            $this->target
         );
 
-        $processor = new Processor\Processor(array(
+        $this->root = $pageCollector($this->origin);
+    }
 
-            // basic HTML conversion
+    protected function processPages()
+    {
+        $view = $this->newView();
+        $templates = $this->root->getConfig()->getTemplates();
+        $processor = $this->newProcessor($view, $templates);
+        $processor($this->root);
+    }
+
+    protected function newView()
+    {
+        $helpersFactory = new Html\HelperLocatorFactory();
+        $helpers = $helpersFactory->newInstance();
+        $viewFactory = new View\ViewFactory();
+        return $viewFactory->newInstance($helpers);
+    }
+
+    protected function newProcessor($view, $templates)
+    {
+        return new Processor\Processor(array(
             new Processor\HtmlProcessor(new CommonMarkConverter()),
-
-            // extract and number headings
             new Processor\HeadingsProcessor(new Content\HeadingFactory()),
-
-            // add TOC entries
             new Processor\TocProcessor(),
-
-            // final layout
             new Processor\LayoutProcessor($view, $templates),
         ));
-
-        $processor($root);
     }
 }

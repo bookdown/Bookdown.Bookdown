@@ -1,30 +1,32 @@
 <?php
 namespace Bookdown\Bookdown\Content;
 
-use Bookdown\Bookdown\Config;
+use Bookdown\Bookdown\ConfigBuilder;
 
 class PageCollector
 {
     protected $pages = array();
+    protected $configBuilder;
     protected $pageFactory;
     protected $targetBase;
 
     public function __construct(
+        ConfigBuilder $configBuilder,
         PageFactory $pageFactory,
         $targetBase
     ) {
+        $this->configBuilder = $configBuilder;
         $this->pageFactory = $pageFactory;
         $this->targetBase = $targetBase;
     }
 
     public function __invoke($bookdownFile, $name = '', $parent = null, $count = 0)
     {
-        $config = $this->newConfig($bookdownFile);
-        $index = $this->addIndexPage($config, $name, $parent, $count);
+        $index = $this->addIndexPage($bookdownFile, $name, $parent, $count);
         $count = 0;
-        foreach ($config->getContent() as $name => $origin) {
+        foreach ($index->getConfig()->getContent() as $name => $origin) {
             $count ++;
-            if ($this->isJson($origin)) {
+            if (substr($origin, -5) == '.json') {
                 $child = $this->__invoke($origin, $name, $index, $count);
             } else {
                 $child = $this->addPage($name, $origin, $index, $count);
@@ -35,20 +37,10 @@ class PageCollector
         return $index;
     }
 
-    public function getItems()
-    {
-        return $this->pages;
-    }
-
     protected function newConfig($file)
     {
         $data = file_get_contents($file);
-        return new Config($file, $data);
-    }
-
-    protected function isJson($origin)
-    {
-        return substr($origin, -5) == '.json';
+        return $this->configBuilder->newInstance($file, $data);
     }
 
     protected function addPage($name, $origin, $parent, $count)
@@ -58,14 +50,16 @@ class PageCollector
         return $page;
     }
 
-    protected function addIndexPage($config, $name, $parent, $count)
+    protected function addIndexPage($bookdownFile, $name, $parent, $count)
     {
-        $origin = $config->getIndexOrigin();
-
         if ($parent) {
-            $page = $this->pageFactory->newIndexPage($name, $origin, $parent, $count);
+            // regular index page
+            $config = $this->configBuilder->newConfig($bookdownFile);
+            $page = $this->pageFactory->newIndexPage($name, $config->getIndexOrigin(), $parent, $count);
         } else {
-            $page = $this->pageFactory->newRootPage($name, $origin, $parent, $count);
+            // root page
+            $config = $this->configBuilder->newRootConfig($bookdownFile);
+            $page = $this->pageFactory->newRootPage($name, $config->getIndexOrigin(), $parent, $count);
             $page->setTargetBase($this->targetBase);
         }
 

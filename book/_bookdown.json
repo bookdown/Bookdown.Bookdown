@@ -5,5 +5,11 @@
         "bundles": "bundles/_bookdown.json",
         "kernels": "kernels/_bookdown.json",
         "projects": "projects/_bookdown.json"
+    },
+    "templates": {
+        "default": "../templates/default.php",
+        "navheader": "../templates/navheader.php",
+        "navfooter": "../templates/navfooter.php",
+        "toc": "../templates/toc.php"
     }
 }

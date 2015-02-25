@@ -13,8 +13,13 @@ class Config
     public function __construct($file, $data)
     {
         $this->initFile($file);
-        $this->initDir();
         $this->initJson($data);
+        $this->init();
+    }
+
+    protected function init()
+    {
+        $this->initDir();
         $this->initTitle();
         $this->initContent();
         $this->initIndexOrigin();
@@ -54,21 +59,21 @@ class Config
 
         $this->content = (array) $this->json->content;
         foreach ($this->content as $name => $origin) {
-            $this->content[$name] = $this->fixContentOrigin($origin);
+            $this->content[$name] = $this->fixPath($origin);
         }
     }
 
-    protected function fixContentOrigin($origin)
+    protected function fixPath($path)
     {
-        if (strpos($origin, '://' !== false)) {
+        if (strpos($path, '://' !== false)) {
             return;
         }
 
-        if ($origin{0} === DIRECTORY_SEPARATOR) {
+        if ($path{0} === DIRECTORY_SEPARATOR) {
             return;
         }
 
-        return $this->getDir() . ltrim($origin, DIRECTORY_SEPARATOR);
+        return $this->getDir() . ltrim($path, DIRECTORY_SEPARATOR);
     }
 
     protected function initIndexOrigin()

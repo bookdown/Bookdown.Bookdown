@@ -1,22 +1,17 @@
 <?php
 namespace Bookdown\Bookdown\Content;
 
-use Bookdown\Bookdown\Config\ConfigBuilder;
-
 class PageCollector
 {
     protected $pages = array();
-    protected $configBuilder;
-    protected $pageFactory;
+    protected $pageBuilder;
     protected $targetBase;
 
     public function __construct(
-        ConfigBuilder $configBuilder,
-        PageFactory $pageFactory,
+        PageBuilder $pageBuilder,
         $targetBase
     ) {
-        $this->configBuilder = $configBuilder;
-        $this->pageFactory = $pageFactory;
+        $this->pageBuilder = $pageBuilder;
         $this->targetBase = $targetBase;
     }
 
@@ -37,34 +32,20 @@ class PageCollector
         return $index;
     }
 
-    protected function newConfig($file)
-    {
-        $data = file_get_contents($file);
-        return $this->configBuilder->newInstance($file, $data);
-    }
-
     protected function addPage($name, $origin, $parent, $count)
     {
-        $page = $this->pageFactory->newPage($name, $origin, $parent, $count);
+        $page = $this->pageBuilder->newPage($name, $origin, $parent, $count);
         $this->append($page);
         return $page;
     }
 
     protected function addIndexPage($bookdownFile, $name, $parent, $count)
     {
-        if ($parent) {
-            // regular index page
-            $config = $this->configBuilder->newConfig($bookdownFile);
-            $page = $this->pageFactory->newIndexPage($name, $config->getIndexOrigin(), $parent, $count);
+        if (! $parent) {
+            $page = $this->pageBuilder->newRootPage($bookdownFile, $name, $this->targetBase);
         } else {
-            // root page
-            $config = $this->configBuilder->newRootConfig($bookdownFile);
-            $page = $this->pageFactory->newRootPage($name, $config->getIndexOrigin(), $parent, $count);
-            $page->setTargetBase($this->targetBase);
+            $page = $this->pageBuilder->newIndexPage($bookdownFile, $name, $parent, $count);
         }
-
-        $page->setTitle($config->getTitle());
-        $page->setConfig($config);
         $this->append($page);
         return $page;
     }

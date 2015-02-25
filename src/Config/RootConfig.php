@@ -4,6 +4,7 @@ namespace Bookdown\Bookdown\Config;
 class RootConfig extends Config
 {
     protected $templates = array();
+    protected $target;
 
     protected function init()
     {
@@ -26,5 +27,10 @@ class RootConfig extends Config
     public function getTemplates()
     {
         return $this->templates;
+    }
+
+    public function getTarget()
+    {
+        return $this->target;
     }
 }

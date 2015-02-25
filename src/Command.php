@@ -41,8 +41,7 @@ class Command
     protected function collectPages()
     {
         $pageCollector = new Content\PageCollector(
-            new Config\ConfigBuilder(),
-            new Content\PageFactory(),
+            new Content\PageBuilder(new Config\ConfigBuilder()),
             $this->target
         );
 
@@ -51,10 +50,21 @@ class Command
 
     protected function processPages()
     {
+        $processor = $this->newProcessor();
+        $processor($this->root);
+    }
+
+    protected function newProcessor()
+    {
         $view = $this->newView();
         $templates = $this->root->getConfig()->getTemplates();
-        $processor = $this->newProcessor($view, $templates);
-        $processor($this->root);
+
+        return new Processor\Processor(array(
+            new Processor\HtmlProcessor(new CommonMarkConverter()),
+            new Processor\HeadingsProcessor(new Content\HeadingFactory()),
+            new Processor\TocProcessor(),
+            new Processor\LayoutProcessor($view, $templates),
+        ));
     }
 
     protected function newView()
@@ -63,15 +73,5 @@ class Command
         $helpers = $helpersFactory->newInstance();
         $viewFactory = new View\ViewFactory();
         return $viewFactory->newInstance($helpers);
-    }
-
-    protected function newProcessor($view, $templates)
-    {
-        return new Processor\Processor(array(
-            new Processor\HtmlProcessor(new CommonMarkConverter()),
-            new Processor\HeadingsProcessor(new Content\HeadingFactory()),
-            new Processor\TocProcessor(),
-            new Processor\LayoutProcessor($view, $templates),
-        ));
     }
 }

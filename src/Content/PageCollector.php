@@ -5,14 +5,10 @@ class PageCollector
 {
     protected $pages = array();
     protected $pageBuilder;
-    protected $targetBase;
 
-    public function __construct(
-        PageBuilder $pageBuilder,
-        $targetBase
-    ) {
+    public function __construct(PageBuilder $pageBuilder)
+    {
         $this->pageBuilder = $pageBuilder;
-        $this->targetBase = $targetBase;
     }
 
     public function __invoke($bookdownFile, $name = '', $parent = null, $count = 0)
@@ -42,7 +38,7 @@ class PageCollector
     protected function addIndexPage($bookdownFile, $name, $parent, $count)
     {
         if (! $parent) {
-            $page = $this->pageBuilder->newRootPage($bookdownFile, $name, $this->targetBase);
+            $page = $this->pageBuilder->newRootPage($bookdownFile, $name);
         } else {
             $page = $this->pageBuilder->newIndexPage($bookdownFile, $name, $parent, $count);
         }

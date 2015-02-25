@@ -3,8 +3,6 @@ namespace Bookdown\Bookdown\Content;
 
 class RootPage extends IndexPage
 {
-    protected $targetBase;
-
     public function getAbsoluteHref()
     {
         return '/';
@@ -17,12 +15,7 @@ class RootPage extends IndexPage
 
     public function getTargetFile()
     {
-        return $this->targetBase . DIRECTORY_SEPARATOR . 'index.html';
-    }
-
-    public function setTargetBase($targetBase)
-    {
-        $this->targetBase = $targetBase;
+        return $this->getConfig()->getTarget() . 'index.html';
     }
 
     public function isRoot()

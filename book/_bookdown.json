@@ -11,5 +11,6 @@
         "navheader": "../templates/navheader.php",
         "navfooter": "../templates/navfooter.php",
         "toc": "../templates/toc.php"
-    }
+    },
+    "target": "../html/"
 }

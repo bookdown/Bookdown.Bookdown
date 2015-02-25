@@ -1,6 +1,8 @@
 <?php
 namespace Bookdown\Bookdown\Config;
 
+use Bookdown\Bookdown\Exception;
+
 class RootConfig extends Config
 {
     protected $templates = array();
@@ -9,7 +11,17 @@ class RootConfig extends Config
     protected function init()
     {
         parent::init();
+        $this->initTarget();
         $this->initTemplates();
+    }
+
+    protected function initTarget()
+    {
+        if (! isset($this->json->target)) {
+            throw new Exception("No target specified in '{$this->file}'.");
+        }
+
+        $this->target = rtrim($this->fixPath($this->json->target), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
     }
 
     protected function initTemplates()

@@ -29,22 +29,15 @@ class Command
             );
         }
         $this->origin = $server['argv'][1];
-
-        if (! isset($server['argv'][2])) {
-            throw new Exception(
-                "Please enter a writable target directory as the second argument."
-            );
-        }
-        $this->target = $server['argv'][2];
     }
 
     protected function collectPages()
     {
         $pageCollector = new Content\PageCollector(
-            new Content\PageBuilder(new Config\ConfigBuilder()),
-            $this->target
+            new Content\PageBuilder(
+                new Config\ConfigBuilder()
+            )
         );
-
         $this->root = $pageCollector($this->origin);
     }
 

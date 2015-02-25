@@ -10,11 +10,13 @@ class Processor
         $this->processors = $processors;
     }
 
-    public function __invoke(ContentList $list)
+    public function __invoke(ContentRoot $root)
     {
         foreach ($this->processors as $processor) {
-            foreach ($list->getItems() as $page) {
+            $page = $root;
+            while ($page) {
                 $processor($page);
+                $page = $page->getNext();
             }
         }
     }

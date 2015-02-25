@@ -1,7 +1,7 @@
 <?php
 namespace Bookdown\Content;
 
-class ContentList
+class ContentCollector
 {
     protected $pages = array();
     protected $contentFactory;

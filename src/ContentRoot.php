@@ -15,11 +15,6 @@ class ContentRoot extends ContentIndex
         return '';
     }
 
-    public function getOriginData()
-    {
-        return null;
-    }
-
     public function getTargetFile()
     {
         return $this->targetBase . DIRECTORY_SEPARATOR . 'index.html';

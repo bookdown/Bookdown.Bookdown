@@ -54,17 +54,6 @@ class ContentPage
         return $this->parent;
     }
 
-    public function getDepth()
-    {
-        $depth = 0;
-        $page = $this;
-        while ($page->hasParent()) {
-            $depth ++;
-            $page = $page->getParent();
-        }
-        return $depth;
-    }
-
     public function getCount()
     {
         return $this->count;
@@ -119,20 +108,6 @@ class ContentPage
     public function getNumberAndTitle()
     {
         return trim($this->getNumber() . ' ' . $this->getTitle());
-    }
-
-    public function getOriginData()
-    {
-        $level = error_reporting(0);
-        $data = file_get_contents($this->getOrigin());
-        error_reporting($level);
-
-        if ($data !== false) {
-            return $data;
-        }
-
-        $error = error_get_last();
-        throw new Exception($error['message']);
     }
 
     public function getTargetFile()

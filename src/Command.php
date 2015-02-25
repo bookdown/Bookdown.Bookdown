@@ -23,8 +23,8 @@ class Command
         }
         $target = $server['argv'][2];
 
-        $contentList = new ContentList(new ContentFactory(), $target);
-        $contentList($origin);
+        $ContentCollector = new ContentCollector(new ContentFactory(), $target);
+        $root = $ContentCollector($origin);
 
         $helpersFactory = new HelperLocatorFactory();
         $helpers = $helpersFactory->newInstance();
@@ -55,6 +55,6 @@ class Command
             new LayoutProcessor($view, $templates),
         ));
 
-        $processor($contentList);
+        $processor($root);
     }
 }

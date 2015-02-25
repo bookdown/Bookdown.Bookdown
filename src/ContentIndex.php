@@ -23,15 +23,6 @@ class ContentIndex extends ContentPage
         return $this->children;
     }
 
-    public function getOriginData()
-    {
-        if (! $this->getOrigin()) {
-            return '';
-        }
-
-        return parent::getOriginData();
-    }
-
     public function getTargetFile()
     {
         $base = rtrim(

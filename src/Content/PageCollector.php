@@ -1,6 +1,8 @@
 <?php
 namespace Bookdown\Bookdown\Content;
 
+use Bookdown\Bookdown\Config;
+
 class PageCollector
 {
     protected $pages = array();
@@ -18,12 +20,12 @@ class PageCollector
     public function __invoke($bookdownFile, $name = '', $parent = null, $count = 0)
     {
         $base = $this->getBase($bookdownFile);
-        $json = $this->getJson($bookdownFile);
+        $config = $this->newConfig($bookdownFile);
 
-        $index = $this->addIndexPage($json, $base, $name, $parent, $count);
+        $index = $this->addIndexPage($config, $base, $name, $parent, $count);
 
         $count = 0;
-        foreach ($json->content as $name => $origin) {
+        foreach ($config->getContent() as $name => $origin) {
             $count ++;
             $origin = $this->fixOrigin($origin, $base);
             if ($this->isJson($origin)) {
@@ -42,17 +44,10 @@ class PageCollector
         return $this->pages;
     }
 
-    protected function getJson($bookdownFile)
+    protected function newConfig($file)
     {
-        $data = file_get_contents($bookdownFile);
-        $json = json_decode($data);
-
-        if (! $json->content) {
-            echo "{$bookdownFile} malformed.";
-            exit(1);
-        }
-
-        return $json;
+        $data = file_get_contents($file);
+        return new Config($file, $data);
     }
 
     protected function getBase($bookdownFile)
@@ -85,13 +80,9 @@ class PageCollector
         return $page;
     }
 
-    protected function addIndexPage($json, $base, $name, $parent, $count)
+    protected function addIndexPage($config, $base, $name, $parent, $count)
     {
-        $origin = '';
-        if (isset($json->content->index)) {
-            $origin = $json->content->index;
-            unset($json->content->index);
-        }
+        $origin = $config->getIndexOrigin();
 
         if ($parent) {
             $page = $this->PageFactory->newIndexPage($name, $origin, $parent, $count);
@@ -100,7 +91,8 @@ class PageCollector
             $page->setTargetBase($this->targetBase);
         }
 
-        $page->setTitle($json->title);
+        $page->setTitle($config->getTitle());
+        $page->setConfig($config);
         $this->append($page);
         return $page;
     }

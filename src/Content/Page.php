@@ -1,6 +1,8 @@
 <?php
 namespace Bookdown\Bookdown\Content;
 
+use Bookdown\Bookdown\Config;
+
 class Page
 {
     protected $name;
@@ -11,6 +13,7 @@ class Page
     protected $next;
     protected $title;
     protected $headings = array();
+    protected $config;
 
     public function __construct(
         $name,
@@ -22,6 +25,16 @@ class Page
         $this->origin = $origin;
         $this->parent = $parent;
         $this->count = $count;
+    }
+
+    public function setConfig(Config $config)
+    {
+        $this->config = $config;
+    }
+
+    public function getConfig()
+    {
+        return $this->config;
     }
 
     public function getName()

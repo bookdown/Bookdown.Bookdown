@@ -4,27 +4,75 @@ namespace Bookdown\Bookdown;
 class Config
 {
     protected $file;
+    protected $dir;
+    protected $json;
     protected $title;
     protected $content;
     protected $indexOrigin = '';
 
     public function __construct($file, $data)
     {
-        $json = json_decode($data);
-        if (! $json) {
-            throw new Exception("Malformed JSON in '{$file}'.");
+        $this->initFile($file);
+        $this->initDir();
+        $this->initJson($data);
+        $this->initTitle();
+        $this->initContent();
+        $this->initIndexOrigin();
+    }
+
+    protected function initFile($file)
+    {
+        $this->file = $file;
+    }
+
+    protected function initDir()
+    {
+        $this->dir = dirname($this->file) . DIRECTORY_SEPARATOR;
+    }
+
+    protected function initJson($data)
+    {
+        $this->json = json_decode($data);
+        if (! $this->json) {
+            throw new Exception("Malformed JSON in '{$this->file}'.");
+        }
+    }
+
+    protected function initTitle()
+    {
+        if (! isset($this->json->title)) {
+            throw new Exception("No title set in '{$this->file}'.");
+        }
+        $this->title = $this->json->title;
+    }
+
+    protected function initContent()
+    {
+        if (! isset($this->json->content)) {
+            throw new Exception("No content listed in '{$this->file}'.");
         }
 
-        if (! isset($json->title)) {
-            throw new Exception("No title set in '{$file}'.");
+        $this->content = (array) $this->json->content;
+        foreach ($this->content as $name => $origin) {
+            $this->content[$name] = $this->fixContentOrigin($origin);
         }
-        $this->title = $json->title;
+    }
 
-        if (! isset($json->content)) {
-            throw new Exception("No content listed in '{$file}'.");
+    protected function fixContentOrigin($origin)
+    {
+        if (strpos($origin, '://' !== false)) {
+            return;
         }
-        $this->content = (array) $json->content;
 
+        if ($origin{0} === DIRECTORY_SEPARATOR) {
+            return;
+        }
+
+        return $this->getDir() . ltrim($origin, DIRECTORY_SEPARATOR);
+    }
+
+    protected function initIndexOrigin()
+    {
         if (isset($this->content['index'])) {
             $this->indexOrigin = $this->content['index'];
             unset($this->content['index']);
@@ -38,7 +86,7 @@ class Config
 
     public function getDir()
     {
-        return dirname($this->file) . DIRECTORY_SEPARATOR;
+        return $this->dir;
     }
 
     public function getTitle()

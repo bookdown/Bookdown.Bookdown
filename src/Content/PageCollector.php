@@ -6,28 +6,24 @@ use Bookdown\Bookdown\Config;
 class PageCollector
 {
     protected $pages = array();
-    protected $PageFactory;
+    protected $pageFactory;
     protected $targetBase;
 
     public function __construct(
-        PageFactory $PageFactory,
+        PageFactory $pageFactory,
         $targetBase
     ) {
-        $this->PageFactory = $PageFactory;
+        $this->pageFactory = $pageFactory;
         $this->targetBase = $targetBase;
     }
 
     public function __invoke($bookdownFile, $name = '', $parent = null, $count = 0)
     {
-        $base = $this->getBase($bookdownFile);
         $config = $this->newConfig($bookdownFile);
-
-        $index = $this->addIndexPage($config, $base, $name, $parent, $count);
-
+        $index = $this->addIndexPage($config, $name, $parent, $count);
         $count = 0;
         foreach ($config->getContent() as $name => $origin) {
             $count ++;
-            $origin = $this->fixOrigin($origin, $base);
             if ($this->isJson($origin)) {
                 $child = $this->__invoke($origin, $name, $index, $count);
             } else {
@@ -50,24 +46,6 @@ class PageCollector
         return new Config($file, $data);
     }
 
-    protected function getBase($bookdownFile)
-    {
-        return dirname($bookdownFile) . DIRECTORY_SEPARATOR;
-    }
-
-    protected function fixOrigin($origin, $base)
-    {
-        if (strpos($origin, '://' !== false)) {
-            return;
-        }
-
-        if ($origin{0} === DIRECTORY_SEPARATOR) {
-            return;
-        }
-
-        return $base . ltrim($origin, DIRECTORY_SEPARATOR);
-    }
-
     protected function isJson($origin)
     {
         return substr($origin, -5) == '.json';
@@ -75,19 +53,19 @@ class PageCollector
 
     protected function addPage($name, $origin, $parent, $count)
     {
-        $page = $this->PageFactory->newPage($name, $origin, $parent, $count);
+        $page = $this->pageFactory->newPage($name, $origin, $parent, $count);
         $this->append($page);
         return $page;
     }
 
-    protected function addIndexPage($config, $base, $name, $parent, $count)
+    protected function addIndexPage($config, $name, $parent, $count)
     {
         $origin = $config->getIndexOrigin();
 
         if ($parent) {
-            $page = $this->PageFactory->newIndexPage($name, $origin, $parent, $count);
+            $page = $this->pageFactory->newIndexPage($name, $origin, $parent, $count);
         } else {
-            $page = $this->PageFactory->newRootPage($name, $origin, $parent, $count);
+            $page = $this->pageFactory->newRootPage($name, $origin, $parent, $count);
             $page->setTargetBase($this->targetBase);
         }
 

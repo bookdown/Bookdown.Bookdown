@@ -3,9 +3,9 @@ namespace Bookdown\Bookdown;
 
 use Bookdown\Bookdown\Config;
 use Bookdown\Bookdown\Content;
+use Bookdown\Bookdown\Converter;
 use Bookdown\Bookdown\Template;
 use Bookdown\Bookdown\Processor;
-use League\CommonMark\CommonMarkConverter;
 
 class Command
 {
@@ -55,10 +55,10 @@ class Command
     protected function newProcessor()
     {
         return new Processor\Processor(array(
-            new Processor\HtmlProcessor(new CommonMarkConverter()),
+            new Processor\ConverterProcessor($this->newConverter()),
             new Processor\HeadingsProcessor(new Content\HeadingFactory()),
             new Processor\TocProcessor(),
-            new Processor\LayoutProcessor($this->newTemplate()),
+            new Processor\TemplateProcessor($this->newTemplate()),
         ));
     }
 
@@ -68,9 +68,24 @@ class Command
 
         $class = $config->getTemplateBuilder();
         $factory = new $class();
-        if (! $factory instanceof \Bookdown\Bookdown\Template\TemplateBuilderInterface) {
+        if (! $factory instanceof Template\TemplateBuilderInterface) {
             throw new Exception(
                 "'{$class}' does not implement TemplateBuilderInterface."
+            );
+        }
+
+        return $factory->newInstance($config);
+    }
+
+    protected function newConverter()
+    {
+        $config = $this->root->getConfig();
+
+        $class = $config->getConverterBuilder();
+        $factory = new $class();
+        if (! $factory instanceof Converter\ConverterBuilderInterface) {
+            throw new Exception(
+                "'{$class}' does not implement ConverterBuilderInterface."
             );
         }
 

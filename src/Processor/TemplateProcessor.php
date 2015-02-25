@@ -4,7 +4,7 @@ namespace Bookdown\Bookdown\Processor;
 use Bookdown\Bookdown\Content\Page;
 use Bookdown\Bookdown\Template\TemplateInterface;
 
-class LayoutProcessor
+class TemplateProcessor
 {
     public function __construct(TemplateInterface $template)
     {
@@ -13,8 +13,7 @@ class LayoutProcessor
 
     public function __invoke(Page $page)
     {
-        $this->template->setPage($page);
-        $html = $this->template->render();
+        $html = $this->template->render($page);
         file_put_contents($page->getTargetFile(), $html);
     }
 }

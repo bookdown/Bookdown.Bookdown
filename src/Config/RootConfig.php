@@ -6,12 +6,14 @@ use Bookdown\Bookdown\Exception;
 class RootConfig extends Config
 {
     protected $target;
+    protected $converterBuilder;
     protected $templateBuilder;
 
     protected function init()
     {
         parent::init();
         $this->initTarget();
+        $this->initConverterBuilder();
         $this->initTemplateBuilder();
     }
 
@@ -24,6 +26,16 @@ class RootConfig extends Config
         $this->target = rtrim($this->fixPath($this->json->target), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
     }
 
+    protected function initConverterBuilder()
+    {
+        if (! isset($this->json->converterBuilder)) {
+            $this->converterBuilder = 'Bookdown\Bookdown\Converter\ConverterBuilder';
+            return;
+        }
+
+        $this->converterBuilder = $this->json->converterBuilder;
+    }
+
     protected function initTemplateBuilder()
     {
         if (! isset($this->json->templateBuilder)) {
@@ -31,7 +43,12 @@ class RootConfig extends Config
             return;
         }
 
-        $this->templateFactory = $this->json->templateBuilder;
+        $this->templateBuilder = $this->json->templateBuilder;
+    }
+
+    public function getConverterBuilder()
+    {
+        return $this->converterBuilder;
     }
 
     public function getTemplateBuilder()

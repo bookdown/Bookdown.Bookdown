@@ -1,8 +1,9 @@
 <?php
 namespace Bookdown\Bookdown\Template;
 
+use Bookdown\Bookdown\Content\Page;
+
 interface TemplateInterface
 {
-    public function setPage($page);
-    public function render();
+    public function render(Page $page);
 }

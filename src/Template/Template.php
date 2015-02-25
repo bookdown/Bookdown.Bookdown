@@ -2,6 +2,7 @@
 namespace Bookdown\Bookdown\Template;
 
 use Aura\View\View;
+use Bookdown\Bookdown\Content\Page;
 
 class Template implements TemplateInterface
 {
@@ -12,14 +13,10 @@ class Template implements TemplateInterface
         $this->view = $view;
     }
 
-    public function setPage($page)
+    public function render(Page $page)
     {
         $this->view->page = $page;
         $this->view->html = file_get_contents($page->getTargetFile());
-    }
-
-    public function render()
-    {
         return $this->view->__invoke();
     }
 }

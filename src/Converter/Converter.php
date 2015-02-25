@@ -1,10 +1,11 @@
 <?php
-namespace Bookdown\Bookdown\Processor;
+namespace Bookdown\Bookdown\Converter;
 
 use Bookdown\Bookdown\Content\Page;
+use Bookdown\Bookdown\Exception;
 use League\CommonMark\CommonMarkConverter;
 
-class HtmlProcessor
+class Converter implements ConverterInterface
 {
     protected $commonMarkConverter;
 
@@ -13,11 +14,10 @@ class HtmlProcessor
         $this->commonMarkConverter = $commonMarkConverter;
     }
 
-    public function __invoke(Page $page)
+    public function convert(Page $page)
     {
         $text = $this->readOriginFile($page);
-        $html = $this->commonMarkConverter->convertToHtml($text);
-        $this->saveTargetFile($page, $html);
+        return $this->commonMarkConverter->convertToHtml($text);
     }
 
     protected function readOriginFile(Page $page)
@@ -37,15 +37,5 @@ class HtmlProcessor
 
         $error = error_get_last();
         throw new Exception($error['message']);
-    }
-
-    protected function saveTargetFile(Page $page, $html)
-    {
-        $file = $page->getTargetFile();
-        $dir = dirname($file);
-        if (! is_dir($dir)) {
-            mkdir($dir, 0777, true);
-        }
-        file_put_contents($file, $html);
     }
 }

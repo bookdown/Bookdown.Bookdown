@@ -48,8 +48,6 @@ Note that the `bookdown.json` file need not be named `bookdown.json` per se; any
 
 - Generate output via an injected output callable, so that any command/console system can display output (or so a logging system can log output).
 
-- Use templates for the table of contents listings instead of embedding it, perhaps as a helper
-
 - Allow bookdown.json to specify `tocdepth`, indicating how many levels to show on the table of contents
 
 - Allow bookdown.json to specify `numbering`, indicating how to number the pages at this level (decimal, upper-alpha, lower-alpha, upper-roman, lower-roman)
@@ -65,3 +63,6 @@ Note that the `bookdown.json` file need not be named `bookdown.json` per se; any
 - Take a PHPDocumentor structure.xml file and convert to Markdown files for conversion through Bookdown
 
 - A link-rewrite processor
+
+- Allow specifying templates from the top bookdown.json file
+

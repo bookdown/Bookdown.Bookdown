@@ -62,7 +62,13 @@ class Command
 
     protected function collectPages()
     {
-        $pageCollector = new Content\PageCollector(
+        $collector = $this->newCollector();
+        $this->root = $collector($this->origin);
+    }
+
+    protected function newCollector()
+    {
+        return new Collector(
             $this->stdio,
             new Content\PageBuilder(
                 new Config\ConfigBuilder(
@@ -70,7 +76,6 @@ class Command
                 )
             )
         );
-        $this->root = $pageCollector($this->origin);
     }
 
     protected function processPages()

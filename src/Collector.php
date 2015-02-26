@@ -1,12 +1,15 @@
 <?php
-namespace Bookdown\Bookdown\Content;
+namespace Bookdown\Bookdown;
 
 use Aura\Cli\Stdio;
+use Bookdown\Bookdown\Content\PageBuilder;
+use Bookdown\Bookdown\Content\Page;
 
-class PageCollector
+class Collector
 {
     protected $pages = array();
     protected $pageBuilder;
+    protected $stdio;
 
     public function __construct(Stdio $stdio, PageBuilder $pageBuilder)
     {

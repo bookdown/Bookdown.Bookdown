@@ -16,6 +16,7 @@ class Command
     protected $root;
     protected $stdio;
     protected $context;
+    protected $start;
 
     public function __construct(
         Context $context,
@@ -28,12 +29,10 @@ class Command
     public function __invoke()
     {
         try {
-            $time = microtime(true);
             $this->init();
             $this->collectPages();
             $this->processPages();
-            $lap = trim(sprintf("%10.2f", microtime(true) - $time));
-            $this->stdio->outln("Completed in {$lap} seconds.");
+            $this->reportTime();
             return 0;
         } catch (Exception $e) {
             $this->stdio->errln((string) $e);
@@ -58,6 +57,8 @@ class Command
                 "Could not resolve '{$file}' to a real path."
             );
         }
+
+        $this->start = microtime(true);
     }
 
     protected function collectPages()
@@ -86,7 +87,7 @@ class Command
 
     protected function newProcessor()
     {
-        return new Processor\Processor(array(
+        return new Processor(array(
             $this->newConverter(),
             new Processor\HeadingsProcessor(
                 new Fsio,
@@ -125,5 +126,11 @@ class Command
         }
 
         return $factory->newInstance($config);
+    }
+
+    protected function reportTime()
+    {
+        $seconds = trim(sprintf("%10.2f", microtime(true) - $this->start));
+        $this->stdio->outln("Completed in {$seconds} seconds.");
     }
 }

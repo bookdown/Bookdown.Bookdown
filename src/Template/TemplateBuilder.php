@@ -5,13 +5,20 @@ use Aura\Html\HelperLocatorFactory;
 use Aura\View\View;
 use Aura\View\ViewFactory;
 use Bookdown\Bookdown\Config\RootConfig;
+use Bookdown\Bookdown\Fsio;
 
 class TemplateBuilder implements TemplateBuilderInterface
 {
     public function newInstance(RootConfig $config)
     {
+        $fsio = $this->newFsio();
         $view = $this->newView($config);
-        return new Template($view);
+        return new Template($fsio, $view);
+    }
+
+    protected function newFsio()
+    {
+        return new Fsio();
     }
 
     protected function newView(RootConfig $config)

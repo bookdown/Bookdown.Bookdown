@@ -6,6 +6,7 @@ use Aura\Cli\Context;
 use Bookdown\Bookdown\Config;
 use Bookdown\Bookdown\Content;
 use Bookdown\Bookdown\Converter;
+use Bookdown\Bookdown\Fsio;
 use Bookdown\Bookdown\Template;
 use Bookdown\Bookdown\Processor;
 
@@ -64,7 +65,9 @@ class Command
         $pageCollector = new Content\PageCollector(
             $this->stdio,
             new Content\PageBuilder(
-                new Config\ConfigBuilder()
+                new Config\ConfigBuilder(
+                    new Fsio
+                )
             )
         );
         $this->root = $pageCollector($this->origin);
@@ -80,7 +83,10 @@ class Command
     {
         return new Processor\Processor(array(
             new Processor\ConverterProcessor($this->newConverter()),
-            new Processor\HeadingsProcessor(new Content\HeadingFactory()),
+            new Processor\HeadingsProcessor(
+                new Fsio,
+                new Content\HeadingFactory()
+            ),
             new Processor\TocProcessor(),
             new Processor\TemplateProcessor($this->newTemplate()),
         ));

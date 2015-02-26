@@ -12,11 +12,11 @@ class TocProcessor
     public function __invoke(Page $page, Stdio $stdio)
     {
         if (! $page->isIndex()) {
-            $stdio->outln("No TOC for {$page->getTarget()}");
+            $stdio->outln("Skipping TOC entries for non-index {$page->getTarget()}");
             return;
         }
 
-        $stdio->outln("Processing TOC for {$page->getTarget()}");
+        $stdio->outln("Adding TOC entries for {$page->getTarget()}");
         $this->tocEntries = array();
         $this->addTocEntries($page);
         $page->setTocEntries($this->tocEntries);

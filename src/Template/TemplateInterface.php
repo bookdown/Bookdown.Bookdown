@@ -6,5 +6,5 @@ use Bookdown\Bookdown\Content\Page;
 
 interface TemplateInterface
 {
-    public function render(Page $page, Stdio $stdio);
+    public function __invoke(Page $page, Stdio $stdio);
 }

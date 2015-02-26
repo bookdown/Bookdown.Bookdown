@@ -4,6 +4,7 @@ namespace Bookdown\Bookdown\Processor;
 use Aura\Cli\Stdio;
 use Bookdown\Bookdown\Content\Page;
 use Bookdown\Bookdown\Content\HeadingFactory;
+use Bookdown\Bookdown\Fsio;
 use DomDocument;
 use DomNode;
 use DomNodeList;
@@ -23,8 +24,13 @@ class HeadingsProcessor
 
     protected $headingFactory;
 
-    public function __construct(HeadingFactory $headingFactory)
-    {
+    protected $fsio;
+
+    public function __construct(
+        Fsio $fsio,
+        HeadingFactory $headingFactory
+    ) {
+        $this->fsio = $fsio;
         $this->headingFactory = $headingFactory;
     }
 
@@ -69,12 +75,12 @@ class HeadingsProcessor
 
     protected function loadHtml()
     {
-        $this->html = file_get_contents($this->page->getTarget());
+        $this->html = $this->fsio->get($this->page->getTarget());
     }
 
     protected function saveHtml()
     {
-        file_put_contents($this->page->getTarget(), $this->html);
+        $this->fsio->put($this->page->getTarget(), $this->html);
     }
 
     protected function loadDomDocument()

@@ -16,7 +16,6 @@ class ConverterProcessor
 
     public function __invoke(Page $page, Stdio $stdio)
     {
-        $file = $page->getTarget();
-        $html = $this->converter->convert($page, $stdio);
+        $this->converter->convert($page, $stdio);
     }
 }

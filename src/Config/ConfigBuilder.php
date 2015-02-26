@@ -2,32 +2,24 @@
 namespace Bookdown\Bookdown\Config;
 
 use Bookdown\Bookdown\Exception;
+use Bookdown\Bookdown\Fsio;
 
 class ConfigBuilder
 {
+    public function __construct(Fsio $fsio)
+    {
+        $this->fsio = $fsio;
+    }
+
     public function newConfig($file)
     {
-        $data = $this->read($file);
+        $data = $this->fsio->get($file);
         return new Config($file, $data);
     }
 
     public function newRootConfig($file)
     {
-        $data = $this->read($file);
+        $data = $this->fsio->get($file);
         return new RootConfig($file, $data);
-    }
-
-    protected function read($file)
-    {
-        $level = error_reporting(0);
-        $result = file_get_contents($file);
-        error_reporting($level);
-
-        if ($result !== false) {
-            return $result;
-        }
-
-        $error = error_get_last();
-        throw new Exception($error['message']);
     }
 }

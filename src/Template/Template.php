@@ -4,19 +4,27 @@ namespace Bookdown\Bookdown\Template;
 use Aura\Cli\Stdio;
 use Aura\View\View;
 use Bookdown\Bookdown\Content\Page;
+use Bookdown\Bookdown\Fsio;
 
 class Template implements TemplateInterface
 {
+    protected $fsio;
     protected $view;
 
-    public function __construct(View $view)
-    {
+    public function __construct(
+        Fsio $fsio,
+        View $view
+    ) {
+        $this->fsio = $fsio;
         $this->view = $view;
     }
 
-    public function render(Page $page, Stdio $stdio)
+    public function __invoke(Page $page, Stdio $stdio)
     {
+        $file = $page->getTarget();
+        $stdio->outln("Rendering template for {$file}");
         $this->view->page = $page;
-        return $this->view->__invoke();
+        $html = $this->view->__invoke();
+        $this->fsio->put($file, $html);
     }
 }

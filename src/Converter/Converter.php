@@ -4,14 +4,19 @@ namespace Bookdown\Bookdown\Converter;
 use Aura\Cli\Stdio;
 use Bookdown\Bookdown\Content\Page;
 use Bookdown\Bookdown\Exception;
+use Bookdown\Bookdown\Fsio;
 use League\CommonMark\CommonMarkConverter;
 
 class Converter implements ConverterInterface
 {
+    protected $fsio;
     protected $commonMarkConverter;
 
-    public function __construct(CommonMarkConverter $commonMarkConverter)
-    {
+    public function __construct(
+        Fsio $fsio,
+        CommonMarkConverter $commonMarkConverter
+    ) {
+        $this->fsio = $fsio;
         $this->commonMarkConverter = $commonMarkConverter;
     }
 
@@ -30,56 +35,20 @@ class Converter implements ConverterInterface
             return;
         }
 
-        $stdio->outln("Reading {$file}");
-        $level = error_reporting(0);
-        $result = file_get_contents($file);
-        error_reporting($level);
-
-        if ($result !== false) {
-            return $result;
-        }
-
-        $error = error_get_last();
-        throw new Exception($error['message']);
+        $stdio->outln("Reading origin {$file}");
+        return $this->fsio->get($file);
     }
 
     protected function saveTarget(Page $page, Stdio $stdio, $html)
     {
-        $this->mkdir($page, $stdio);
+        $dir = dirname($page->getTarget());
+        if (! $this->fsio->isDir($dir)) {
+            $stdio->outln("Making directory {$dir}");
+            $this->fsio->mkdir($dir);
+        }
 
         $file = $page->getTarget();
-        $stdio->outln("Saving {$file}");
-
-        $level = error_reporting(0);
-        $result = file_put_contents($file, $html);
-        error_reporting($level);
-
-        if ($result !== false) {
-            return;
-        }
-
-        $error = error_get_last();
-        throw new Exception($error['message']);
-    }
-
-    protected function mkdir(Page $page, Stdio $stdio)
-    {
-        $dir = dirname($page->getTarget());
-        if (is_dir($dir)) {
-            return;
-        }
-
-        $stdio->outln("Making directory {$dir}");
-
-        $level = error_reporting(0);
-        $result = mkdir($dir, 0777, true);
-        error_reporting($level);
-
-        if ($result !== false) {
-            return;
-        }
-
-        $error = error_get_last();
-        throw new Exception($error['message']);
+        $stdio->outln("Saving target {$file}");
+        $this->fsio->put($file, $html);
     }
 }

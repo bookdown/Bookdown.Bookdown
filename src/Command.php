@@ -82,45 +82,30 @@ class Command
 
     protected function newProcessor()
     {
-        $headingsProcessBuilder = new Process\HeadingsProcessBuilder();
-        $tocProcessBuilder = new Process\TocProcessBuilder();
-
         return new Processor(array(
-            $this->newConversion(),
-            $headingsProcessBuilder->newInstance($this->root->getConfig()),
-            $tocProcessBuilder->newInstance($this->root->getConfig()),
-            $this->newRendering(),
+            $this->newProcess('Conversion'),
+            $this->newProcess('Headings'),
+            $this->newProcess('Toc'),
+            $this->newProcess('Rendering'),
         ));
     }
 
-    protected function newRendering()
+    protected function newProcess($name)
     {
         $config = $this->root->getConfig();
-
-        $class = $config->getRenderingBuilder();
-        $factory = new $class();
-        if (! $factory instanceof Process\ProcessBuilderInterface) {
+        $method = "get{$name}Process";
+        $class = $config->$method();
+        $implemented = is_subclass_of(
+            $class,
+            'Bookdown\Bookdown\Process\ProcessBuilderInterface'
+        );
+        if (! $implemented) {
             throw new Exception(
                 "'{$class}' does not implement ProcessBuilderInterface."
             );
         }
-
-        return $factory->newInstance($config);
-    }
-
-    protected function newConversion()
-    {
-        $config = $this->root->getConfig();
-
-        $class = $config->getConversionBuilder();
-        $factory = new $class();
-        if (! $factory instanceof Process\ProcessBuilderInterface) {
-            throw new Exception(
-                "'{$class}' does not implement ProcessBuilderInterface."
-            );
-        }
-
-        return $factory->newInstance($config);
+        $builder = new $class();
+        return $builder->newInstance($config);
     }
 
     protected function reportTime()

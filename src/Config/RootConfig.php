@@ -6,8 +6,10 @@ use Bookdown\Bookdown\Exception;
 class RootConfig extends Config
 {
     protected $target;
-    protected $conversionBuilder;
-    protected $renderingBuilder;
+    protected $conversionProcess;
+    protected $renderingProcess;
+    protected $tocProcess;
+    protected $headingsProcess;
     protected $templates = array();
     protected $templateName;
 
@@ -17,8 +19,10 @@ class RootConfig extends Config
         $this->initTarget();
         $this->initTemplates();
         $this->initTemplateName();
-        $this->initConversionBuilder();
-        $this->initRenderingBuilder();
+        $this->initConversionProcess();
+        $this->initHeadingsProcess();
+        $this->initTocProcess();
+        $this->initRenderingProcess();
     }
 
     protected function initTarget()
@@ -45,28 +49,52 @@ class RootConfig extends Config
             : null;
     }
 
-    protected function initConversionBuilder()
+    protected function initConversionProcess()
     {
-        $this->conversionBuilder = isset($this->json->conversionBuilder)
-            ? $this->json->conversionBuilder
+        $this->conversionProcess = isset($this->json->conversionProcess)
+            ? $this->json->conversionProcess
             : 'Bookdown\Bookdown\Process\ConversionProcessBuilder';
     }
 
-    protected function initRenderingBuilder()
+    protected function initHeadingsProcess()
     {
-        $this->renderingBuilder = isset($this->json->renderingBuilder)
-            ? $this->json->renderingBuilder
+        $this->headingsProcess = isset($this->json->headingsProcess)
+            ? $this->json->headingsProcess
+            : 'Bookdown\Bookdown\Process\HeadingsProcessBuilder';
+    }
+
+    protected function initTocProcess()
+    {
+        $this->tocProcess = isset($this->json->tocProcess)
+            ? $this->json->tocProcess
+            : 'Bookdown\Bookdown\Process\TocProcessBuilder';
+    }
+
+    protected function initRenderingProcess()
+    {
+        $this->renderingProcess = isset($this->json->renderingProcess)
+            ? $this->json->renderingProcess
             : 'Bookdown\Bookdown\Process\RenderingProcessBuilder';
     }
 
-    public function getConversionBuilder()
+    public function getConversionProcess()
     {
-        return $this->conversionBuilder;
+        return $this->conversionProcess;
     }
 
-    public function getRenderingBuilder()
+    public function getHeadingsProcess()
     {
-        return $this->renderingBuilder;
+        return $this->headingsProcess;
+    }
+
+    public function getTocProcess()
+    {
+        return $this->tocProcess;
+    }
+
+    public function getRenderingProcess()
+    {
+        return $this->renderingProcess;
     }
 
     public function getTarget()

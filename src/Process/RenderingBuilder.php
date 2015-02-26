@@ -64,7 +64,7 @@ class RenderingBuilder implements ProcessBuilderInterface
 
     protected function getTemplates()
     {
-        $dir = __DIR__ . '/files';
+        $dir = __DIR__ . '/templates';
         return array(
             "main" => "{$dir}/main.php",
             "head" => "{$dir}/head.php",

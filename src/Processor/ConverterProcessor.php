@@ -16,6 +16,6 @@ class ConverterProcessor
 
     public function __invoke(Page $page, Stdio $stdio)
     {
-        $this->converter->convert($page, $stdio);
+        $this->converter->__invoke($page, $stdio);
     }
 }

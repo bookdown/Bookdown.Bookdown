@@ -6,5 +6,5 @@ use Bookdown\Bookdown\Content\Page;
 
 interface ConverterInterface
 {
-    public function convert(Page $page, Stdio $stdio);
+    public function __invoke(Page $page, Stdio $stdio);
 }

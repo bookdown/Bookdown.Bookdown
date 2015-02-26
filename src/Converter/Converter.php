@@ -20,7 +20,7 @@ class Converter implements ConverterInterface
         $this->commonMarkConverter = $commonMarkConverter;
     }
 
-    public function convert(Page $page, Stdio $stdio)
+    public function __invoke(Page $page, Stdio $stdio)
     {
         $text = $this->readOrigin($page, $stdio);
         $html = $this->commonMarkConverter->convertToHtml($text);

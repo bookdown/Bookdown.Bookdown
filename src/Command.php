@@ -82,13 +82,13 @@ class Command
 
     protected function newProcessor()
     {
+        $headingsProcessBuilder = new Process\HeadingsProcessBuilder();
+        $tocProcessBuilder = new Process\TocProcessBuilder();
+
         return new Processor(array(
             $this->newConversion(),
-            new Process\HeadingsProcess(
-                new Fsio,
-                new Content\HeadingFactory()
-            ),
-            new Process\TocProcess(),
+            $headingsProcessBuilder->newInstance($this->root->getConfig()),
+            $tocProcessBuilder->newInstance($this->root->getConfig()),
             $this->newRendering(),
         ));
     }

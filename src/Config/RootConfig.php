@@ -49,14 +49,14 @@ class RootConfig extends Config
     {
         $this->conversionBuilder = isset($this->json->conversionBuilder)
             ? $this->json->conversionBuilder
-            : 'Bookdown\Bookdown\Process\ConversionBuilder';
+            : 'Bookdown\Bookdown\Process\ConversionProcessBuilder';
     }
 
     protected function initRenderingBuilder()
     {
         $this->renderingBuilder = isset($this->json->renderingBuilder)
             ? $this->json->renderingBuilder
-            : 'Bookdown\Bookdown\Process\RenderingBuilder';
+            : 'Bookdown\Bookdown\Process\RenderingProcessBuilder';
     }
 
     public function getConversionBuilder()

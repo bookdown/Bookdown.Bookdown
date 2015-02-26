@@ -7,7 +7,7 @@ use Bookdown\Bookdown\Content\Page;
 use Bookdown\Bookdown\Fsio;
 use Bookdown\Bookdown\Process\ProcessInterface;
 
-class Rendering implements ProcessInterface
+class RenderingProcess implements ProcessInterface
 {
     protected $fsio;
     protected $view;

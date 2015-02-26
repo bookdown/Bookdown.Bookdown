@@ -7,13 +7,13 @@ use Aura\View\ViewFactory;
 use Bookdown\Bookdown\Config\RootConfig;
 use Bookdown\Bookdown\Fsio;
 
-class RenderingBuilder implements ProcessBuilderInterface
+class RenderingProcessBuilder implements ProcessBuilderInterface
 {
     public function newInstance(RootConfig $config)
     {
         $fsio = $this->newFsio();
         $view = $this->newView($config);
-        return new Rendering($fsio, $view);
+        return new RenderingProcess($fsio, $view);
     }
 
     protected function newFsio()

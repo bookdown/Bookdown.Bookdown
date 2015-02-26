@@ -32,23 +32,15 @@ class TemplateBuilder implements TemplateBuilderInterface
     {
         $registry = $view->getViewRegistry();
 
-        // default templates
-        $dir = __DIR__ . '/files';
-        $templates = array(
-            'main' => 'main.php',
-            'head' => 'head.php',
-            'body' => 'body.php',
-            'navheader' => 'navheader.php',
-            'navfooter' => 'navfooter.php',
-            'toc' => 'toc.php',
-        );
+        // defaults
+        $templates = $this->getTemplates();
         foreach ($templates as $name => $template) {
-            $registry->set($name, "{$dir}/{$template}");
+            $registry->set($name, $template);
         }
 
         // overrides
         $dir = $config->getDir();
-        $templates = (array) $config->get('templates');
+        $templates = (array) $config->getTemplates();
         foreach ($templates as $name => $template) {
             $registry->set($name, "{$dir}/{$template}");
         }
@@ -56,10 +48,28 @@ class TemplateBuilder implements TemplateBuilderInterface
 
     protected function setTemplateName(View $view, RootConfig $config)
     {
-        $templateName = $config->get('templateName');
+        $templateName = $config->getTemplateName();
         if (! $templateName) {
-            $templateName = 'main';
+            $templateName = $this->getTemplateName();
         }
         $view->setView($templateName);
+    }
+
+    protected function getTemplates()
+    {
+        $dir = __DIR__ . '/files';
+        return array(
+            "main" => "{$dir}/main.php",
+            "head" => "{$dir}/head.php",
+            "body" => "{$dir}/body.php",
+            "navheader" => "{$dir}/navheader.php",
+            "navfooter" => "{$dir}/navfooter.php",
+            "toc" => "{$dir}/toc.php",
+        );
+    }
+
+    protected function getTemplateName()
+    {
+        return 'main';
     }
 }

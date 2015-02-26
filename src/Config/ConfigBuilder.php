@@ -1,6 +1,8 @@
 <?php
 namespace Bookdown\Bookdown\Config;
 
+use Bookdown\Bookdown\Exception;
+
 class ConfigBuilder
 {
     public function newConfig($file)
@@ -17,6 +19,15 @@ class ConfigBuilder
 
     protected function read($file)
     {
-        return file_get_contents($file);
+        $level = error_reporting(0);
+        $result = file_get_contents($file);
+        error_reporting($level);
+
+        if ($result !== false) {
+            return $result;
+        }
+
+        $error = error_get_last();
+        throw new Exception($error['message']);
     }
 }

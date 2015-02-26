@@ -8,43 +8,55 @@ class RootConfig extends Config
     protected $target;
     protected $converterBuilder;
     protected $templateBuilder;
+    protected $templates = array();
+    protected $templateName;
 
     protected function init()
     {
         parent::init();
         $this->initTarget();
+        $this->initTemplates();
+        $this->initTemplateName();
         $this->initConverterBuilder();
         $this->initTemplateBuilder();
     }
 
     protected function initTarget()
     {
-        $target = '_site';
-        if (isset($this->json->target)) {
-            $target = $this->json->target;
-        }
+        $target = isset($this->json->target)
+            ? $this->json->target
+            : '_site';
 
-        $this->target = rtrim($this->fixPath($target), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+        $target = rtrim($this->fixPath($target), DIRECTORY_SEPARATOR);
+        $this->target = $target . DIRECTORY_SEPARATOR;
+    }
+
+    protected function initTemplates()
+    {
+        $this->templates = isset($this->json->templates)
+            ? (array) $this->json->templates
+            : array();
+    }
+
+    protected function initTemplateName()
+    {
+        $this->templateName = isset($this->json->templateName)
+            ? $this->json->templateName
+            : null;
     }
 
     protected function initConverterBuilder()
     {
-        if (! isset($this->json->converterBuilder)) {
-            $this->converterBuilder = 'Bookdown\Bookdown\Converter\ConverterBuilder';
-            return;
-        }
-
-        $this->converterBuilder = $this->json->converterBuilder;
+        $this->converterBuilder = isset($this->json->converterBuilder)
+            ? $this->json->converterBuilder
+            : 'Bookdown\Bookdown\Converter\ConverterBuilder';
     }
 
     protected function initTemplateBuilder()
     {
-        if (! isset($this->json->templateBuilder)) {
-            $this->templateBuilder = 'Bookdown\Bookdown\Template\TemplateBuilder';
-            return;
-        }
-
-        $this->templateBuilder = $this->json->templateBuilder;
+        $this->templateBuilder = isset($this->json->templateBuilder)
+            ? $this->json->templateBuilder
+            : 'Bookdown\Bookdown\Template\TemplateBuilder';
     }
 
     public function getConverterBuilder()
@@ -62,10 +74,21 @@ class RootConfig extends Config
         return $this->target;
     }
 
-    public function get($key)
+    public function getTemplates()
+    {
+        return $this->templates;
+    }
+
+    public function getTemplateName()
+    {
+        return $this->templateName;
+    }
+
+    public function get($key, $alt = null)
     {
         if (isset($this->json->$key)) {
             return $this->json->$key;
         }
+        return $alt;
     }
 }

@@ -35,7 +35,9 @@ class TemplateBuilder implements TemplateBuilderInterface
         // default templates
         $dir = __DIR__ . '/files';
         $templates = array(
-            'default' => 'default.php',
+            'main' => 'main.php',
+            'head' => 'head.php',
+            'body' => 'body.php',
             'navheader' => 'navheader.php',
             'navfooter' => 'navfooter.php',
             'toc' => 'toc.php',
@@ -56,7 +58,7 @@ class TemplateBuilder implements TemplateBuilderInterface
     {
         $templateName = $config->get('templateName');
         if (! $templateName) {
-            $templateName = 'default';
+            $templateName = 'main';
         }
         $view->setView($templateName);
     }

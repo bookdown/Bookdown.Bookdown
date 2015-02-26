@@ -13,7 +13,7 @@ class RootPage extends IndexPage
         return '';
     }
 
-    public function getTargetFile()
+    public function getTarget()
     {
         return $this->getConfig()->getTarget() . 'index.html';
     }

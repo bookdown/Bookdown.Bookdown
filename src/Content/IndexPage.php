@@ -23,10 +23,10 @@ class IndexPage extends Page
         return $this->children;
     }
 
-    public function getTargetFile()
+    public function getTarget()
     {
         $base = rtrim(
-            dirname($this->getParent()->getTargetFile()),
+            dirname($this->getParent()->getTarget()),
             DIRECTORY_SEPARATOR
         );
 

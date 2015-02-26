@@ -14,8 +14,8 @@ class TemplateProcessor
 
     public function __invoke(Page $page, Stdio $stdio)
     {
-        $stdio->outln("Processing template for {$page->getTargetFile()}");
+        $stdio->outln("Processing template for {$page->getTarget()}");
         $html = $this->template->render($page, $stdio);
-        file_put_contents($page->getTargetFile(), $html);
+        file_put_contents($page->getTarget(), $html);
     }
 }

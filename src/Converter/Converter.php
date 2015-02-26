@@ -17,16 +17,16 @@ class Converter implements ConverterInterface
 
     public function convert(Page $page, Stdio $stdio)
     {
-        $text = $this->readOriginFile($page, $stdio);
+        $text = $this->readOrigin($page, $stdio);
         $html = $this->commonMarkConverter->convertToHtml($text);
-        $this->saveTargetFile($page, $stdio, $html);
+        $this->saveTarget($page, $stdio, $html);
     }
 
-    protected function readOriginFile(Page $page, Stdio $stdio)
+    protected function readOrigin(Page $page, Stdio $stdio)
     {
         $file = $page->getOrigin();
         if (! $file) {
-            $stdio->outln("No origin for {$page->getTargetFile()}");
+            $stdio->outln("No origin for {$page->getTarget()}");
             return;
         }
 
@@ -43,11 +43,11 @@ class Converter implements ConverterInterface
         throw new Exception($error['message']);
     }
 
-    protected function saveTargetFile(Page $page, Stdio $stdio, $html)
+    protected function saveTarget(Page $page, Stdio $stdio, $html)
     {
         $this->mkdir($page, $stdio);
 
-        $file = $page->getTargetFile();
+        $file = $page->getTarget();
         $stdio->outln("Saving {$file}");
 
         $level = error_reporting(0);
@@ -64,7 +64,7 @@ class Converter implements ConverterInterface
 
     protected function mkdir(Page $page, Stdio $stdio)
     {
-        $dir = dirname($page->getTargetFile());
+        $dir = dirname($page->getTarget());
         if (is_dir($dir)) {
             return;
         }

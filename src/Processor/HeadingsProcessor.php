@@ -30,7 +30,7 @@ class HeadingsProcessor
 
     public function __invoke(Page $page, Stdio $stdio)
     {
-        $stdio->outln("Processing headings for {$page->getTargetFile()}");
+        $stdio->outln("Processing headings for {$page->getTarget()}");
 
         $this->reset($page);
 
@@ -69,12 +69,12 @@ class HeadingsProcessor
 
     protected function loadHtml()
     {
-        $this->html = file_get_contents($this->page->getTargetFile());
+        $this->html = file_get_contents($this->page->getTarget());
     }
 
     protected function saveHtml()
     {
-        file_put_contents($this->page->getTargetFile(), $this->html);
+        file_put_contents($this->page->getTarget(), $this->html);
     }
 
     protected function loadDomDocument()

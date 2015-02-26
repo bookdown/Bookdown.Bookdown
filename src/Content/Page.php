@@ -123,10 +123,10 @@ class Page
         return trim($this->getNumber() . ' ' . $this->getTitle());
     }
 
-    public function getTargetFile()
+    public function getTarget()
     {
         $base = rtrim(
-            dirname($this->getParent()->getTargetFile()),
+            dirname($this->getParent()->getTarget()),
             DIRECTORY_SEPARATOR
         );
         return $base . DIRECTORY_SEPARATOR . $this->getName() . '.html';

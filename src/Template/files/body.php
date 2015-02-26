@@ -4,6 +4,6 @@
     ? $this->render('toc')
     : '' ;
 ?>
-<?= file_get_contents($this->page->getTargetFile()); ?>
+<?= file_get_contents($this->page->getTarget()); ?>
 <?= $this->render('navfooter'); ?>
 </body>

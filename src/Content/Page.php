@@ -156,4 +156,22 @@ class Page
     {
         return false;
     }
+
+    public function getRoot()
+    {
+        $page = $this;
+        while ($parent = $page->getParent()) {
+            $page = $parent;
+        }
+        return $page;
+    }
+
+    public function getParentIndex()
+    {
+        $page = $this->getParent();
+        while (! $page->isIndex()) {
+            $page = $page->getParent();
+        }
+        return $page;
+    }
 }

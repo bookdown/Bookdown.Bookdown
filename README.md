@@ -14,15 +14,13 @@ To see a demonstration of Bookdown, clone this repository, then:
 
 1. issue `composer install` to install the dependencies, and
 
-2. issue `php bin/bookdown.php {$origin}` to run the generator.
+2. issue `php bin/bookdown.php demo/_bookdown.json` to run the generator.
 
-The `{$origin}` is a top-level `bookdown.json` file, and the `{$target}` is a directory to which the HTML files will be rendered.
-
-Note how each rendered `index.html` file is a table-of-contents, and how each rendered page has numbered headings with their own target IDs.
+This will create a `_site` directory. You can then issue `php -S localhost:8080 -t _site` and browse the generated pages.
 
 ## The `bookdown.json` file
 
-Each directory should have a `bookdown.json` file with a "title" string value (to indicate the title of the pages grouped into that directory) and a "content" hash of page names and origin files.  An origin file may be yet another `bookdown.json` file, indicating a sub-collection of pages.
+Each `bookdown.json` file has a "title" string value (to indicate the title of the page) and a "content" hash of page names and origin files.  An origin file may be a Markdown file (indicating a single page) or yet another `bookdown.json` file (indicating a sub-collection of pages).
 
 ```json
 {
@@ -36,9 +34,9 @@ Each directory should have a `bookdown.json` file with a "title" string value (t
 }
 ```
 
-If you have `allow_url_fopen` enabled, you can also use URLs as the origin file values, meaning that the origin files and bookdown.json files can reside on remote servers, such as Github.
+If `allow_url_fopen` is enabled, you can also use URLs as the origin file values. That means that page files and `bookdown.json` files can reside on remote servers, such as Github.
 
-Note that the `bookdown.json` file need not be named `bookdown.json` per se; any `.json` file will be assumed to be a `bookdown.json` file, and any other file will be assumed to be a page file.
+Note that the `bookdown.json` file need not be named `bookdown.json` per se. Any `.json` file will be assumed to be a `bookdown.json` file, and all other files will be assumed to be page files.
 
 ## Todo
 

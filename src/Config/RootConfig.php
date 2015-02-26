@@ -7,7 +7,7 @@ class RootConfig extends Config
 {
     protected $target;
     protected $converterBuilder;
-    protected $templateBuilder;
+    protected $renderingBuilder;
     protected $templates = array();
     protected $templateName;
 
@@ -18,7 +18,7 @@ class RootConfig extends Config
         $this->initTemplates();
         $this->initTemplateName();
         $this->initConverterBuilder();
-        $this->initTemplateBuilder();
+        $this->initRenderingBuilder();
     }
 
     protected function initTarget()
@@ -49,14 +49,14 @@ class RootConfig extends Config
     {
         $this->converterBuilder = isset($this->json->converterBuilder)
             ? $this->json->converterBuilder
-            : 'Bookdown\Bookdown\Converter\ConverterBuilder';
+            : 'Bookdown\Bookdown\Process\ConverterBuilder';
     }
 
-    protected function initTemplateBuilder()
+    protected function initRenderingBuilder()
     {
-        $this->templateBuilder = isset($this->json->templateBuilder)
-            ? $this->json->templateBuilder
-            : 'Bookdown\Bookdown\Template\TemplateBuilder';
+        $this->renderingBuilder = isset($this->json->renderingBuilder)
+            ? $this->json->renderingBuilder
+            : 'Bookdown\Bookdown\Process\RenderingBuilder';
     }
 
     public function getConverterBuilder()
@@ -64,9 +64,9 @@ class RootConfig extends Config
         return $this->converterBuilder;
     }
 
-    public function getTemplateBuilder()
+    public function getRenderingBuilder()
     {
-        return $this->templateBuilder;
+        return $this->renderingBuilder;
     }
 
     public function getTarget()

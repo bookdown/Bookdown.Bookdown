@@ -1,13 +1,13 @@
 <?php
-namespace Bookdown\Bookdown\Template;
+namespace Bookdown\Bookdown\Process;
 
 use Aura\Cli\Stdio;
 use Aura\View\View;
 use Bookdown\Bookdown\Content\Page;
 use Bookdown\Bookdown\Fsio;
-use Bookdown\Bookdown\Processor\ProcessorInterface;
+use Bookdown\Bookdown\Process\ProcessInterface;
 
-class Template implements ProcessorInterface
+class Rendering implements ProcessInterface
 {
     protected $fsio;
     protected $view;

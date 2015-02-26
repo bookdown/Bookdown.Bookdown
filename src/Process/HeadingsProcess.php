@@ -1,5 +1,5 @@
 <?php
-namespace Bookdown\Bookdown\Processor;
+namespace Bookdown\Bookdown\Process;
 
 use Aura\Cli\Stdio;
 use Bookdown\Bookdown\Content\Page;
@@ -10,7 +10,7 @@ use DomNode;
 use DomNodeList;
 use DomXpath;
 
-class HeadingsProcessor implements ProcessorInterface
+class HeadingsProcess implements ProcessInterface
 {
     protected $page;
 

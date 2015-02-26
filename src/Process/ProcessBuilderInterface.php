@@ -1,9 +1,9 @@
 <?php
-namespace Bookdown\Bookdown\Converter;
+namespace Bookdown\Bookdown\Process;
 
 use Bookdown\Bookdown\Config\RootConfig;
 
-interface ConverterBuilderInterface
+interface ProcessBuilderInterface
 {
     public function newInstance(RootConfig $config);
 }

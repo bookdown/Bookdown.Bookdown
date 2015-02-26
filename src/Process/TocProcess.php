@@ -1,11 +1,11 @@
 <?php
-namespace Bookdown\Bookdown\Processor;
+namespace Bookdown\Bookdown\Process;
 
 use Aura\Cli\Stdio;
 use Bookdown\Bookdown\Content\Page;
 use Bookdown\Bookdown\Content\IndexPage;
 
-class TocProcessor implements ProcessorInterface
+class TocProcess implements ProcessInterface
 {
     protected $tocEntries;
 

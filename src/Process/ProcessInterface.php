@@ -1,10 +1,10 @@
 <?php
-namespace Bookdown\Bookdown\Processor;
+namespace Bookdown\Bookdown\Process;
 
 use Aura\Cli\Stdio;
 use Bookdown\Bookdown\Content\Page;
 
-interface ProcessorInterface
+interface ProcessInterface
 {
     public function __invoke(Page $page, Stdio $stdio);
 }

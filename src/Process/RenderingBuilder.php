@@ -1,5 +1,5 @@
 <?php
-namespace Bookdown\Bookdown\Template;
+namespace Bookdown\Bookdown\Process;
 
 use Aura\Html\HelperLocatorFactory;
 use Aura\View\View;
@@ -7,13 +7,13 @@ use Aura\View\ViewFactory;
 use Bookdown\Bookdown\Config\RootConfig;
 use Bookdown\Bookdown\Fsio;
 
-class TemplateBuilder implements TemplateBuilderInterface
+class RenderingBuilder implements ProcessBuilderInterface
 {
     public function newInstance(RootConfig $config)
     {
         $fsio = $this->newFsio();
         $view = $this->newView($config);
-        return new Template($fsio, $view);
+        return new Rendering($fsio, $view);
     }
 
     protected function newFsio()

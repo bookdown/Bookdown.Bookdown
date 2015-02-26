@@ -7,7 +7,7 @@ use Bookdown\Bookdown\Config;
 use Bookdown\Bookdown\Content;
 use Bookdown\Bookdown\Converter;
 use Bookdown\Bookdown\Fsio;
-use Bookdown\Bookdown\Template;
+use Bookdown\Bookdown\Rendering;
 use Bookdown\Bookdown\Processor;
 
 class Command
@@ -89,24 +89,24 @@ class Command
     {
         return new Processor(array(
             $this->newConverter(),
-            new Processor\HeadingsProcessor(
+            new Process\HeadingsProcess(
                 new Fsio,
                 new Content\HeadingFactory()
             ),
-            new Processor\TocProcessor(),
-            $this->newTemplate(),
+            new Process\TocProcess(),
+            $this->newRendering(),
         ));
     }
 
-    protected function newTemplate()
+    protected function newRendering()
     {
         $config = $this->root->getConfig();
 
-        $class = $config->getTemplateBuilder();
+        $class = $config->getRenderingBuilder();
         $factory = new $class();
-        if (! $factory instanceof Template\TemplateBuilderInterface) {
+        if (! $factory instanceof Process\ProcessBuilderInterface) {
             throw new Exception(
-                "'{$class}' does not implement TemplateBuilderInterface."
+                "'{$class}' does not implement ProcessBuilderInterface."
             );
         }
 
@@ -119,9 +119,9 @@ class Command
 
         $class = $config->getConverterBuilder();
         $factory = new $class();
-        if (! $factory instanceof Converter\ConverterBuilderInterface) {
+        if (! $factory instanceof Process\ProcessBuilderInterface) {
             throw new Exception(
-                "'{$class}' does not implement ConverterBuilderInterface."
+                "'{$class}' does not implement ProcessBuilderInterface."
             );
         }
 

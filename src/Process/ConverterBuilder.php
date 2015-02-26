@@ -1,11 +1,11 @@
 <?php
-namespace Bookdown\Bookdown\Converter;
+namespace Bookdown\Bookdown\Process;
 
 use Bookdown\Bookdown\Config\RootConfig;
 use Bookdown\Bookdown\Fsio;
 use League\CommonMark\CommonMarkConverter;
 
-class ConverterBuilder implements ConverterBuilderInterface
+class ConverterBuilder implements ProcessBuilderInterface
 {
     public function newInstance(RootConfig $config)
     {

@@ -1,14 +1,14 @@
 <?php
-namespace Bookdown\Bookdown\Converter;
+namespace Bookdown\Bookdown\Process;
 
 use Aura\Cli\Stdio;
 use Bookdown\Bookdown\Content\Page;
 use Bookdown\Bookdown\Exception;
 use Bookdown\Bookdown\Fsio;
-use Bookdown\Bookdown\Processor\ProcessorInterface;
+use Bookdown\Bookdown\Process\ProcessInterface;
 use League\CommonMark\CommonMarkConverter;
 
-class Converter implements ProcessorInterface
+class Converter implements ProcessInterface
 {
     protected $fsio;
     protected $commonMarkConverter;

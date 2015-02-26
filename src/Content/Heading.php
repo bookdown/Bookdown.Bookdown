@@ -22,11 +22,6 @@ class Heading
         $this->level = substr_count($number, '.');
     }
 
-    public function __get($key)
-    {
-        throw new Exception("Use a method");
-    }
-
     public function getNumber()
     {
         return $this->number;

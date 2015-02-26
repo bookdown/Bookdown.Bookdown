@@ -28,6 +28,11 @@
             "Bookdown\\Bookdown\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Bookdown\\Bookdown\\": "tests/"
+        }
+    },
     "bin": [
         "bin/bookdown.php"
     ]

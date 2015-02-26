@@ -82,13 +82,13 @@ class Command
     protected function newProcessor()
     {
         return new Processor\Processor(array(
-            new Processor\ConverterProcessor($this->newConverter()),
+            $this->newConverter(),
             new Processor\HeadingsProcessor(
                 new Fsio,
                 new Content\HeadingFactory()
             ),
             new Processor\TocProcessor(),
-            new Processor\TemplateProcessor($this->newTemplate()),
+            $this->newTemplate(),
         ));
     }
 

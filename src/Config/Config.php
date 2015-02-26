@@ -7,6 +7,7 @@ class Config
 {
     protected $file;
     protected $dir;
+    protected $isRemote = false;
     protected $json;
     protected $title;
     protected $content;
@@ -30,6 +31,7 @@ class Config
     protected function initFile($file)
     {
         $this->file = $file;
+        $this->isRemote = strpos($file, '://') !== false;
     }
 
     protected function initDir()
@@ -47,7 +49,7 @@ class Config
 
     protected function initTitle()
     {
-        if (! isset($this->json->title)) {
+        if (empty($this->json->title)) {
             throw new Exception("No title set in '{$this->file}'.");
         }
         $this->title = $this->json->title;
@@ -55,11 +57,14 @@ class Config
 
     protected function initContent()
     {
-        if (! isset($this->json->content)) {
+        $this->content = empty($this->json->content)
+            ? array()
+            : (array) $this->json->content;
+
+        if (! $this->content) {
             throw new Exception("No content listed in '{$this->file}'.");
         }
 
-        $this->content = (array) $this->json->content;
         foreach ($this->content as $name => $origin) {
             $this->content[$name] = $this->fixPath($origin);
         }
@@ -67,12 +72,18 @@ class Config
 
     protected function fixPath($path)
     {
-        if (strpos($path, '://' !== false)) {
-            return;
+        if (strpos($path, '://') !== false) {
+            return $path;
+        }
+
+        if ($this->isRemote() && $path{0} === DIRECTORY_SEPARATOR) {
+            throw new Exception(
+                "Cannot handle absolute content path '{$path}' in remote '{$this->file}'."
+            );
         }
 
         if ($path{0} === DIRECTORY_SEPARATOR) {
-            return;
+            return $path;
         }
 
         return $this->getDir() . ltrim($path, DIRECTORY_SEPARATOR);
@@ -80,10 +91,15 @@ class Config
 
     protected function initIndexOrigin()
     {
-        if (isset($this->content['index'])) {
+        if (! empty($this->content['index'])) {
             $this->indexOrigin = $this->content['index'];
             unset($this->content['index']);
         }
+    }
+
+    public function isRemote()
+    {
+        return $this->isRemote;
     }
 
     public function getFile()

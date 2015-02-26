@@ -1,11 +1,9 @@
 <?php
 error_reporting(E_ALL);
-spl_autoload_register(function ($class) {
-    $ns = 'Bookdown\\Content\\';
-    $len = strlen($ns);
-    if (substr($class, 0, $len) != $ns) {
-        return;
-    }
-    $file = str_replace('\\', DIRECTORY_SEPARATOR, substr($class, $len));
-    require $file;
-});
+$file = './vendor/autoload.php';
+if (! file_exists($file)) {
+    echo "{$file} not found" . PHP_EOL;
+    echo "Try 'composer update' before continuing." . PHP_EOL;
+    exit(1);
+}
+require $file;

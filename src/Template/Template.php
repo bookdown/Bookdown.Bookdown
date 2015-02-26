@@ -5,8 +5,9 @@ use Aura\Cli\Stdio;
 use Aura\View\View;
 use Bookdown\Bookdown\Content\Page;
 use Bookdown\Bookdown\Fsio;
+use Bookdown\Bookdown\Processor\ProcessorInterface;
 
-class Template implements TemplateInterface
+class Template implements ProcessorInterface
 {
     protected $fsio;
     protected $view;

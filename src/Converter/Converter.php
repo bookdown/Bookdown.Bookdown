@@ -5,9 +5,10 @@ use Aura\Cli\Stdio;
 use Bookdown\Bookdown\Content\Page;
 use Bookdown\Bookdown\Exception;
 use Bookdown\Bookdown\Fsio;
+use Bookdown\Bookdown\Processor\ProcessorInterface;
 use League\CommonMark\CommonMarkConverter;
 
-class Converter implements ConverterInterface
+class Converter implements ProcessorInterface
 {
     protected $fsio;
     protected $commonMarkConverter;

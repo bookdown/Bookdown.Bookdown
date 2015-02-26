@@ -5,7 +5,7 @@ use Aura\Cli\Stdio;
 use Bookdown\Bookdown\Content\Page;
 use Bookdown\Bookdown\Content\IndexPage;
 
-class TocProcessor
+class TocProcessor implements ProcessorInterface
 {
     protected $tocEntries;
 

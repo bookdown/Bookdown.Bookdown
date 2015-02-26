@@ -10,7 +10,7 @@ use DomNode;
 use DomNodeList;
 use DomXpath;
 
-class HeadingsProcessor
+class HeadingsProcessor implements ProcessorInterface
 {
     protected $page;
 

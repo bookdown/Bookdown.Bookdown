@@ -12,13 +12,16 @@ class Command
     protected $stdio;
     protected $context;
     protected $start;
+    protected $builder;
 
     public function __construct(
         Context $context,
-        Stdio $stdio
+        Stdio $stdio,
+        Builder $builder
     ) {
         $this->context = $context;
         $this->stdio = $stdio;
+        $this->builder = $builder;
     }
 
     public function __invoke()
@@ -58,57 +61,15 @@ class Command
 
     protected function collectPages()
     {
-        $collector = $this->newCollector();
+        $collector = $this->builder->newCollector();
         $this->root = $collector($this->origin);
         $this->config = $this->root->getConfig();
     }
 
-    protected function newCollector()
-    {
-        return new Collector(
-            $this->stdio,
-            new Content\PageBuilder(
-                new Config\ConfigBuilder(
-                    new Fsio
-                )
-            )
-        );
-    }
-
     protected function processPages()
     {
-        $processor = $this->newProcessor();
-        $processor($this->root, $this->stdio);
-    }
-
-    protected function newProcessor()
-    {
-        return new Processor(
-            $this->stdio,
-            array(
-                $this->newProcess('Conversion'),
-                $this->newProcess('Headings'),
-                $this->newProcess('Toc'),
-                $this->newProcess('Rendering'),
-            )
-        );
-    }
-
-    protected function newProcess($name)
-    {
-        $method = "get{$name}Process";
-        $class = $this->config->$method();
-        $implemented = is_subclass_of(
-            $class,
-            'Bookdown\Bookdown\Process\ProcessBuilderInterface'
-        );
-        if (! $implemented) {
-            throw new Exception(
-                "'{$class}' does not implement ProcessBuilderInterface."
-            );
-        }
-        $builder = new $class();
-        return $builder->newInstance($this->config, $this->stdio);
+        $processor = $this->builder->newProcessor($this->config);
+        $processor($this->root);
     }
 
     protected function reportTime()

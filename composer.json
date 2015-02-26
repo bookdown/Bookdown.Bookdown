@@ -1,4 +1,22 @@
 {
+    "name": "bookdown/bookdown",
+    "type": "library",
+    "description": "Provides DocBook-like rendering of Markdown files.",
+    "keywords": [
+        "docbook",
+        "markdown",
+        "manual",
+        "documentation",
+        "static site"
+    ],
+    "homepage": "https://github.com/bookdown/bookdown",
+    "license": "BSD-2-Clause",
+    "authors": [
+        {
+            "name": "Bookdown Contributors",
+            "homepage": "https://github.com/bookdown/bookdown/contributors"
+        }
+    ],
     "require": {
         "aura/cli": "~2.0",
         "aura/html": "~2.0",

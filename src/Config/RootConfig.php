@@ -6,7 +6,7 @@ use Bookdown\Bookdown\Exception;
 class RootConfig extends Config
 {
     protected $target;
-    protected $converterBuilder;
+    protected $conversionBuilder;
     protected $renderingBuilder;
     protected $templates = array();
     protected $templateName;
@@ -17,7 +17,7 @@ class RootConfig extends Config
         $this->initTarget();
         $this->initTemplates();
         $this->initTemplateName();
-        $this->initConverterBuilder();
+        $this->initConversionBuilder();
         $this->initRenderingBuilder();
     }
 
@@ -45,11 +45,11 @@ class RootConfig extends Config
             : null;
     }
 
-    protected function initConverterBuilder()
+    protected function initConversionBuilder()
     {
-        $this->converterBuilder = isset($this->json->converterBuilder)
-            ? $this->json->converterBuilder
-            : 'Bookdown\Bookdown\Process\ConverterBuilder';
+        $this->conversionBuilder = isset($this->json->conversionBuilder)
+            ? $this->json->conversionBuilder
+            : 'Bookdown\Bookdown\Process\ConversionBuilder';
     }
 
     protected function initRenderingBuilder()
@@ -59,9 +59,9 @@ class RootConfig extends Config
             : 'Bookdown\Bookdown\Process\RenderingBuilder';
     }
 
-    public function getConverterBuilder()
+    public function getConversionBuilder()
     {
-        return $this->converterBuilder;
+        return $this->conversionBuilder;
     }
 
     public function getRenderingBuilder()

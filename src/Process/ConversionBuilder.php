@@ -5,11 +5,11 @@ use Bookdown\Bookdown\Config\RootConfig;
 use Bookdown\Bookdown\Fsio;
 use League\CommonMark\CommonMarkConverter;
 
-class ConverterBuilder implements ProcessBuilderInterface
+class ConversionBuilder implements ProcessBuilderInterface
 {
     public function newInstance(RootConfig $config)
     {
-        return new Converter(
+        return new Conversion(
             $this->newFsio(),
             $this->newCommonMarkConverter()
         );

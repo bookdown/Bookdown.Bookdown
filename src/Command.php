@@ -3,12 +3,7 @@ namespace Bookdown\Bookdown;
 
 use Aura\Cli\Stdio;
 use Aura\Cli\Context;
-use Bookdown\Bookdown\Config;
-use Bookdown\Bookdown\Content;
-use Bookdown\Bookdown\Converter;
-use Bookdown\Bookdown\Fsio;
-use Bookdown\Bookdown\Rendering;
-use Bookdown\Bookdown\Processor;
+use Exception as AnyException;
 
 class Command
 {
@@ -34,7 +29,7 @@ class Command
             $this->processPages();
             $this->reportTime();
             return 0;
-        } catch (Exception $e) {
+        } catch (AnyException $e) {
             $this->stdio->errln((string) $e);
             $this->stdio->errln($e->getMessage());
             $code = $e->getCode() ? $e->getCode() : 1;
@@ -88,7 +83,7 @@ class Command
     protected function newProcessor()
     {
         return new Processor(array(
-            $this->newConverter(),
+            $this->newConversion(),
             new Process\HeadingsProcess(
                 new Fsio,
                 new Content\HeadingFactory()
@@ -113,11 +108,11 @@ class Command
         return $factory->newInstance($config);
     }
 
-    protected function newConverter()
+    protected function newConversion()
     {
         $config = $this->root->getConfig();
 
-        $class = $config->getConverterBuilder();
+        $class = $config->getConversionBuilder();
         $factory = new $class();
         if (! $factory instanceof Process\ProcessBuilderInterface) {
             throw new Exception(

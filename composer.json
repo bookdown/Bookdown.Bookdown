@@ -1,8 +1,9 @@
 {
     "require": {
-        "league/commonmark": "~0.7",
+        "aura/cli": "~2.0",
+        "aura/html": "~2.0",
         "aura/view": "~2.0",
-        "aura/html": "~2.0"
+        "league/commonmark": "~0.7"
     },
     "autoload": {
         "psr-4": {

@@ -1,6 +1,7 @@
 <?php
 namespace Bookdown\Bookdown\Processor;
 
+use Aura\Cli\Stdio;
 use Bookdown\Bookdown\Content\Page;
 use Bookdown\Bookdown\Converter\ConverterInterface;
 
@@ -13,15 +14,9 @@ class ConverterProcessor
         $this->converter = $converter;
     }
 
-    public function __invoke(Page $page)
+    public function __invoke(Page $page, Stdio $stdio)
     {
-        $html = $this->converter->convert($page);
-
         $file = $page->getTargetFile();
-        $dir = dirname($file);
-        if (! is_dir($dir)) {
-            mkdir($dir, 0777, true);
-        }
-        file_put_contents($file, $html);
+        $html = $this->converter->convert($page, $stdio);
     }
 }

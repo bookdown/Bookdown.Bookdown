@@ -1,6 +1,8 @@
 <?php
 namespace Bookdown\Bookdown;
 
+use Aura\Cli\Stdio;
+use Aura\Cli\Context;
 use Bookdown\Bookdown\Config;
 use Bookdown\Bookdown\Content;
 use Bookdown\Bookdown\Converter;
@@ -11,23 +13,44 @@ class Command
 {
     protected $origin;
     protected $root;
+    protected $stdio;
+    protected $context;
 
-    public function __invoke($server)
-    {
-        $this->init($server);
-        $this->collectPages();
-        $this->processPages();
+    public function __construct(
+        Context $context,
+        Stdio $stdio
+    ) {
+        $this->context = $context;
+        $this->stdio = $stdio;
     }
 
-    protected function init($server)
+    public function __invoke()
     {
-        if (! isset($server['argv'][1])) {
+        try {
+            $time = microtime(true);
+            $this->init();
+            $this->collectPages();
+            $this->processPages();
+            $lap = trim(sprintf("%10.2f", microtime(true) - $time));
+            $this->stdio->outln("Completed in {$lap} seconds.");
+            return 0;
+        } catch (Exception $e) {
+            $this->stdio->errln((string) $e);
+            $this->stdio->errln($e->getMessage());
+            $code = $e->getCode() ? $e->getCode() : 1;
+            return $code;
+        }
+    }
+
+    protected function init()
+    {
+        $file = $this->context->argv->get(1);
+        if (! $file) {
             throw new Exception(
                 "Please enter an origin bookdown.json file as the first argument."
             );
         }
 
-        $file = $server['argv'][1];
         $this->origin = realpath($file);
         if (! $this->origin) {
             throw new Exception(
@@ -39,6 +62,7 @@ class Command
     protected function collectPages()
     {
         $pageCollector = new Content\PageCollector(
+            $this->stdio,
             new Content\PageBuilder(
                 new Config\ConfigBuilder()
             )
@@ -49,7 +73,7 @@ class Command
     protected function processPages()
     {
         $processor = $this->newProcessor();
-        $processor($this->root);
+        $processor($this->root, $this->stdio);
     }
 
     protected function newProcessor()

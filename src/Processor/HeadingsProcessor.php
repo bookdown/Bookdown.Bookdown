@@ -1,6 +1,7 @@
 <?php
 namespace Bookdown\Bookdown\Processor;
 
+use Aura\Cli\Stdio;
 use Bookdown\Bookdown\Content\Page;
 use Bookdown\Bookdown\Content\HeadingFactory;
 use DomDocument;
@@ -27,8 +28,10 @@ class HeadingsProcessor
         $this->headingFactory = $headingFactory;
     }
 
-    public function __invoke(Page $page)
+    public function __invoke(Page $page, Stdio $stdio)
     {
+        $stdio->outln("Processing headings for {$page->getTargetFile()}");
+
         $this->reset($page);
 
         $this->loadHtml();

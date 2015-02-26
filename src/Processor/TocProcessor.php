@@ -1,6 +1,7 @@
 <?php
 namespace Bookdown\Bookdown\Processor;
 
+use Aura\Cli\Stdio;
 use Bookdown\Bookdown\Content\Page;
 use Bookdown\Bookdown\Content\IndexPage;
 
@@ -8,12 +9,14 @@ class TocProcessor
 {
     protected $tocEntries;
 
-    public function __invoke(Page $page)
+    public function __invoke(Page $page, Stdio $stdio)
     {
         if (! $page->isIndex()) {
+            $stdio->outln("No TOC for {$page->getTargetFile()}");
             return;
         }
 
+        $stdio->outln("Processing TOC for {$page->getTargetFile()}");
         $this->tocEntries = array();
         $this->addTocEntries($page);
         $page->setTocEntries($this->tocEntries);

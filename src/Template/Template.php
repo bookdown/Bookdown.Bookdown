@@ -1,6 +1,7 @@
 <?php
 namespace Bookdown\Bookdown\Template;
 
+use Aura\Cli\Stdio;
 use Aura\View\View;
 use Bookdown\Bookdown\Content\Page;
 
@@ -13,7 +14,7 @@ class Template implements TemplateInterface
         $this->view = $view;
     }
 
-    public function render(Page $page)
+    public function render(Page $page, Stdio $stdio)
     {
         $this->view->page = $page;
         return $this->view->__invoke();

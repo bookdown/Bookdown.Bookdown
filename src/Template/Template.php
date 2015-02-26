@@ -16,7 +16,6 @@ class Template implements TemplateInterface
     public function render(Page $page)
     {
         $this->view->page = $page;
-        $this->view->html = file_get_contents($page->getTargetFile());
         return $this->view->__invoke();
     }
 }

@@ -10,46 +10,51 @@ use League\CommonMark\CommonMarkConverter;
 
 class ConversionProcess implements ProcessInterface
 {
+    protected $page;
+    protected $stdio;
     protected $fsio;
     protected $commonMarkConverter;
 
     public function __construct(
+        Stdio $stdio,
         Fsio $fsio,
         CommonMarkConverter $commonMarkConverter
     ) {
+        $this->stdio = $stdio;
         $this->fsio = $fsio;
         $this->commonMarkConverter = $commonMarkConverter;
     }
 
-    public function __invoke(Page $page, Stdio $stdio)
+    public function __invoke(Page $page)
     {
-        $text = $this->readOrigin($page, $stdio);
+        $this->page = $page;
+        $text = $this->readOrigin();
         $html = $this->commonMarkConverter->convertToHtml($text);
-        $this->saveTarget($page, $stdio, $html);
+        $this->saveTarget($html);
     }
 
-    protected function readOrigin(Page $page, Stdio $stdio)
+    protected function readOrigin()
     {
-        $file = $page->getOrigin();
+        $file = $this->page->getOrigin();
         if (! $file) {
-            $stdio->outln("No origin for {$page->getTarget()}");
+            $this->stdio->outln("No origin for {$this->page->getTarget()}");
             return;
         }
 
-        $stdio->outln("Reading origin {$file}");
+        $this->stdio->outln("Reading origin {$file}");
         return $this->fsio->get($file);
     }
 
-    protected function saveTarget(Page $page, Stdio $stdio, $html)
+    protected function saveTarget($html)
     {
-        $dir = dirname($page->getTarget());
+        $file = $this->page->getTarget();
+        $dir = dirname($file);
         if (! $this->fsio->isDir($dir)) {
-            $stdio->outln("Making directory {$dir}");
+            $this->stdio->outln("Making directory {$dir}");
             $this->fsio->mkdir($dir);
         }
 
-        $file = $page->getTarget();
-        $stdio->outln("Saving target {$file}");
+        $this->stdio->outln("Saving target {$file}");
         $this->fsio->put($file, $html);
     }
 }

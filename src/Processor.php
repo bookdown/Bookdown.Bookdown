@@ -6,20 +6,24 @@ use Bookdown\Bookdown\Content\RootPage;
 
 class Processor
 {
-    protected $processors;
+    protected $stdio;
+    protected $processes;
 
-    public function __construct(array $processors = null)
-    {
-        $this->processors = $processors;
+    public function __construct(
+        Stdio $stdio,
+        array $processes
+    ) {
+        $this->stdio = $stdio;
+        $this->processes = $processes;
     }
 
-    public function __invoke(RootPage $root, Stdio $stdio)
+    public function __invoke(RootPage $root)
     {
-        $stdio->outln("Applying processors.");
-        foreach ($this->processors as $processor) {
+        $this->stdio->outln("Processing pages.");
+        foreach ($this->processes as $process) {
             $page = $root;
             while ($page) {
-                $processor($page, $stdio);
+                $process($page);
                 $page = $page->getNext();
             }
         }

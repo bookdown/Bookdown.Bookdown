@@ -60,6 +60,7 @@ class Command
     {
         $collector = $this->newCollector();
         $this->root = $collector($this->origin);
+        $this->config = $this->root->getConfig();
     }
 
     protected function newCollector()
@@ -82,19 +83,21 @@ class Command
 
     protected function newProcessor()
     {
-        return new Processor(array(
-            $this->newProcess('Conversion'),
-            $this->newProcess('Headings'),
-            $this->newProcess('Toc'),
-            $this->newProcess('Rendering'),
-        ));
+        return new Processor(
+            $this->stdio,
+            array(
+                $this->newProcess('Conversion'),
+                $this->newProcess('Headings'),
+                $this->newProcess('Toc'),
+                $this->newProcess('Rendering'),
+            )
+        );
     }
 
     protected function newProcess($name)
     {
-        $config = $this->root->getConfig();
         $method = "get{$name}Process";
-        $class = $config->$method();
+        $class = $this->config->$method();
         $implemented = is_subclass_of(
             $class,
             'Bookdown\Bookdown\Process\ProcessBuilderInterface'
@@ -105,7 +108,7 @@ class Command
             );
         }
         $builder = new $class();
-        return $builder->newInstance($config);
+        return $builder->newInstance($this->config, $this->stdio);
     }
 
     protected function reportTime()

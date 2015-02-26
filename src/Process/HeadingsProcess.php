@@ -26,17 +26,21 @@ class HeadingsProcess implements ProcessInterface
 
     protected $fsio;
 
+    protected $stdio;
+
     public function __construct(
+        Stdio $stdio,
         Fsio $fsio,
         HeadingFactory $headingFactory
     ) {
+        $this->stdio = $stdio;
         $this->fsio = $fsio;
         $this->headingFactory = $headingFactory;
     }
 
-    public function __invoke(Page $page, Stdio $stdio)
+    public function __invoke(Page $page)
     {
-        $stdio->outln("Processing headings for {$page->getTarget()}");
+        $this->stdio->outln("Processing headings for {$page->getTarget()}");
 
         $this->reset($page);
 

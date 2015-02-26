@@ -9,21 +9,24 @@ use Bookdown\Bookdown\Process\ProcessInterface;
 
 class RenderingProcess implements ProcessInterface
 {
+    protected $stdio;
     protected $fsio;
     protected $view;
 
     public function __construct(
+        Stdio $stdio,
         Fsio $fsio,
         View $view
     ) {
+        $this->stdio = $stdio;
         $this->fsio = $fsio;
         $this->view = $view;
     }
 
-    public function __invoke(Page $page, Stdio $stdio)
+    public function __invoke(Page $page)
     {
         $file = $page->getTarget();
-        $stdio->outln("Rendering template for {$file}");
+        $this->stdio->outln("Rendering template for {$file}");
         $this->view->page = $page;
         $html = $this->view->__invoke();
         $this->fsio->put($file, $html);

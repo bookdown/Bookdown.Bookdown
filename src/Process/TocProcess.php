@@ -7,16 +7,22 @@ use Bookdown\Bookdown\Content\IndexPage;
 
 class TocProcess implements ProcessInterface
 {
+    protected $stdio;
     protected $tocEntries;
 
-    public function __invoke(Page $page, Stdio $stdio)
+    public function __construct(Stdio $stdio)
+    {
+        $this->stdio = $stdio;
+    }
+
+    public function __invoke(Page $page)
     {
         if (! $page->isIndex()) {
-            $stdio->outln("Skipping TOC entries for non-index {$page->getTarget()}");
+            $this->stdio->outln("Skipping TOC entries for non-index {$page->getTarget()}");
             return;
         }
 
-        $stdio->outln("Adding TOC entries for {$page->getTarget()}");
+        $this->stdio->outln("Adding TOC entries for {$page->getTarget()}");
         $this->tocEntries = array();
         $this->addTocEntries($page);
         $page->setTocEntries($this->tocEntries);

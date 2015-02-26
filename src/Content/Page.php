@@ -160,8 +160,8 @@ class Page
     public function getRoot()
     {
         $page = $this;
-        while ($parent = $page->getParent()) {
-            $page = $parent;
+        while (! $page->isRoot()) {
+            $page = $page->getParent();
         }
         return $page;
     }

@@ -37,44 +37,44 @@ class RootConfig extends Config
 
     protected function initTemplates()
     {
-        $this->templates = isset($this->json->templates)
-            ? (array) $this->json->templates
-            : array();
+        $this->templates = empty($this->json->templates)
+            ? array()
+            : (array) $this->json->templates;
     }
 
     protected function initTemplateName()
     {
-        $this->templateName = isset($this->json->templateName)
-            ? $this->json->templateName
-            : null;
+        $this->templateName = empty($this->json->templateName)
+            ? null
+            : $this->json->templateName;
     }
 
     protected function initConversionProcess()
     {
-        $this->conversionProcess = isset($this->json->conversionProcess)
-            ? $this->json->conversionProcess
-            : 'Bookdown\Bookdown\Process\Conversion\ConversionProcessBuilder';
+        $this->conversionProcess = empty($this->json->conversionProcess)
+            ? 'Bookdown\Bookdown\Process\Conversion\ConversionProcessBuilder'
+            : $this->json->conversionProcess;
     }
 
     protected function initHeadingsProcess()
     {
-        $this->headingsProcess = isset($this->json->headingsProcess)
-            ? $this->json->headingsProcess
-            : 'Bookdown\Bookdown\Process\Headings\HeadingsProcessBuilder';
+        $this->headingsProcess = empty($this->json->headingsProcess)
+            ? 'Bookdown\Bookdown\Process\Headings\HeadingsProcessBuilder'
+            : $this->json->headingsProcess;
     }
 
     protected function initTocProcess()
     {
-        $this->tocProcess = isset($this->json->tocProcess)
-            ? $this->json->tocProcess
-            : 'Bookdown\Bookdown\Process\Toc\TocProcessBuilder';
+        $this->tocProcess = empty($this->json->tocProcess)
+            ? 'Bookdown\Bookdown\Process\Toc\TocProcessBuilder'
+            : $this->json->tocProcess;
     }
 
     protected function initRenderingProcess()
     {
-        $this->renderingProcess = isset($this->json->renderingProcess)
-            ? $this->json->renderingProcess
-            : 'Bookdown\Bookdown\Process\Rendering\RenderingProcessBuilder';
+        $this->renderingProcess = empty($this->json->renderingProcess)
+            ? 'Bookdown\Bookdown\Process\Rendering\RenderingProcessBuilder'
+            : $this->json->renderingProcess;
     }
 
     public function getConversionProcess()

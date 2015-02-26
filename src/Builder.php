@@ -9,6 +9,7 @@ class Builder
     protected $stdout;
     protected $stderr;
     protected $stdio;
+    protected $cliFactory;
 
     public function __construct(
         $stdout = 'php://stdout',
@@ -20,17 +21,23 @@ class Builder
 
     public function newCommand($globals)
     {
-        $cliFactory = new CliFactory();
-        $context = $cliFactory->newContext($globals);
+        $context = $this->getCliFactory()->newContext($globals);
         $stdio = $this->getStdio();
         return new Command($context, $stdio, $this);
+    }
+
+    public function getCliFactory()
+    {
+        if (! $this->cliFactory) {
+            $this->cliFactory = new CliFactory();
+        }
+        return $this->cliFactory;
     }
 
     public function getStdio()
     {
         if (! $this->stdio) {
-            $cliFactory = new CliFactory();
-            $this->stdio = $cliFactory->newStdio(
+            $this->stdio = $this->getCliFactory()->newStdio(
                 'php://stdin',
                 $this->stdout,
                 $this->stderr

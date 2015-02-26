@@ -1,10 +1,11 @@
 <?php
-namespace Bookdown\Bookdown\Process;
+namespace Bookdown\Bookdown\Process\Conversion;
 
 use Aura\Cli\Stdio;
 use Bookdown\Bookdown\Config\RootConfig;
 use Bookdown\Bookdown\Fsio;
 use League\CommonMark\CommonMarkConverter;
+use Bookdown\Bookdown\Process\ProcessBuilderInterface;
 
 class ConversionProcessBuilder implements ProcessBuilderInterface
 {

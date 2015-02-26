@@ -1,9 +1,10 @@
 <?php
-namespace Bookdown\Bookdown\Process;
+namespace Bookdown\Bookdown\Process\Toc;
 
 use Aura\Cli\Stdio;
 use Bookdown\Bookdown\Content\Page;
 use Bookdown\Bookdown\Content\IndexPage;
+use Bookdown\Bookdown\Process\ProcessInterface;
 
 class TocProcess implements ProcessInterface
 {

@@ -1,10 +1,11 @@
 <?php
-namespace Bookdown\Bookdown\Process;
+namespace Bookdown\Bookdown\Process\Headings;
 
 use Aura\Cli\Stdio;
 use Bookdown\Bookdown\Config\RootConfig;
 use Bookdown\Bookdown\Content\HeadingFactory;
 use Bookdown\Bookdown\Fsio;
+use Bookdown\Bookdown\Process\ProcessBuilderInterface;
 
 class HeadingsProcessBuilder implements ProcessBuilderInterface
 {

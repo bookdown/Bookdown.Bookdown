@@ -1,5 +1,5 @@
 <?php
-namespace Bookdown\Bookdown\Process;
+namespace Bookdown\Bookdown\Process\Conversion;
 
 use Aura\Cli\Stdio;
 use Bookdown\Bookdown\Content\Page;

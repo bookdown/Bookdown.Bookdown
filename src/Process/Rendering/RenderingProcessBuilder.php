@@ -1,5 +1,5 @@
 <?php
-namespace Bookdown\Bookdown\Process;
+namespace Bookdown\Bookdown\Process\Rendering;
 
 use Aura\Cli\Stdio;
 use Aura\Html\HelperLocatorFactory;
@@ -7,6 +7,7 @@ use Aura\View\View;
 use Aura\View\ViewFactory;
 use Bookdown\Bookdown\Config\RootConfig;
 use Bookdown\Bookdown\Fsio;
+use Bookdown\Bookdown\Process\ProcessBuilderInterface;
 
 class RenderingProcessBuilder implements ProcessBuilderInterface
 {

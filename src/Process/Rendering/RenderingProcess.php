@@ -1,5 +1,5 @@
 <?php
-namespace Bookdown\Bookdown\Process;
+namespace Bookdown\Bookdown\Process\Rendering;
 
 use Aura\Cli\Stdio;
 use Aura\View\View;

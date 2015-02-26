@@ -53,28 +53,28 @@ class RootConfig extends Config
     {
         $this->conversionProcess = isset($this->json->conversionProcess)
             ? $this->json->conversionProcess
-            : 'Bookdown\Bookdown\Process\ConversionProcessBuilder';
+            : 'Bookdown\Bookdown\Process\Conversion\ConversionProcessBuilder';
     }
 
     protected function initHeadingsProcess()
     {
         $this->headingsProcess = isset($this->json->headingsProcess)
             ? $this->json->headingsProcess
-            : 'Bookdown\Bookdown\Process\HeadingsProcessBuilder';
+            : 'Bookdown\Bookdown\Process\Headings\HeadingsProcessBuilder';
     }
 
     protected function initTocProcess()
     {
         $this->tocProcess = isset($this->json->tocProcess)
             ? $this->json->tocProcess
-            : 'Bookdown\Bookdown\Process\TocProcessBuilder';
+            : 'Bookdown\Bookdown\Process\Toc\TocProcessBuilder';
     }
 
     protected function initRenderingProcess()
     {
         $this->renderingProcess = isset($this->json->renderingProcess)
             ? $this->json->renderingProcess
-            : 'Bookdown\Bookdown\Process\RenderingProcessBuilder';
+            : 'Bookdown\Bookdown\Process\Rendering\RenderingProcessBuilder';
     }
 
     public function getConversionProcess()

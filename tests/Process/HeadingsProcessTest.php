@@ -8,7 +8,6 @@ use Bookdown\Bookdown\FakeFsio;
 class HeadingsProcessTest extends \PHPUnit_Framework_TestCase
 {
     protected $fsio;
-    protected $page;
     protected $fixture;
 
     protected function setUp()

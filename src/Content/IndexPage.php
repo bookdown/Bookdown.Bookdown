@@ -14,7 +14,7 @@ class IndexPage extends Page
     public function __construct(
         IndexConfig $config,
         $name,
-        $parent,
+        IndexPage $parent,
         $count
     ) {
         $this->config = $config;

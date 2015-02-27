@@ -32,8 +32,17 @@ class ConversionTest extends \PHPUnit_Framework_TestCase
     public function testConversion()
     {
         $this->process->__invoke($this->fixture->page);
-        $html = $this->fsio->get($this->fixture->page->getTarget());
-        $this->assertSame('<h1>Title</h1>', trim($html));
+        $expect = '<h1>Title</h1>
+<p>Text under title.</p>
+<h2>Subtitle A</h2>
+<p>Text under subtitle A.</p>
+<h3>Sub-subtitle</h3>
+<p>Text under sub-subtitle.</p>
+<h2>Subtitle B</h2>
+<p>Text under subtitle B.</p>
+';
+        $actual = $this->fsio->get($this->fixture->page->getTarget());
+        $this->assertSame($expect, $actual);
     }
 
     public function testConversionNoOrigin()

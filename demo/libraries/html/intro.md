@@ -1,4 +1,4 @@
-# Aura.Html
+# Aura.Html Introduction
 
 Provides HTML escapers and helpers, including form input helpers, that can be used in any template, view, or presentation system.
 

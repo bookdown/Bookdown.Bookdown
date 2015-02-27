@@ -1,4 +1,4 @@
-# Aura HTTP
+# Aura.Http
 
 The Aura HTTP package provides objects to build and send HTTP requests and
 responses, including `multipart/form-data` requests, with streaming of file

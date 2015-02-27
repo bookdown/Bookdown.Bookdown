@@ -1,4 +1,4 @@
-# Rules To Sanitize Fields
+# Aura.Filter Rules To Sanitize Fields
 
 ## alnum
 

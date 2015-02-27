@@ -35,9 +35,9 @@ different parts of the response:
   filename
 
 - `$response->cache` for convenience methods related to cache headers
-  
+
 - `$response->redirect` for convenience methods related to Location and Status
-  
+
 
 ## Status
 
@@ -194,7 +194,7 @@ cache headers.
 
 - `disable()` turns off caching by removing all cache-related headers, then
   sets the following:
-  
+
         Cache-Control: max-age=0, no-cache, no-store, must-revalidate, proxy-revalidate
         Expires: Mon, 01 Jan 0001 00:00:00 GMT
         Pragma: no-cache

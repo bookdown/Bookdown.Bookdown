@@ -1,4 +1,4 @@
-# Aura.Filter
+# Aura.Filter Introduction
 
 This package provides tools to validate and sanitize objects and arrays.
 

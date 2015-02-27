@@ -7,9 +7,9 @@ class IndexPage extends Page
 
     protected $tocEntries;
 
-    public function getAbsoluteHref()
+    public function getHref()
     {
-        $base = $this->getParent()->getAbsoluteHref();
+        $base = $this->getParent()->getHref();
         return $base . $this->getName() . '/';
     }
 

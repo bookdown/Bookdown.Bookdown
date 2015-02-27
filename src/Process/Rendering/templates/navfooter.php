@@ -10,17 +10,17 @@ $next = $this->page->getNext();
         <tr>
             <td width="40%" align="left"><?php if ($prev) {
                 echo $this->anchor(
-                    $prev->getAbsoluteHref(), 'Prev'
+                    $prev->getHref(), 'Prev'
                 );
             } ?></td>
             <td width="20%" align="center"><?php if ($parent) {
                 echo $this->anchor(
-                    $parent->getAbsoluteHref(), 'Up'
+                    $parent->getHref(), 'Up'
                 );
             } ?></td>
             <td width="40%" align="right"><?php if ($next) {
                 echo $this->anchor(
-                    $next->getAbsoluteHref(), 'Next'
+                    $next->getHref(), 'Next'
                 );
             } ?></td>
         </tr>

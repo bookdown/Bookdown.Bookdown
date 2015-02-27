@@ -27,11 +27,11 @@ class PageBuilder
         return $page;
     }
 
-    public function newRootPage($bookdownFile, $name)
+    public function newRootPage($bookdownFile)
     {
         $config = $this->configBuilder->newRootConfig($bookdownFile);
         $origin = $config->getIndexOrigin();
-        $page = new RootPage($name, $origin, null, null);
+        $page = new RootPage(null, $origin, null, null);
         $page->setTitle($config->getTitle());
         $page->setConfig($config);
         return $page;

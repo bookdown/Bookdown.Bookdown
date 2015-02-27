@@ -102,9 +102,9 @@ class Page
         return $this->next;
     }
 
-    public function getAbsoluteHref()
+    public function getHref()
     {
-        $base = $this->getParent()->getAbsoluteHref();
+        $base = $this->getParent()->getHref();
         return $base . $this->getName() . '.html';
     }
 

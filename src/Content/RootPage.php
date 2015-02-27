@@ -3,7 +3,7 @@ namespace Bookdown\Bookdown\Content;
 
 class RootPage extends IndexPage
 {
-    public function getAbsoluteHref()
+    public function getHref()
     {
         return '/';
     }

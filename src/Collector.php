@@ -47,7 +47,7 @@ class Collector
     protected function addIndexPage($bookdownFile, $name, $parent, $count)
     {
         if (! $parent) {
-            $page = $this->pageBuilder->newRootPage($bookdownFile, $name);
+            $page = $this->pageBuilder->newRootPage($bookdownFile);
             $this->stdio->outln("Added root page from {$bookdownFile}");
         } else {
             $page = $this->pageBuilder->newIndexPage($bookdownFile, $name, $parent, $count);

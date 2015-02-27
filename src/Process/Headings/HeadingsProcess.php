@@ -73,7 +73,7 @@ class HeadingsProcess implements ProcessInterface
             $this->headings[] = $this->headingFactory->newInstance(
                 $this->page->getNumber(),
                 $this->page->getTitle(),
-                $this->page->getAbsoluteHref()
+                $this->page->getHref()
             );
         }
     }
@@ -153,7 +153,7 @@ class HeadingsProcess implements ProcessInterface
         return $this->headingFactory->newInstance(
             $number,
             $title,
-            $this->page->getAbsoluteHref(),
+            $this->page->getHref(),
             $id
         );
     }

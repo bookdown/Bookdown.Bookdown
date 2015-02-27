@@ -11,7 +11,7 @@
                 $prev = $this->page->getPrev();
                 if ($prev) {
                     echo $this->anchor(
-                        $prev->getAbsoluteHref(),
+                        $prev->getHref(),
                         $prev->getTitle()
                     );
                 }
@@ -26,7 +26,7 @@
                 $next = $this->page->getNext();
                 if ($next) {
                     echo $this->anchor(
-                        $next->getAbsoluteHref(),
+                        $next->getHref(),
                         $next->getTitle()
                     );
                 }

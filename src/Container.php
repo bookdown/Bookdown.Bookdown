@@ -2,7 +2,6 @@
 namespace Bookdown\Bookdown;
 
 use Aura\Cli\CliFactory;
-use Bookdown\Bookdown\Config\RootConfig;
 
 class Container
 {
@@ -28,7 +27,8 @@ class Container
         return new Command(
             $this->getCliFactory()->newContext($globals),
             $this->getStdio(),
-            $this
+            $this->newCollector(),
+            $this->newProcessorBuilder()
         );
     }
 
@@ -42,36 +42,12 @@ class Container
         );
     }
 
-    public function newProcessor(RootConfig $config)
+    public function newProcessorBuilder()
     {
-        return new Processor(
+        return new ProcessorBuilder(
             $this->getStdio(),
-            array(
-                $this->newProcess($config, 'Conversion'),
-                $this->newProcess($config, 'Headings'),
-                $this->newProcess($config, 'Toc'),
-                $this->newProcess($config, 'Rendering'),
-            )
+            $this->getFsio()
         );
-    }
-
-    public function newProcess(RootConfig $config, $name)
-    {
-        $method = "get{$name}Process";
-        $class = $config->$method();
-
-        $implemented = is_subclass_of(
-            $class,
-            'Bookdown\Bookdown\Process\ProcessBuilderInterface'
-        );
-        if (! $implemented) {
-            throw new Exception(
-                "'{$class}' does not implement ProcessBuilderInterface"
-            );
-        }
-
-        $builder = new $class();
-        return $builder->newInstance($config, $this->getStdio(), $this->getFsio());
     }
 
     public function getCliFactory()

@@ -8,21 +8,24 @@ use Exception as AnyException;
 class Command
 {
     protected $rootConfigFile;
-    protected $root;
+    protected $rootPage;
     protected $stdio;
     protected $context;
     protected $started;
     protected $container;
     protected $rootConfig;
+    protected $collector;
 
     public function __construct(
         Context $context,
         Stdio $stdio,
-        Container $container
+        Collector $collector,
+        ProcessorBuilder $processorBuilder
     ) {
         $this->context = $context;
         $this->stdio = $stdio;
-        $this->container = $container;
+        $this->collector = $collector;
+        $this->processorBuilder = $processorBuilder;
     }
 
     public function __invoke()
@@ -62,15 +65,14 @@ class Command
 
     protected function collect()
     {
-        $collector = $this->container->newCollector();
-        $this->root = $collector($this->rootConfigFile);
-        $this->rootConfig = $this->root->getConfig();
+        $this->rootPage = $this->collector->__invoke($this->rootConfigFile);
+        $this->rootConfig = $this->rootPage->getConfig();
     }
 
     protected function process()
     {
-        $processor = $this->container->newProcessor($this->rootConfig);
-        $processor($this->root);
+        $processor = $this->processorBuilder->newProcessor($this->rootConfig);
+        $processor($this->rootPage);
     }
 
     protected function reportTime()

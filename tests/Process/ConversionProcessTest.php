@@ -5,7 +5,7 @@ use Bookdown\Bookdown\BookFixture;
 use Bookdown\Bookdown\Container;
 use Bookdown\Bookdown\FakeFsio;
 
-class ConversionTest extends \PHPUnit_Framework_TestCase
+class ConversionProcessTest extends \PHPUnit_Framework_TestCase
 {
     protected $fsio;
     protected $page;

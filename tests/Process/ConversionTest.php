@@ -48,7 +48,7 @@ class ConversionTest extends \PHPUnit_Framework_TestCase
     public function testConversionNoOrigin()
     {
         $this->process->__invoke($this->fixture->rootPage);
-        $html = $this->fsio->get($this->fixture->rootPage->getTarget());
-        $this->assertSame('', trim($html));
+        $actual = $this->fsio->get($this->fixture->rootPage->getTarget());
+        $this->assertSame('', $actual);
     }
 }

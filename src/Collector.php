@@ -15,6 +15,7 @@ class Collector
     protected $stdio;
     protected $fsio;
     protected $level;
+    protected $prev;
 
     public function __construct(
         Stdio $stdio,
@@ -93,13 +94,12 @@ class Collector
 
     protected function append(Page $page)
     {
-        $prev = end($this->pages);
-        if ($prev) {
-            $prev->setNext($page);
-            $page->setPrev($prev);
+        if ($this->prev) {
+            $this->prev->setNext($page);
+            $page->setPrev($this->prev);
         }
-
         $this->pages[] = $page;
+        $this->prev = $page;
         return $page;
     }
 

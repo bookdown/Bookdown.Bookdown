@@ -1,11 +1,33 @@
 <?php
 namespace Bookdown\Bookdown\Content;
 
+use Bookdown\Bookdown\Config\Config;
+
 class IndexPage extends Page
 {
     protected $children;
 
     protected $tocEntries;
+
+    protected $config;
+
+    public function __construct(
+        Config $config,
+        $name,
+        $parent,
+        $count
+    ) {
+        $this->config = $config;
+        $this->name = $name;
+        $this->parent = $parent;
+        $this->count = $count;
+        $this->setTitle($config->getTitle());
+    }
+
+    public function getConfig()
+    {
+        return $this->config;
+    }
 
     public function getHref()
     {

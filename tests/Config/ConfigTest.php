@@ -8,7 +8,6 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
     protected $validLocalJson = '{
         "title": "Example Title",
         "content": {
-            "index": "index.md",
             "foo": "foo.md",
             "bar": "/bar.md",
             "baz": "http://example.com/baz.md"
@@ -18,7 +17,6 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
     protected $validRemoteJson = '{
         "title": "Example Title",
         "content": {
-            "index": "index.md",
             "zim": "zim.md",
             "dib": "dib.md",
             "gir": "http://example.com/gir.md"
@@ -29,7 +27,6 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
 
     protected $jsonMissingTitle = '{
         "content": {
-            "index": "index.md",
             "foo": "foo.md",
             "bar": "/bar.md",
             "baz": "http://example.com/baz.md"

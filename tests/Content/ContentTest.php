@@ -73,7 +73,7 @@ TEXT;
     {
         $this->assertInstanceOf('Bookdown\Bookdown\Content\RootPage', $this->root);
 
-        $this->assertSame('', $this->root->getOrigin());
+        $this->assertSame(null, $this->root->getOrigin());
         $this->assertSame('/_site/index.html', $this->root->getTarget());
 
         $this->assertSame('/', $this->root->getHref());
@@ -112,7 +112,7 @@ TEXT;
     {
         $this->assertInstanceOf('Bookdown\Bookdown\Content\IndexPage', $this->index);
 
-        $this->assertSame('', $this->index->getOrigin());
+        $this->assertSame(null, $this->index->getOrigin());
         $this->assertSame('/_site/chapter-1/index.html', $this->index->getTarget());
         $this->assertSame('/chapter-1/', $this->index->getHref());
 

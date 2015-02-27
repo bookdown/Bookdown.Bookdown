@@ -14,7 +14,6 @@ class ConfigBuilderTest extends \PHPUnit_Framework_TestCase
         $this->fsio->put('/path/to/bookdown.json', '{
             "title": "Example Title",
             "content": {
-                "index": "index.md",
                 "foo": "foo.md",
                 "bar": "/bar.md",
                 "baz": "http://example.com/baz.md"

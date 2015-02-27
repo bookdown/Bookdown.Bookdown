@@ -20,18 +20,14 @@ class PageBuilder
     public function newIndexPage($bookdownFile, $name, $parent, $count)
     {
         $config = $this->configBuilder->newConfig($bookdownFile);
-        $page = new IndexPage($name, null, $parent, $count);
-        $page->setTitle($config->getTitle());
-        $page->setConfig($config);
+        $page = new IndexPage($config, $name, $parent, $count);
         return $page;
     }
 
     public function newRootPage($bookdownFile)
     {
         $config = $this->configBuilder->newRootConfig($bookdownFile);
-        $page = new RootPage(null, null, null, null);
-        $page->setTitle($config->getTitle());
-        $page->setConfig($config);
+        $page = new RootPage($config);
         return $page;
     }
 }

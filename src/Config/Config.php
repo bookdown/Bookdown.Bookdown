@@ -64,7 +64,7 @@ class Config
             throw new Exception("No content listed in '{$this->file}'.");
         }
 
-        if (isset($this->content->index)) {
+        if (isset($this->content['index'])) {
             throw new Exception("Disallowed 'index' content in {$this->file}.");
         }
 

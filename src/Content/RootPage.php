@@ -1,8 +1,16 @@
 <?php
 namespace Bookdown\Bookdown\Content;
 
+use Bookdown\Bookdown\Config\RootConfig;
+
 class RootPage extends IndexPage
 {
+    public function __construct(RootConfig $config)
+    {
+        $this->config = $config;
+        $this->setTitle($config->getTitle());
+    }
+
     public function getHref()
     {
         return '/';

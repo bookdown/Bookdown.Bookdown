@@ -8,7 +8,6 @@ class RootConfigTest extends \PHPUnit_Framework_TestCase
     protected $maxRootJson = '{
         "title": "Example Title",
         "content": {
-            "index": "index.md",
             "foo": "foo.md",
             "bar": "/bar.md",
             "baz": "http://example.com/baz.md"
@@ -28,7 +27,6 @@ class RootConfigTest extends \PHPUnit_Framework_TestCase
     protected $minRootJson = '{
         "title": "Example Title",
         "content": {
-            "index": "index.md",
             "foo": "foo.md",
             "bar": "/bar.md",
             "baz": "http://example.com/baz.md"

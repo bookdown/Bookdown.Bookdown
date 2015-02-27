@@ -98,7 +98,7 @@ class HeadingsProcess implements ProcessInterface
     protected function processHeadingNodes()
     {
         $nodes = $this->getHeadingNodes();
-        $this->setItemTitle($nodes);
+        $this->setPageTitle($nodes);
         $this->addHeadings($nodes);
         $this->setHtmlFromDomDocument();
     }
@@ -111,12 +111,8 @@ class HeadingsProcess implements ProcessInterface
         return $xpath->query($query);
     }
 
-    protected function setItemTitle(DomNodeList $nodes)
+    protected function setPageTitle(DomNodeList $nodes)
     {
-        if ($this->page->getTitle()) {
-            return;
-        }
-
         $node = $nodes->item(0);
         if ($node) {
             $this->page->setTitle($node->nodeValue);

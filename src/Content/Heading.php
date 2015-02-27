@@ -50,4 +50,9 @@ class Heading
     {
         return $this->level;
     }
+
+    public function asArray()
+    {
+        return get_object_vars($this);
+    }
 }

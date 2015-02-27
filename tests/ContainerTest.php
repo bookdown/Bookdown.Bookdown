@@ -6,12 +6,10 @@ use Bookdown\Bookdown\Config\RootConfig;
 class ContainerTest extends \PHPUnit_Framework_TestCase
 {
     protected $container;
-    protected $rootConfig;
 
     protected function setUp()
     {
         $this->container = new Container();
-
     }
 
     public function testNewCommand()
@@ -30,37 +28,12 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testNewProcessor()
+    public function testNewProcessorBuilder()
     {
-        $rootConfig = new RootConfig('/path/to/bookdown.json', '{
-            "title": "Example Book",
-            "content": {
-                "foo": "foo.md"
-            }
-        }');
-
         $this->assertInstanceOf(
-            'Bookdown\Bookdown\Processor',
-            $this->container->newProcessor($rootConfig)
+            'Bookdown\Bookdown\ProcessorBuilder',
+            $this->container->newProcessorBuilder()
         );
-    }
-
-    public function testNewProcessUnimplementedContainer()
-    {
-        $rootConfig = new RootConfig('/path/to/bookdown.json', '{
-            "title": "Example Book",
-            "content": {
-                "foo": "foo.md"
-            },
-            "tocProcess": "Bookdown\\\\Bookdown\\\\Process\\\\Fake\\\\FakeProcessUnimplementedBuilder"
-        }');
-
-        $this->setExpectedException(
-            'Bookdown\Bookdown\Exception',
-            "Bookdown\Bookdown\Process\Fake\FakeProcessUnimplementedBuilder' does not implement ProcessBuilderInterface"
-        );
-
-        $this->container->newProcess($rootConfig, 'Toc');
     }
 
     public function testGetCliFactory()

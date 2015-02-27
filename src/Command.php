@@ -72,7 +72,7 @@ class Command
     protected function process()
     {
         $processor = $this->processorBuilder->newProcessor($this->rootConfig);
-        $processor($this->rootPage);
+        $processor->__invoke($this->rootPage);
     }
 
     protected function reportTime()

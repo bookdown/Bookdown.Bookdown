@@ -1,53 +1,37 @@
 <?php
 namespace Bookdown\Bookdown\Content;
 
-use Bookdown\Bookdown\Config\ConfigBuilder;
-use Bookdown\Bookdown\FakeFsio;
+use Bookdown\Bookdown\Config\IndexConfig;
+use Bookdown\Bookdown\Config\RootConfig;
 
 class ContentTest extends \PHPUnit_Framework_TestCase
 {
-    protected $fsio;
-    protected $configBuilder;
-    protected $pageBuilder;
-
+    protected $pageFactory;
     protected $root;
     protected $index;
     protected $page;
 
     protected function setUp()
     {
-        $this->fsio = new FakeFsio;
-        $this->configBuilder = new ConfigBuilder($this->fsio);
-        $this->pageBuilder = new PageBuilder($this->configBuilder);
+        $pageFactory = new PageFactory();
 
-        $text = <<<TEXT
-# Section 1
-
-This is section 1.
-
-TEXT;
-
-        $this->fsio->put('/path/to/bookdown.json', '{
+        $rootConfig = new RootConfig('/path/to/bookdown.json', '{
             "title": "Example Book",
             "content": {
                 "chapter-1": "chapter-1/bookdown.json"
             },
             "target": "/_site"
         }');
+        $this->root = $pageFactory->newRootPage($rootConfig);
 
-        $this->fsio->put('/path/to/chapter-1/bookdown.json', '{
+        $indexConfig = new IndexConfig('/path/to/chapter-1/bookdown.json', '{
             "title": "Chapter 1",
             "content": {
                 "section-1": "section-1.md"
             }
         }');
-
-        $this->fsio->put('/path/to/chapter-1/section-1.md', $text);
-
-        $this->root = $this->pageBuilder->newRootPage('/path/to/bookdown.json');
-
-        $this->index = $this->pageBuilder->newIndexPage(
-            '/path/to/chapter-1/bookdown.json',
+        $this->index = $pageFactory->newIndexPage(
+            $indexConfig,
             'chapter-1',
             $this->root,
             1
@@ -57,7 +41,7 @@ TEXT;
         $this->root->addChild($this->index);
         $this->index->setPrev($this->root);
 
-        $this->page = $this->pageBuilder->newPage(
+        $this->page = $pageFactory->newPage(
             '/path/to/chapter-1/section-1.md',
             'section-1',
             $this->index,

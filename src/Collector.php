@@ -4,12 +4,14 @@ namespace Bookdown\Bookdown;
 use Aura\Cli\Stdio;
 use Bookdown\Bookdown\Content\PageBuilder;
 use Bookdown\Bookdown\Content\Page;
+use Bookdown\Bookdown\Content\IndexPage;
 
 class Collector
 {
     protected $pages = array();
     protected $pageBuilder;
     protected $stdio;
+    protected $level;
 
     public function __construct(Stdio $stdio, PageBuilder $pageBuilder)
     {
@@ -19,42 +21,61 @@ class Collector
 
     public function __invoke($bookdownFile, $name = '', $parent = null, $count = 0)
     {
-        $this->stdio->outln("  Collecting content from {$bookdownFile}");
-
-        $index = $this->addIndexPage($bookdownFile, $name, $parent, $count);
-        $count = 0;
-        foreach ($index->getConfig()->getContent() as $name => $origin) {
-            $count ++;
-            if (substr($origin, -5) == '.json') {
-                $child = $this->__invoke($origin, $name, $index, $count);
-            } else {
-                $child = $this->addPage($name, $origin, $index, $count);
-            }
-            $index->addChild($child);
-        }
-
+        $this->padln("Collecting content from {$bookdownFile}");
+        $this->level ++;
+        $index = $this->newIndex($bookdownFile, $name, $parent, $count);
+        $this->addContent($index);
+        $this->level --;
         return $index;
     }
 
-    protected function addPage($name, $origin, $parent, $count)
+    protected function newIndex($bookdownFile, $name, $parent, $count)
+    {
+        if (! $parent) {
+            return $this->addRootPage($bookdownFile);
+        }
+
+        return $this->addIndexPage($bookdownFile, $name, $parent, $count);
+    }
+
+    protected function addContent(IndexPage $index)
+    {
+        $count = 1;
+        foreach ($index->getConfig()->getContent() as $name => $origin) {
+            $child = $this->newChild($origin, $name, $index, $count);
+            $index->addChild($child);
+            $count ++;
+        }
+    }
+
+    protected function newChild($origin, $name, $index, $count)
+    {
+        if (substr($origin, -5) == '.json') {
+            return $this->__invoke($origin, $name, $index, $count);
+        }
+
+        return $this->addPage($origin, $name, $index, $count);
+    }
+
+    protected function addPage($origin, $name, $parent, $count)
     {
         $page = $this->pageBuilder->newPage($name, $origin, $parent, $count);
-        $this->stdio->outln("    Added page {$page->getOrigin()}");
-        $this->append($page);
-        return $page;
+        $this->padln("Added page {$page->getOrigin()}");
+        return $this->append($page);
+    }
+
+    protected function addRootPage($bookdownFile)
+    {
+        $page = $this->pageBuilder->newRootPage($bookdownFile);
+        $this->padln("Added root page from {$bookdownFile}");
+        return $this->append($page);
     }
 
     protected function addIndexPage($bookdownFile, $name, $parent, $count)
     {
-        if (! $parent) {
-            $page = $this->pageBuilder->newRootPage($bookdownFile);
-            $this->stdio->outln("    Added root page from {$bookdownFile}");
-        } else {
-            $page = $this->pageBuilder->newIndexPage($bookdownFile, $name, $parent, $count);
-            $this->stdio->outln("    Added index page from {$bookdownFile}");
-        }
-        $this->append($page);
-        return $page;
+        $page = $this->pageBuilder->newIndexPage($bookdownFile, $name, $parent, $count);
+        $this->padln("Added index page from {$bookdownFile}");
+        return $this->append($page);
     }
 
     protected function append(Page $page)
@@ -66,5 +87,12 @@ class Collector
         }
 
         $this->pages[] = $page;
+        return $page;
+    }
+
+    protected function padln($str)
+    {
+        $pad = str_pad('', $this->level * 2);
+        $this->stdio->outln("  {$pad}{$str}");
     }
 }

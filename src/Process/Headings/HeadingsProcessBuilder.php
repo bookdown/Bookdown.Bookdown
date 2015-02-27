@@ -9,18 +9,13 @@ use Bookdown\Bookdown\Process\ProcessBuilderInterface;
 
 class HeadingsProcessBuilder implements ProcessBuilderInterface
 {
-    public function newInstance(RootConfig $config, Stdio $stdio)
+    public function newInstance(RootConfig $config, Stdio $stdio, Fsio $fsio)
     {
         return new HeadingsProcess(
             $stdio,
-            $this->newFsio(),
+            $fsio,
             $this->newHeadingFactory()
         );
-    }
-
-    protected function newFsio()
-    {
-        return new Fsio();
     }
 
     protected function newHeadingFactory()

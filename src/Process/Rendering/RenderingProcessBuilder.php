@@ -11,18 +11,13 @@ use Bookdown\Bookdown\Process\ProcessBuilderInterface;
 
 class RenderingProcessBuilder implements ProcessBuilderInterface
 {
-    public function newInstance(RootConfig $config, Stdio $stdio)
+    public function newInstance(RootConfig $config, Stdio $stdio, Fsio $fsio)
     {
         return new RenderingProcess(
             $stdio,
-            $this->newFsio(),
+            $fsio,
             $this->newView($config)
         );
-    }
-
-    protected function newFsio()
-    {
-        return new Fsio();
     }
 
     protected function newView(RootConfig $config)

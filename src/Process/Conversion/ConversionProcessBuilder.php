@@ -9,22 +9,17 @@ use Bookdown\Bookdown\Process\ProcessBuilderInterface;
 
 class ConversionProcessBuilder implements ProcessBuilderInterface
 {
-    public function newInstance(RootConfig $config, Stdio $stdio)
+    public function newInstance(RootConfig $config, Stdio $stdio, Fsio $fsio)
     {
         return new ConversionProcess(
             $stdio,
-            $this->newFsio(),
-            $this->newCommonMarkConverter()
+            $fsio,
+            $this->newCommonMarkConverter($config)
         );
     }
 
-    protected function newCommonMarkConverter()
+    protected function newCommonMarkConverter(RootConfig $config)
     {
         return new CommonMarkConverter();
-    }
-
-    protected function newFsio()
-    {
-        return new Fsio();
     }
 }

@@ -10,13 +10,17 @@ class Builder
     protected $stderr;
     protected $stdio;
     protected $cliFactory;
+    protected $fsio;
+    protected $fsioClass;
 
     public function __construct(
         $stdout = 'php://stdout',
-        $stderr = 'php://stderr'
+        $stderr = 'php://stderr',
+        $fsioClass = 'Bookdown\Bookdown\Fsio'
     ) {
         $this->stdout = $stdout;
         $this->stderr = $stderr;
+        $this->fsioClass = $fsioClass;
     }
 
     public function newCommand($globals)
@@ -26,33 +30,13 @@ class Builder
         return new Command($context, $stdio, $this);
     }
 
-    public function getCliFactory()
-    {
-        if (! $this->cliFactory) {
-            $this->cliFactory = new CliFactory();
-        }
-        return $this->cliFactory;
-    }
-
-    public function getStdio()
-    {
-        if (! $this->stdio) {
-            $this->stdio = $this->getCliFactory()->newStdio(
-                'php://stdin',
-                $this->stdout,
-                $this->stderr
-            );
-        }
-        return $this->stdio;
-    }
-
     public function newCollector()
     {
         return new Collector(
             $this->getStdio(),
             new Content\PageBuilder(
                 new Config\ConfigBuilder(
-                    new Fsio
+                    $this->getFsio()
                 )
             )
         );
@@ -75,6 +59,7 @@ class Builder
     {
         $method = "get{$name}Process";
         $class = $config->$method();
+
         $implemented = is_subclass_of(
             $class,
             'Bookdown\Bookdown\Process\ProcessBuilderInterface'
@@ -84,7 +69,37 @@ class Builder
                 "'{$class}' does not implement ProcessBuilderInterface"
             );
         }
+
         $builder = new $class();
-        return $builder->newInstance($config, $this->getStdio());
+        return $builder->newInstance($config, $this->getStdio(), $this->getFsio());
+    }
+
+    protected function getCliFactory()
+    {
+        if (! $this->cliFactory) {
+            $this->cliFactory = new CliFactory();
+        }
+        return $this->cliFactory;
+    }
+
+    protected function getStdio()
+    {
+        if (! $this->stdio) {
+            $this->stdio = $this->getCliFactory()->newStdio(
+                'php://stdin',
+                $this->stdout,
+                $this->stderr
+            );
+        }
+        return $this->stdio;
+    }
+
+    protected function getFsio()
+    {
+        if (! $this->fsio) {
+            $class = $this->fsioClass;
+            $this->fsio = new $class();
+        }
+        return $this->fsio;
     }
 }

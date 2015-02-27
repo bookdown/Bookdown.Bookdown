@@ -19,7 +19,7 @@ class PageBuilder
 
     public function newIndexPage($bookdownFile, $name, $parent, $count)
     {
-        $config = $this->configBuilder->newConfig($bookdownFile);
+        $config = $this->configBuilder->newIndexConfig($bookdownFile);
         $page = new IndexPage($config, $name, $parent, $count);
         return $page;
     }

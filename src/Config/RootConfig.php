@@ -3,7 +3,7 @@ namespace Bookdown\Bookdown\Config;
 
 use Bookdown\Bookdown\Exception;
 
-class RootConfig extends Config
+class RootConfig extends IndexConfig
 {
     protected $target;
     protected $conversionProcess;

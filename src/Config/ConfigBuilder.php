@@ -11,10 +11,10 @@ class ConfigBuilder
         $this->fsio = $fsio;
     }
 
-    public function newConfig($file)
+    public function newIndexConfig($file)
     {
         $data = $this->fsio->get($file);
-        return new Config($file, $data);
+        return new IndexConfig($file, $data);
     }
 
     public function newRootConfig($file)

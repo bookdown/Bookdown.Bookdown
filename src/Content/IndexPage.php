@@ -1,7 +1,7 @@
 <?php
 namespace Bookdown\Bookdown\Content;
 
-use Bookdown\Bookdown\Config\Config;
+use Bookdown\Bookdown\Config\IndexConfig;
 
 class IndexPage extends Page
 {
@@ -12,7 +12,7 @@ class IndexPage extends Page
     protected $config;
 
     public function __construct(
-        Config $config,
+        IndexConfig $config,
         $name,
         $parent,
         $count

@@ -3,7 +3,7 @@ namespace Bookdown\Bookdown\Config;
 
 use Bookdown\Bookdown\Exception;
 
-class Config
+class IndexConfig
 {
     protected $file;
     protected $dir;

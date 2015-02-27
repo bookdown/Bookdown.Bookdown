@@ -23,10 +23,10 @@ class ConfigBuilderTest extends \PHPUnit_Framework_TestCase
         $this->builder = new ConfigBuilder($this->fsio);
     }
 
-    public function testNewConfig()
+    public function testNewIndexConfig()
     {
-        $config = $this->builder->newConfig('/path/to/bookdown.json');
-        $this->assertInstanceOf('Bookdown\Bookdown\Config\Config', $config);
+        $config = $this->builder->newIndexConfig('/path/to/bookdown.json');
+        $this->assertInstanceOf('Bookdown\Bookdown\Config\IndexConfig', $config);
     }
 
     public function testNewRootConfig()

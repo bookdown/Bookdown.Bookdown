@@ -38,9 +38,9 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
         "content" : {}
     }';
 
-    protected function newConfig($file, $data)
+    protected function newIndexConfig($file, $data)
     {
-        return new Config($file, $data);
+        return new IndexConfig($file, $data);
     }
 
     public function testMalformedJson()
@@ -49,7 +49,7 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
             'Bookdown\Bookdown\Exception',
             "Malformed JSON in '/path/to/bookdown.json'."
         );
-        $config = $this->newConfig('/path/to/bookdown.json', $this->malformedJson);
+        $config = $this->newIndexConfig('/path/to/bookdown.json', $this->malformedJson);
     }
 
     public function testMissingTitle()
@@ -58,7 +58,7 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
             'Bookdown\Bookdown\Exception',
             "No title set in '/path/to/bookdown.json'."
         );
-        $config = $this->newConfig('/path/to/bookdown.json', $this->jsonMissingTitle);
+        $config = $this->newIndexConfig('/path/to/bookdown.json', $this->jsonMissingTitle);
     }
 
     public function testMissingContent()
@@ -67,12 +67,12 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
             'Bookdown\Bookdown\Exception',
             "No content listed in '/path/to/bookdown.json'."
         );
-        $config = $this->newConfig('/path/to/bookdown.json', $this->jsonMissingContent);
+        $config = $this->newIndexConfig('/path/to/bookdown.json', $this->jsonMissingContent);
     }
 
     public function testValidLocalJson()
     {
-        $config = $this->newConfig('/path/to/bookdown.json', $this->validLocalJson);
+        $config = $this->newIndexConfig('/path/to/bookdown.json', $this->validLocalJson);
 
         $this->assertSame('/path/to/bookdown.json', $config->getFile());
         $this->assertSame('/path/to/', $config->getDir());
@@ -87,7 +87,7 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
 
     public function testValidRemoteJson()
     {
-        $config = $this->newConfig(
+        $config = $this->newIndexConfig(
             'http://example.net/path/to/bookdown.json',
             $this->validRemoteJson
         );
@@ -108,7 +108,7 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
             'Bookdown\Bookdown\Exception',
             "Cannot handle absolute content path '/bar.md' in remote 'http://example.net/path/to/bookdown.json'."
         );
-        $config = $this->newConfig(
+        $config = $this->newIndexConfig(
             'http://example.net/path/to/bookdown.json',
             $this->validLocalJson
         );

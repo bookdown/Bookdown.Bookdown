@@ -7,6 +7,9 @@ class CollectorTest extends \PHPUnit_Framework_TestCase
     protected $root;
     protected $index;
     protected $page;
+    protected $collector;
+    protected $stdio;
+    protected $fsio;
 
     protected function setUp()
     {

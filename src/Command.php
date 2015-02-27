@@ -7,12 +7,13 @@ use Exception as AnyException;
 
 class Command
 {
-    protected $origin;
+    protected $rootConfigFile;
     protected $root;
     protected $stdio;
     protected $context;
-    protected $start;
+    protected $started;
     protected $builder;
+    protected $rootConfig;
 
     public function __construct(
         Context $context,
@@ -45,36 +46,36 @@ class Command
         $file = $this->context->argv->get(1);
         if (! $file) {
             throw new Exception(
-                "Please enter an origin bookdown.json file as the first argument."
+                "Please enter the path to a bookdown.json file as the first argument."
             );
         }
 
-        $this->origin = realpath($file);
-        if (! $this->origin) {
+        $this->rootConfigFile = realpath($file);
+        if (! $this->rootConfigFile) {
             throw new Exception(
                 "Could not resolve '{$file}' to a real path."
             );
         }
 
-        $this->start = microtime(true);
+        $this->started = microtime(true);
     }
 
     protected function collect()
     {
         $collector = $this->builder->newCollector();
-        $this->root = $collector($this->origin);
-        $this->config = $this->root->getConfig();
+        $this->root = $collector($this->rootConfigFile);
+        $this->rootConfig = $this->root->getConfig();
     }
 
     protected function process()
     {
-        $processor = $this->builder->newProcessor($this->config);
+        $processor = $this->builder->newProcessor($this->rootConfig);
         $processor($this->root);
     }
 
     protected function reportTime()
     {
-        $seconds = trim(sprintf("%10.2f", microtime(true) - $this->start));
+        $seconds = trim(sprintf("%10.2f", microtime(true) - $this->started));
         $this->stdio->outln("Completed in {$seconds} seconds.");
     }
 }

@@ -41,7 +41,7 @@ class HeadingsProcess implements ProcessInterface
 
     public function __invoke(Page $page)
     {
-        $this->stdio->outln("Processing headings for {$page->getTarget()}");
+        $this->stdio->outln("    Processing headings for {$page->getTarget()}");
 
         $this->reset($page);
 

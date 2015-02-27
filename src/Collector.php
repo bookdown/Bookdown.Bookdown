@@ -19,7 +19,7 @@ class Collector
 
     public function __invoke($bookdownFile, $name = '', $parent = null, $count = 0)
     {
-        $this->stdio->outln("Collecting content from {$bookdownFile}");
+        $this->stdio->outln("  Collecting content from {$bookdownFile}");
 
         $index = $this->addIndexPage($bookdownFile, $name, $parent, $count);
         $count = 0;
@@ -39,7 +39,7 @@ class Collector
     protected function addPage($name, $origin, $parent, $count)
     {
         $page = $this->pageBuilder->newPage($name, $origin, $parent, $count);
-        $this->stdio->outln("Added page {$page->getOrigin()}");
+        $this->stdio->outln("    Added page {$page->getOrigin()}");
         $this->append($page);
         return $page;
     }
@@ -48,10 +48,10 @@ class Collector
     {
         if (! $parent) {
             $page = $this->pageBuilder->newRootPage($bookdownFile);
-            $this->stdio->outln("Added root page from {$bookdownFile}");
+            $this->stdio->outln("    Added root page from {$bookdownFile}");
         } else {
             $page = $this->pageBuilder->newIndexPage($bookdownFile, $name, $parent, $count);
-            $this->stdio->outln("Added index page from {$bookdownFile}");
+            $this->stdio->outln("    Added index page from {$bookdownFile}");
         }
         $this->append($page);
         return $page;

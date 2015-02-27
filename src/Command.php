@@ -28,8 +28,10 @@ class Command
     {
         try {
             $this->init();
-            $this->collectPages();
-            $this->processPages();
+            $this->stdio->outln("Collecting content.");
+            $this->collect();
+            $this->stdio->outln("Processing content.");
+            $this->process();
             $this->reportTime();
             return 0;
         } catch (AnyException $e) {
@@ -59,14 +61,14 @@ class Command
         $this->start = microtime(true);
     }
 
-    protected function collectPages()
+    protected function collect()
     {
         $collector = $this->builder->newCollector();
         $this->root = $collector($this->origin);
         $this->config = $this->root->getConfig();
     }
 
-    protected function processPages()
+    protected function process()
     {
         $processor = $this->builder->newProcessor($this->config);
         $processor($this->root);

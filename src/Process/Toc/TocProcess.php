@@ -19,11 +19,11 @@ class TocProcess implements ProcessInterface
     public function __invoke(Page $page)
     {
         if (! $page->isIndex()) {
-            $this->stdio->outln("Skipping TOC entries for non-index {$page->getTarget()}");
+            $this->stdio->outln("    Skipping TOC entries for non-index {$page->getTarget()}");
             return;
         }
 
-        $this->stdio->outln("Adding TOC entries for {$page->getTarget()}");
+        $this->stdio->outln("    Adding TOC entries for {$page->getTarget()}");
         $this->tocEntries = array();
         $this->addTocEntries($page);
         $page->setTocEntries($this->tocEntries);

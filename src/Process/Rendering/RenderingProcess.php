@@ -26,7 +26,7 @@ class RenderingProcess implements ProcessInterface
     public function __invoke(Page $page)
     {
         $file = $page->getTarget();
-        $this->stdio->outln("Rendering template for {$file}");
+        $this->stdio->outln("    Rendering {$file}");
         $this->view->page = $page;
         $html = $this->view->__invoke();
         $this->fsio->put($file, $html);

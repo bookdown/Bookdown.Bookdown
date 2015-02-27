@@ -19,8 +19,8 @@ class Processor
 
     public function __invoke(RootPage $root)
     {
-        $this->stdio->outln("Processing pages.");
         foreach ($this->processes as $process) {
+            $this->stdio->outln("  Applying " . get_class($process));
             $page = $root;
             while ($page) {
                 $process($page);

@@ -25,9 +25,11 @@ class Builder
 
     public function newCommand($globals)
     {
-        $context = $this->getCliFactory()->newContext($globals);
-        $stdio = $this->getStdio();
-        return new Command($context, $stdio, $this);
+        return new Command(
+            $this->getCliFactory()->newContext($globals),
+            $this->getStdio(),
+            $this
+        );
     }
 
     public function newCollector()

@@ -37,11 +37,11 @@ class ConversionProcess implements ProcessInterface
     {
         $file = $this->page->getOrigin();
         if (! $file) {
-            $this->stdio->outln("No origin for {$this->page->getTarget()}");
+            $this->stdio->outln("    No origin for {$this->page->getTarget()}");
             return;
         }
 
-        $this->stdio->outln("Reading origin {$file}");
+        $this->stdio->outln("    Reading origin {$file}");
         return $this->fsio->get($file);
     }
 
@@ -50,11 +50,11 @@ class ConversionProcess implements ProcessInterface
         $file = $this->page->getTarget();
         $dir = dirname($file);
         if (! $this->fsio->isDir($dir)) {
-            $this->stdio->outln("Making directory {$dir}");
+            $this->stdio->outln("    Making directory {$dir}");
             $this->fsio->mkdir($dir);
         }
 
-        $this->stdio->outln("Saving target {$file}");
+        $this->stdio->outln("    Saving target {$file}");
         $this->fsio->put($file, $html);
     }
 }

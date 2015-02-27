@@ -10,8 +10,8 @@ use Bookdown\Bookdown\Content\Page;
 class Collector
 {
     protected $pages = array();
-    protected $configBuilder;
-    protected $pageBuilder;
+    protected $configFactory;
+    protected $pageFactory;
     protected $stdio;
     protected $fsio;
     protected $level;
@@ -19,75 +19,75 @@ class Collector
     public function __construct(
         Stdio $stdio,
         Fsio $fsio,
-        ConfigFactory $configBuilder,
-        PageFactory $pageBuilder
+        ConfigFactory $configFactory,
+        PageFactory $pageFactory
     ) {
         $this->stdio = $stdio;
         $this->fsio = $fsio;
-        $this->configBuilder = $configBuilder;
-        $this->pageBuilder = $pageBuilder;
+        $this->configFactory = $configFactory;
+        $this->pageFactory = $pageFactory;
     }
 
-    public function __invoke($bookdownFile, $name = '', $parent = null, $count = 0)
+    public function __invoke($configFile, $name = '', $parent = null, $count = 0)
     {
-        $this->padln("Collecting content from {$bookdownFile}");
+        $this->padln("Collecting content from {$configFile}");
         $this->level ++;
-        $index = $this->newIndex($bookdownFile, $name, $parent, $count);
+        $index = $this->newIndex($configFile, $name, $parent, $count);
         $this->addContent($index);
         $this->level --;
         return $index;
     }
 
-    protected function newIndex($bookdownFile, $name, $parent, $count)
+    protected function newIndex($configFile, $name, $parent, $count)
     {
         if (! $parent) {
-            return $this->addRootPage($bookdownFile);
+            return $this->addRootPage($configFile);
         }
 
-        return $this->addIndexPage($bookdownFile, $name, $parent, $count);
+        return $this->addIndexPage($configFile, $name, $parent, $count);
     }
 
     protected function addContent(IndexPage $index)
     {
         $count = 1;
-        foreach ($index->getConfig()->getContent() as $name => $origin) {
-            $child = $this->newChild($origin, $name, $index, $count);
+        foreach ($index->getConfig()->getContent() as $name => $file) {
+            $child = $this->newChild($file, $name, $index, $count);
             $index->addChild($child);
             $count ++;
         }
     }
 
-    protected function newChild($origin, $name, $index, $count)
+    protected function newChild($file, $name, $index, $count)
     {
-        if (substr($origin, -5) == '.json') {
-            return $this->__invoke($origin, $name, $index, $count);
+        if (substr($file, -5) == '.json') {
+            return $this->__invoke($file, $name, $index, $count);
         }
 
-        return $this->addPage($origin, $name, $index, $count);
+        return $this->addPage($file, $name, $index, $count);
     }
 
     protected function addPage($origin, $name, $parent, $count)
     {
-        $page = $this->pageBuilder->newPage($origin, $name, $parent, $count);
+        $page = $this->pageFactory->newPage($origin, $name, $parent, $count);
         $this->padln("Added page {$page->getOrigin()}");
         return $this->append($page);
     }
 
-    protected function addRootPage($bookdownFile)
+    protected function addRootPage($configFile)
     {
-        $data = $this->fsio->get($bookdownFile);
-        $config = $this->configBuilder->newRootConfig($bookdownFile, $data);
-        $page = $this->pageBuilder->newRootPage($config);
-        $this->padln("Added root page from {$bookdownFile}");
+        $data = $this->fsio->get($configFile);
+        $config = $this->configFactory->newRootConfig($configFile, $data);
+        $page = $this->pageFactory->newRootPage($config);
+        $this->padln("Added root page from {$configFile}");
         return $this->append($page);
     }
 
-    protected function addIndexPage($bookdownFile, $name, $parent, $count)
+    protected function addIndexPage($configFile, $name, $parent, $count)
     {
-        $data = $this->fsio->get($bookdownFile);
-        $config = $this->configBuilder->newIndexConfig($bookdownFile, $data);
-        $page = $this->pageBuilder->newIndexPage($config, $name, $parent, $count);
-        $this->padln("Added index page from {$bookdownFile}");
+        $data = $this->fsio->get($configFile);
+        $config = $this->configFactory->newIndexConfig($configFile, $data);
+        $page = $this->pageFactory->newIndexPage($config, $name, $parent, $count);
+        $this->padln("Added index page from {$configFile}");
         return $this->append($page);
     }
 

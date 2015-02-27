@@ -11,12 +11,12 @@ class PageFactory
         return new Page($origin, $name, $parent, $count);
     }
 
-    public function newIndexPage($config, $name, $parent, $count)
+    public function newIndexPage(IndexConfig $config, $name, $parent, $count)
     {
         return new IndexPage($config, $name, $parent, $count);
     }
 
-    public function newRootPage($config)
+    public function newRootPage(RootConfig $config)
     {
         return new RootPage($config);
     }

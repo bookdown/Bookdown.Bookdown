@@ -12,9 +12,9 @@ class PageBuilder
         $this->configBuilder = $configBuilder;
     }
 
-    public function newPage($name, $origin, $parent, $count)
+    public function newPage($origin, $name, $parent, $count)
     {
-        return new Page($name, $origin, $parent, $count);
+        return new Page($origin, $name, $parent, $count);
     }
 
     public function newIndexPage($bookdownFile, $name, $parent, $count)

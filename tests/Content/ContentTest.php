@@ -58,8 +58,8 @@ TEXT;
         $this->index->setPrev($this->root);
 
         $this->page = $this->pageBuilder->newPage(
-            'section-1',
             '/path/to/chapter-1/section-1.md',
+            'section-1',
             $this->index,
             1
         );

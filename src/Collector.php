@@ -59,7 +59,7 @@ class Collector
 
     protected function addPage($origin, $name, $parent, $count)
     {
-        $page = $this->pageBuilder->newPage($name, $origin, $parent, $count);
+        $page = $this->pageBuilder->newPage($origin, $name, $parent, $count);
         $this->padln("Added page {$page->getOrigin()}");
         return $this->append($page);
     }

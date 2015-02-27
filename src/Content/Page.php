@@ -15,13 +15,13 @@ class Page
     protected $headings = array();
 
     public function __construct(
-        $name,
         $origin,
+        $name,
         $parent,
         $count
     ) {
-        $this->name = $name;
         $this->origin = $origin;
+        $this->name = $name;
         $this->parent = $parent;
         $this->count = $count;
     }

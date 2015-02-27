@@ -27,22 +27,22 @@ This is section 1.
 
 TEXT;
 
-        $this->fsio->files = array(
-            '/path/to/bookdown.json' => '{
-                "title": "Example Book",
-                "content": {
-                    "chapter-1": "chapter-1/bookdown.json"
-                },
-                "target": "/_site"
-            }',
-            '/path/to/chapter-1/bookdown.json' => '{
-                "title": "Chapter 1",
-                "content": {
-                    "section-1": "section-1.md"
-                }
-            }',
-            '/path/to/chapter-1/section-1.md' => $text,
-        );
+        $this->fsio->put('/path/to/bookdown.json', '{
+            "title": "Example Book",
+            "content": {
+                "chapter-1": "chapter-1/bookdown.json"
+            },
+            "target": "/_site"
+        }');
+
+        $this->fsio->put('/path/to/chapter-1/bookdown.json', '{
+            "title": "Chapter 1",
+            "content": {
+                "section-1": "section-1.md"
+            }
+        }');
+
+        $this->fsio->put('/path/to/chapter-1/section-1.md', $text);
 
         $this->root = $this->pageBuilder->newRootPage('/path/to/bookdown.json');
 

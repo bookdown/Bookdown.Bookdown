@@ -10,8 +10,8 @@ class Builder
     protected $stderr;
     protected $stdio;
     protected $cliFactory;
-    protected $fsio;
     protected $fsioClass;
+    protected $fsio;
 
     public function __construct(
         $stdout = 'php://stdout',
@@ -76,7 +76,7 @@ class Builder
         return $builder->newInstance($config, $this->getStdio(), $this->getFsio());
     }
 
-    protected function getCliFactory()
+    public function getCliFactory()
     {
         if (! $this->cliFactory) {
             $this->cliFactory = new CliFactory();
@@ -84,7 +84,7 @@ class Builder
         return $this->cliFactory;
     }
 
-    protected function getStdio()
+    public function getStdio()
     {
         if (! $this->stdio) {
             $this->stdio = $this->getCliFactory()->newStdio(
@@ -96,7 +96,7 @@ class Builder
         return $this->stdio;
     }
 
-    protected function getFsio()
+    public function getFsio()
     {
         if (! $this->fsio) {
             $class = $this->fsioClass;

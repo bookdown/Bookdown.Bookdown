@@ -3,8 +3,8 @@ namespace Bookdown\Bookdown;
 
 class FakeFsio extends Fsio
 {
-    public $files = array();
-    public $dirs = array();
+    protected $files = array();
+    protected $dirs = array();
 
     public function get($file)
     {

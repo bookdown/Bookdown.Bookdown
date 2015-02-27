@@ -11,17 +11,16 @@ class ConfigBuilderTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->fsio = new FakeFsio();
-        $this->fsio->files = array(
-            '/path/to/bookdown.json' => '{
-                "title": "Example Title",
-                "content": {
-                    "index": "index.md",
-                    "foo": "foo.md",
-                    "bar": "/bar.md",
-                    "baz": "http://example.com/baz.md"
-                }
-            }'
-        );
+        $this->fsio->put('/path/to/bookdown.json', '{
+            "title": "Example Title",
+            "content": {
+                "index": "index.md",
+                "foo": "foo.md",
+                "bar": "/bar.md",
+                "baz": "http://example.com/baz.md"
+            }
+        }');
+
         $this->builder = new ConfigBuilder($this->fsio);
     }
 

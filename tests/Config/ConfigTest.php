@@ -80,7 +80,6 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('/path/to/bookdown.json', $config->getFile());
         $this->assertSame('/path/to/', $config->getDir());
         $this->assertSame('Example Title', $config->getTitle());
-        $this->assertSame('/path/to/index.md', $config->getIndexOrigin());
         $expect = array(
             'foo' => '/path/to/foo.md',
             'bar' => '/bar.md',

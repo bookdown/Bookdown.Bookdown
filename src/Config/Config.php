@@ -25,7 +25,6 @@ class Config
         $this->initDir();
         $this->initTitle();
         $this->initContent();
-        $this->initIndexOrigin();
     }
 
     protected function initFile($file)
@@ -65,6 +64,10 @@ class Config
             throw new Exception("No content listed in '{$this->file}'.");
         }
 
+        if (isset($this->content->index)) {
+            throw new Exception("Disallowed 'index' content in {$this->file}.");
+        }
+
         foreach ($this->content as $name => $origin) {
             $this->content[$name] = $this->fixPath($origin);
         }
@@ -87,14 +90,6 @@ class Config
         }
 
         return $this->getDir() . ltrim($path, DIRECTORY_SEPARATOR);
-    }
-
-    protected function initIndexOrigin()
-    {
-        if (! empty($this->content['index'])) {
-            $this->indexOrigin = $this->content['index'];
-            unset($this->content['index']);
-        }
     }
 
     public function isRemote()
@@ -120,10 +115,5 @@ class Config
     public function getContent()
     {
         return $this->content;
-    }
-
-    public function getIndexOrigin()
-    {
-        return $this->indexOrigin;
     }
 }

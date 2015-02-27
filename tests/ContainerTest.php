@@ -3,14 +3,14 @@ namespace Bookdown\Bookdown;
 
 use Bookdown\Bookdown\Config\RootConfig;
 
-class BuilderTest extends \PHPUnit_Framework_TestCase
+class ContainerTest extends \PHPUnit_Framework_TestCase
 {
-    protected $builder;
+    protected $container;
     protected $rootConfig;
 
     protected function setUp()
     {
-        $this->builder = new Builder();
+        $this->container = new Container();
 
     }
 
@@ -18,7 +18,7 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertInstanceOf(
             'Bookdown\Bookdown\Command',
-            $this->builder->newCommand(array())
+            $this->container->newCommand(array())
         );
     }
 
@@ -26,7 +26,7 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertInstanceOf(
             'Bookdown\Bookdown\Collector',
-            $this->builder->newCollector()
+            $this->container->newCollector()
         );
     }
 
@@ -41,49 +41,49 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf(
             'Bookdown\Bookdown\Processor',
-            $this->builder->newProcessor($rootConfig)
+            $this->container->newProcessor($rootConfig)
         );
     }
 
-    public function testNewProcessUnimplementedBuilder()
+    public function testNewProcessUnimplementedContainer()
     {
         $rootConfig = new RootConfig('/path/to/bookdown.json', '{
             "title": "Example Book",
             "content": {
                 "foo": "foo.md"
             },
-            "tocProcess": "Bookdown\\\\Bookdown\\\\Proces\\\\Fake\\\\FakeProcessUnimplementedBuilder"
+            "tocProcess": "Bookdown\\\\Bookdown\\\\Process\\\\Fake\\\\FakeProcessUnimplementedBuilder"
         }');
 
         $this->setExpectedException(
             'Bookdown\Bookdown\Exception',
-            "Bookdown\Bookdown\Proces\Fake\FakeProcessUnimplementedBuilder' does not implement ProcessBuilderInterface"
+            "Bookdown\Bookdown\Process\Fake\FakeProcessUnimplementedBuilder' does not implement ProcessBuilderInterface"
         );
 
-        $this->builder->newProcess($rootConfig, 'Toc');
+        $this->container->newProcess($rootConfig, 'Toc');
     }
 
     public function testGetCliFactory()
     {
-        $factory = $this->builder->getCliFactory();
+        $factory = $this->container->getCliFactory();
         $this->assertInstanceOf('Aura\Cli\CliFactory', $factory);
-        $again = $this->builder->getCliFactory();
+        $again = $this->container->getCliFactory();
         $this->assertSame($factory, $again);
     }
 
     public function testGetStdio()
     {
-        $stdio = $this->builder->getStdio();
+        $stdio = $this->container->getStdio();
         $this->assertInstanceOf('Aura\Cli\Stdio', $stdio);
-        $again = $this->builder->getStdio();
+        $again = $this->container->getStdio();
         $this->assertSame($stdio, $again);
     }
 
     public function testGetFsio()
     {
-        $fsio = $this->builder->getFsio();
+        $fsio = $this->container->getFsio();
         $this->assertInstanceOf('Bookdown\Bookdown\Fsio', $fsio);
-        $again = $this->builder->getFsio();
+        $again = $this->container->getFsio();
         $this->assertSame($fsio, $again);
     }
 }

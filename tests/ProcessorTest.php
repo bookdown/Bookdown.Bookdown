@@ -12,17 +12,17 @@ class ProcessorTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $builder = new Builder(
+        $container = new Container(
             'php://memory',
             'php://memory',
             'Bookdown\Bookdown\FakeFsio'
         );
 
-        $this->stdio = $builder->getStdio();
-        $this->fsio = $builder->getFsio();
+        $this->stdio = $container->getStdio();
+        $this->fsio = $container->getFsio();
         $this->setUpFsio();
 
-        $collector = $builder->newCollector();
+        $collector = $container->newCollector();
         $this->root = $collector('/path/to/bookdown.json');
 
         $this->processes = array(

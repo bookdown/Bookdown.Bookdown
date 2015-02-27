@@ -1,7 +1,6 @@
 <?php
 namespace Bookdown\Bookdown;
 
-
 class CollectorTest extends \PHPUnit_Framework_TestCase
 {
     protected $root;
@@ -13,15 +12,15 @@ class CollectorTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $builder = new Builder(
+        $container = new Container(
             'php://memory',
             'php://memory',
             'Bookdown\Bookdown\FakeFsio'
         );
 
-        $this->collector = $builder->newCollector();
-        $this->stdio = $builder->getStdio();
-        $this->fsio = $builder->getFsio();
+        $this->collector = $container->newCollector();
+        $this->stdio = $container->getStdio();
+        $this->fsio = $container->getFsio();
         $this->setUpFsio();
     }
 

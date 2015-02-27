@@ -12,17 +12,17 @@ class Command
     protected $stdio;
     protected $context;
     protected $started;
-    protected $builder;
+    protected $container;
     protected $rootConfig;
 
     public function __construct(
         Context $context,
         Stdio $stdio,
-        Builder $builder
+        Container $container
     ) {
         $this->context = $context;
         $this->stdio = $stdio;
-        $this->builder = $builder;
+        $this->container = $container;
     }
 
     public function __invoke()
@@ -62,14 +62,14 @@ class Command
 
     protected function collect()
     {
-        $collector = $this->builder->newCollector();
+        $collector = $this->container->newCollector();
         $this->root = $collector($this->rootConfigFile);
         $this->rootConfig = $this->root->getConfig();
     }
 
     protected function process()
     {
-        $processor = $this->builder->newProcessor($this->rootConfig);
+        $processor = $this->container->newProcessor($this->rootConfig);
         $processor($this->root);
     }
 

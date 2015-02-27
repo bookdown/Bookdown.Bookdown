@@ -4,7 +4,7 @@ namespace Bookdown\Bookdown;
 use Aura\Cli\CliFactory;
 use Bookdown\Bookdown\Config\RootConfig;
 
-class Builder
+class Container
 {
     protected $stdout;
     protected $stderr;

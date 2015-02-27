@@ -10,6 +10,7 @@ class Command
     protected $rootConfigFile;
     protected $rootPage;
     protected $stdio;
+    protected $fsio;
     protected $context;
     protected $started;
     protected $container;
@@ -19,11 +20,13 @@ class Command
     public function __construct(
         Context $context,
         Stdio $stdio,
+        Fsio $fsio,
         Collector $collector,
         ProcessorBuilder $processorBuilder
     ) {
         $this->context = $context;
         $this->stdio = $stdio;
+        $this->fsio = $fsio;
         $this->collector = $collector;
         $this->processorBuilder = $processorBuilder;
     }
@@ -53,7 +56,7 @@ class Command
             );
         }
 
-        $this->rootConfigFile = realpath($file);
+        $this->rootConfigFile = $this->fsio->realpath($file);
         if (! $this->rootConfigFile) {
             throw new Exception(
                 "Could not resolve '{$file}' to a real path."

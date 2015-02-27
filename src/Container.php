@@ -27,6 +27,7 @@ class Container
         return new Command(
             $this->getCliFactory()->newContext($globals),
             $this->getStdio(),
+            $this->getFsio(),
             $this->newCollector(),
             $this->newProcessorBuilder()
         );

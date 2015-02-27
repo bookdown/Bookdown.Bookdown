@@ -51,4 +51,9 @@ class Fsio
         $error = error_get_last();
         throw new Exception($error['message']);
     }
+
+    public function realpath($file)
+    {
+        return realpath($file);
+    }
 }

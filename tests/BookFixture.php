@@ -13,7 +13,10 @@ class BookFixture
         "content": {
             "chapter": "chapter/bookdown.json"
         },
-        "target": "/_site"
+        "target": "/_site",
+        "templates": {
+            "foo": "/foo.php"
+        }
     }';
     public $rootConfig;
     public $rootPage;

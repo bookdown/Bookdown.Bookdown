@@ -38,6 +38,13 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
         "content" : {}
     }';
 
+    protected $jsonContentIndex = '{
+        "title": "Example Title",
+        "content" : {
+            "index": "index.md"
+        }
+    }';
+
     protected function newIndexConfig($file, $data)
     {
         return new IndexConfig($file, $data);
@@ -68,6 +75,15 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
             "No content listed in '/path/to/bookdown.json'."
         );
         $config = $this->newIndexConfig('/path/to/bookdown.json', $this->jsonMissingContent);
+    }
+
+    public function testContentIndex()
+    {
+        $this->setExpectedException(
+            'Bookdown\Bookdown\Exception',
+            "Disallowed 'index' content in /path/to/bookdown.json."
+        );
+        $config = $this->newIndexConfig('/path/to/bookdown.json', $this->jsonContentIndex);
     }
 
     public function testValidLocalJson()

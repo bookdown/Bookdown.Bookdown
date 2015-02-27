@@ -17,7 +17,7 @@ class Page
     public function __construct(
         $origin,
         $name,
-        $parent,
+        IndexPage $parent,
         $count
     ) {
         $this->origin = $origin;

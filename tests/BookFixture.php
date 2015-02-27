@@ -29,7 +29,22 @@ class BookFixture
     public $indexPage;
 
     public $pageFile = '/path/to/chapter/section.md';
-    public $pageData = '# Title';
+    public $pageData = '# Title
+
+Text under title.
+
+## Subtitle A
+
+Text under subtitle A.
+
+### Sub-subtitle
+
+Text under sub-subtitle.
+
+## Subtitle B
+
+Text under subtitle B.
+';
     public $page;
 
     public function __construct(FakeFsio $fsio)

@@ -36,7 +36,8 @@ class Builder
     {
         return new Collector(
             $this->getStdio(),
-            new Config\ConfigBuilder($this->getFsio()),
+            $this->getFsio(),
+            new Config\ConfigFactory(),
             new Content\PageFactory()
         );
     }

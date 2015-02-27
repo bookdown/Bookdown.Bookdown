@@ -2,7 +2,7 @@
 namespace Bookdown\Bookdown;
 
 use Aura\Cli\Stdio;
-use Bookdown\Bookdown\Config\ConfigBuilder;
+use Bookdown\Bookdown\Config\ConfigFactory;
 use Bookdown\Bookdown\Content\IndexPage;
 use Bookdown\Bookdown\Content\PageFactory;
 use Bookdown\Bookdown\Content\Page;
@@ -13,14 +13,17 @@ class Collector
     protected $configBuilder;
     protected $pageBuilder;
     protected $stdio;
+    protected $fsio;
     protected $level;
 
     public function __construct(
         Stdio $stdio,
-        ConfigBuilder $configBuilder,
+        Fsio $fsio,
+        ConfigFactory $configBuilder,
         PageFactory $pageBuilder
     ) {
         $this->stdio = $stdio;
+        $this->fsio = $fsio;
         $this->configBuilder = $configBuilder;
         $this->pageBuilder = $pageBuilder;
     }
@@ -72,7 +75,8 @@ class Collector
 
     protected function addRootPage($bookdownFile)
     {
-        $config = $this->configBuilder->newRootConfig($bookdownFile);
+        $data = $this->fsio->get($bookdownFile);
+        $config = $this->configBuilder->newRootConfig($bookdownFile, $data);
         $page = $this->pageBuilder->newRootPage($config);
         $this->padln("Added root page from {$bookdownFile}");
         return $this->append($page);
@@ -80,7 +84,8 @@ class Collector
 
     protected function addIndexPage($bookdownFile, $name, $parent, $count)
     {
-        $config = $this->configBuilder->newIndexConfig($bookdownFile);
+        $data = $this->fsio->get($bookdownFile);
+        $config = $this->configBuilder->newIndexConfig($bookdownFile, $data);
         $page = $this->pageBuilder->newIndexPage($config, $name, $parent, $count);
         $this->padln("Added index page from {$bookdownFile}");
         return $this->append($page);

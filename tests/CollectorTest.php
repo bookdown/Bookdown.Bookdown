@@ -7,7 +7,6 @@ class CollectorTest extends \PHPUnit_Framework_TestCase
     protected $index;
     protected $page;
     protected $collector;
-    protected $stdio;
     protected $fsio;
 
     protected function setUp()
@@ -18,28 +17,8 @@ class CollectorTest extends \PHPUnit_Framework_TestCase
             'Bookdown\Bookdown\FakeFsio'
         );
 
+        $bookFixture = new BookFixture($container->getFsio());
         $this->collector = $container->newCollector();
-        $this->stdio = $container->getStdio();
-        $this->fsio = $container->getFsio();
-        $this->setUpFsio();
-    }
-
-    protected function setUpFsio()
-    {
-        $this->fsio->put('/path/to/bookdown.json', '{
-            "title": "Example Book",
-            "content": {
-                "chapter-1": "chapter-1/bookdown.json"
-            },
-            "target": "/_site"
-        }');
-
-        $this->fsio->put('/path/to/chapter-1/bookdown.json', '{
-            "title": "Chapter 1",
-            "content": {
-                "section-1": "section-1.md"
-            }
-        }');
     }
 
     public function testCollector()
@@ -86,12 +65,12 @@ class CollectorTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Bookdown\Bookdown\Content\IndexPage', $this->index);
 
         $this->assertSame(null, $this->index->getOrigin());
-        $this->assertSame('/_site/chapter-1/index.html', $this->index->getTarget());
-        $this->assertSame('/chapter-1/', $this->index->getHref());
+        $this->assertSame('/_site/chapter/index.html', $this->index->getTarget());
+        $this->assertSame('/chapter/', $this->index->getHref());
 
         $this->assertSame('1.', $this->index->getNumber());
-        $this->assertSame('Chapter 1', $this->index->getTitle());
-        $this->assertSame('1. Chapter 1', $this->index->getNumberAndTitle());
+        $this->assertSame('Chapter', $this->index->getTitle());
+        $this->assertSame('1. Chapter', $this->index->getNumberAndTitle());
 
         $this->assertFalse($this->index->isRoot());
         $this->assertTrue($this->index->isIndex());
@@ -115,15 +94,15 @@ class CollectorTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertInstanceOf('Bookdown\Bookdown\Content\Page', $this->page);
 
-        $this->assertSame('/path/to/chapter-1/section-1.md', $this->page->getOrigin());
-        $this->assertSame('/_site/chapter-1/section-1.html', $this->page->getTarget());
+        $this->assertSame('/path/to/chapter/section.md', $this->page->getOrigin());
+        $this->assertSame('/_site/chapter/section.html', $this->page->getTarget());
 
-        $this->assertSame('/chapter-1/section-1.html', $this->page->getHref());
+        $this->assertSame('/chapter/section.html', $this->page->getHref());
         $this->assertSame('1.1.', $this->page->getNumber());
         $this->assertNull($this->page->getTitle());
         $this->assertSame('1.1.', $this->page->getNumberAndTitle());
-        $this->page->setTitle('Section 1');
-        $this->assertSame('1.1. Section 1', $this->page->getNumberAndTitle());
+        $this->page->setTitle('Section');
+        $this->assertSame('1.1. Section', $this->page->getNumberAndTitle());
 
         $this->assertFalse($this->page->isRoot());
         $this->assertFalse($this->page->isIndex());

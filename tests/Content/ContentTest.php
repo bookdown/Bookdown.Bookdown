@@ -1,6 +1,8 @@
 <?php
 namespace Bookdown\Bookdown\Content;
 
+use Bookdown\Bookdown\BookFixture;
+use Bookdown\Bookdown\FakeFsio;
 use Bookdown\Bookdown\Config\IndexConfig;
 use Bookdown\Bookdown\Config\RootConfig;
 
@@ -13,44 +15,10 @@ class ContentTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $pageFactory = new PageFactory();
-
-        $rootConfig = new RootConfig('/path/to/bookdown.json', '{
-            "title": "Example Book",
-            "content": {
-                "chapter-1": "chapter-1/bookdown.json"
-            },
-            "target": "/_site"
-        }');
-        $this->root = $pageFactory->newRootPage($rootConfig);
-
-        $indexConfig = new IndexConfig('/path/to/chapter-1/bookdown.json', '{
-            "title": "Chapter 1",
-            "content": {
-                "section-1": "section-1.md"
-            }
-        }');
-        $this->index = $pageFactory->newIndexPage(
-            $indexConfig,
-            'chapter-1',
-            $this->root,
-            1
-        );
-
-        $this->root->setNext($this->index);
-        $this->root->addChild($this->index);
-        $this->index->setPrev($this->root);
-
-        $this->page = $pageFactory->newPage(
-            '/path/to/chapter-1/section-1.md',
-            'section-1',
-            $this->index,
-            1
-        );
-
-        $this->index->addChild($this->page);
-        $this->index->setNext($this->page);
-        $this->page->setPrev($this->index);
+        $bookFixture = new BookFixture(new FakeFsio());
+        $this->root = $bookFixture->rootPage;
+        $this->index = $bookFixture->indexPage;
+        $this->page = $bookFixture->page;
     }
 
     public function testRootPage()
@@ -97,12 +65,12 @@ class ContentTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Bookdown\Bookdown\Content\IndexPage', $this->index);
 
         $this->assertSame(null, $this->index->getOrigin());
-        $this->assertSame('/_site/chapter-1/index.html', $this->index->getTarget());
-        $this->assertSame('/chapter-1/', $this->index->getHref());
+        $this->assertSame('/_site/chapter/index.html', $this->index->getTarget());
+        $this->assertSame('/chapter/', $this->index->getHref());
 
         $this->assertSame('1.', $this->index->getNumber());
-        $this->assertSame('Chapter 1', $this->index->getTitle());
-        $this->assertSame('1. Chapter 1', $this->index->getNumberAndTitle());
+        $this->assertSame('Chapter', $this->index->getTitle());
+        $this->assertSame('1. Chapter', $this->index->getNumberAndTitle());
 
         $this->assertFalse($this->index->isRoot());
         $this->assertTrue($this->index->isIndex());
@@ -135,15 +103,15 @@ class ContentTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertInstanceOf('Bookdown\Bookdown\Content\Page', $this->page);
 
-        $this->assertSame('/path/to/chapter-1/section-1.md', $this->page->getOrigin());
-        $this->assertSame('/_site/chapter-1/section-1.html', $this->page->getTarget());
+        $this->assertSame('/path/to/chapter/section.md', $this->page->getOrigin());
+        $this->assertSame('/_site/chapter/section.html', $this->page->getTarget());
 
-        $this->assertSame('/chapter-1/section-1.html', $this->page->getHref());
+        $this->assertSame('/chapter/section.html', $this->page->getHref());
         $this->assertSame('1.1.', $this->page->getNumber());
         $this->assertNull($this->page->getTitle());
         $this->assertSame('1.1.', $this->page->getNumberAndTitle());
-        $this->page->setTitle('Section 1');
-        $this->assertSame('1.1. Section 1', $this->page->getNumberAndTitle());
+        $this->page->setTitle('Section');
+        $this->assertSame('1.1. Section', $this->page->getNumberAndTitle());
 
         $this->assertFalse($this->page->isRoot());
         $this->assertFalse($this->page->isIndex());

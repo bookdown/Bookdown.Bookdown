@@ -13,7 +13,7 @@ class IndexPage extends Page
         return $base . $this->getName() . '/';
     }
 
-    public function addChild($child)
+    public function addChild(Page $child)
     {
         $this->children[] = $child;
     }

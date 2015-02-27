@@ -112,9 +112,6 @@ class Page
     {
         $base = $this->getParent()->getNumber();
         $count = $this->getCount();
-        if (! $count) {
-            $count = '';
-        }
         return "{$base}{$count}.";
     }
 
@@ -161,15 +158,6 @@ class Page
     {
         $page = $this;
         while (! $page->isRoot()) {
-            $page = $page->getParent();
-        }
-        return $page;
-    }
-
-    public function getParentIndex()
-    {
-        $page = $this->getParent();
-        while (! $page->isIndex()) {
             $page = $page->getParent();
         }
         return $page;

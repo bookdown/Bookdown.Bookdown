@@ -14,7 +14,7 @@ class Collector
     protected $pageFactory;
     protected $stdio;
     protected $fsio;
-    protected $level;
+    protected $level = 0;
     protected $prev;
 
     public function __construct(
@@ -106,6 +106,6 @@ class Collector
     protected function padln($str)
     {
         $pad = str_pad('', $this->level * 2);
-        $this->stdio->outln("  {$pad}{$str}");
+        $this->stdio->outln("{$pad}{$str}");
     }
 }

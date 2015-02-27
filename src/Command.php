@@ -28,9 +28,7 @@ class Command
     {
         try {
             $this->init();
-            $this->stdio->outln("Collecting content.");
             $this->collect();
-            $this->stdio->outln("Processing content.");
             $this->process();
             $this->reportTime();
             return 0;

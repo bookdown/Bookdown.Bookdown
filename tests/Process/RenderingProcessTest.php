@@ -61,6 +61,7 @@ class RenderingProcessTest extends \PHPUnit_Framework_TestCase
     <title>Chapter</title>
 </head>
 <body>
+
 <nav class="navheader">
     <table width="100%">
         <tr>
@@ -85,6 +86,7 @@ class RenderingProcessTest extends \PHPUnit_Framework_TestCase
 <dt>1.1.2. <a href="/chapter/section.html#1.1.2">Subtitle B</a></dt>
 </dl></dd>
 </dl>
+
 <nav class="navfooter">
     <table width="100%">
         <tr>

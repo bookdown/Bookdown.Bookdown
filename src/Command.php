@@ -40,7 +40,6 @@ class Command
             $this->reportTime();
             return 0;
         } catch (AnyException $e) {
-            $this->stdio->errln((string) $e);
             $this->stdio->errln($e->getMessage());
             $code = $e->getCode() ? $e->getCode() : 1;
             return $code;

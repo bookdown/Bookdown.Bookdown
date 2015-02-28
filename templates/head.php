@@ -1,4 +1,3 @@
-<?php use Aura\Html\Escaper as e; ?>
 <head>
-    <title><?= e::h($this->page->getTitle()); ?></title>
+    <title><?php echo $this->page->getTitle(); ?></title>
 </head>

@@ -1,12 +1,8 @@
-<?php
-use Aura\Html\Escaper as e;
-
-if (! $this->page->hasTocEntries()) {
+<?php if (! $this->page->hasTocEntries()) {
     return;
-}
-?>
+} ?>
 
-<h1><?= e::h($this->page->getNumberAndTitle()); ?></h1>
+<h1><?php echo $this->page->getNumberAndTitle(); ?></h1>
 <dl>
 <?php
 $entries = $this->page->getTocEntries();
@@ -27,7 +23,7 @@ foreach ($entries as $entry) {
     }
 
     echo "<dt>{$entry->getNumber()} "
-        . $this->anchor($entry->getHref(), $entry->getTitle())
+        . $this->anchorRaw($entry->getHref(), $entry->getTitle())
         . "</dt>" . PHP_EOL;
 }
 

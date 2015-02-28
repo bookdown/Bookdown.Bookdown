@@ -1,4 +1,4 @@
 <html>
-<?= $this->render('head'); ?>
-<?= $this->render('body'); ?>
+<?php echo $this->render('head'); ?>
+<?php echo $this->render('body'); ?>
 </html>

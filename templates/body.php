@@ -1,3 +1,3 @@
 <body>
-<?= $this->render('core'); ?>
+<?php echo $this->render('core'); ?>
 </body>

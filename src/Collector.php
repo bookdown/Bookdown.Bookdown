@@ -60,7 +60,10 @@ class Collector
 
     protected function newChild($file, $name, $index, $count)
     {
-        if (substr($file, -5) == '.json') {
+        $bookdown_json = 'bookdown.json';
+        $len = -1 * strlen($bookdown_json);
+
+        if (substr($file, $len) == $bookdown_json) {
             return $this->__invoke($file, $name, $index, $count);
         }
 

@@ -9,12 +9,12 @@
         "documentation",
         "static site"
     ],
-    "homepage": "https://github.com/bookdown/bookdown",
+    "homepage": "https://github.com/bookdown/Bookdown.Bookdown",
     "license": "BSD-2-Clause",
     "authors": [
         {
-            "name": "Bookdown Contributors",
-            "homepage": "https://github.com/bookdown/bookdown/contributors"
+            "name": "Bookdown.Bookdown Contributors",
+            "homepage": "https://github.com/bookdown/Bookdown.Bookdown/contributors"
         }
     ],
     "require": {

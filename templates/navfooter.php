@@ -5,6 +5,7 @@ $prev = $this->page->getPrev();
 $parent = $this->page->getParent();
 $next = $this->page->getNext();
 ?>
+
 <nav class="navfooter">
     <table width="100%">
         <tr>

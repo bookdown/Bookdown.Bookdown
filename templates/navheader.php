@@ -1,4 +1,5 @@
 <?php use Aura\Html\Escaper as e; ?>
+
 <nav class="navheader">
     <table width="100%">
         <tr>

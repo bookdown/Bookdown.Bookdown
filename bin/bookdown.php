@@ -4,9 +4,9 @@ error_reporting(E_ALL);
 $autoload = false;
 
 $files = array(
-    __DIR__ . '/../../autoload.php',
-    __DIR__ . '/../vendor/autoload.php',
-    __DIR__ . '/vendor/autoload.php'
+    __DIR__ . '/../../../autoload.php',
+    __DIR__ . '/../../vendor/autoload.php',
+    __DIR__ . '/../vendor/autoload.php'
 );
 
 foreach ($files as $file) {

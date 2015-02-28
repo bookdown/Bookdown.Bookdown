@@ -68,6 +68,7 @@ class RenderingProcessBuilder implements ProcessBuilderInterface
             "main" => "{$dir}/main.php",
             "head" => "{$dir}/head.php",
             "body" => "{$dir}/body.php",
+            "core" => "{$dir}/core.php",
             "navheader" => "{$dir}/navheader.php",
             "navfooter" => "{$dir}/navfooter.php",
             "toc" => "{$dir}/toc.php",

@@ -2,7 +2,11 @@
 
 > **WARNING:** This project is incomplete and still under heavy development. Use at your own risk.
 
-Bookdown is a Markdown-oriented static-page generator geared toward "DocBook-like" documentation, as opposed to blogs or other kinds of static sites. Read more about it at <http://bookdown.github.io>.
+Bookdown generates [DocBook](http://docbook.org)-like HTML output using [Markdown](http://daringfireball.net/projects/markdown/) and JSON files instead of XML.
+
+Bookdown is especially well-suited for publishing project documentation to GitHub Pages.
+
+Read more about it at <http://bookdown.github.io>.
 
 ## Todo
 

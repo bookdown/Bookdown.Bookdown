@@ -13,7 +13,7 @@ class RootConfigTest extends \PHPUnit_Framework_TestCase
             "baz": "http://example.com/baz.md"
         },
         "target": "my/target",
-        "template": "/path/to/templates/master.php",
+        "template": "../templates/master.php",
         "conversionProcess": "My\\\\Conversion\\\\Builder",
         "headingsProcess": "My\\\\Headings\\\\Builder",
         "tocProcess": "My\\\\Toc\\\\Builder",
@@ -51,7 +51,7 @@ class RootConfigTest extends \PHPUnit_Framework_TestCase
         $this->assertBasics($config);
 
         $this->assertSame('/path/to/my/target/', $config->getTarget());
-        $this->assertSame('/path/to/templates/master.php', $config->getTemplate());
+        $this->assertSame('/path/to/../templates/master.php', $config->getTemplate());
         $this->assertSame('My\\Conversion\\Builder', $config->getConversionProcess());
         $this->assertSame('My\\Headings\\Builder', $config->getHeadingsProcess());
         $this->assertSame('My\\Toc\\Builder', $config->getTocProcess());

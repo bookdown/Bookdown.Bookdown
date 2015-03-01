@@ -34,6 +34,15 @@ class RootConfigTest extends \PHPUnit_Framework_TestCase
         "target": "_site"
     }';
 
+    protected $missingTargetJson = '{
+        "title": "Example Title",
+        "content": {
+            "foo": "foo.md",
+            "bar": "/bar.md",
+            "baz": "http://example.com/baz.md"
+        }
+    }';
+
     protected function newRootConfig($file, $data)
     {
         return new RootConfig($file, $data);
@@ -96,4 +105,14 @@ class RootConfigTest extends \PHPUnit_Framework_TestCase
             $config->getRenderingProcess()
         );
     }
+
+    public function testMissingTitle()
+    {
+        $this->setExpectedException(
+            'Bookdown\Bookdown\Exception',
+            "No target set in '/path/to/bookdown.json'."
+        );
+        $config = $this->newRootConfig('/path/to/bookdown.json', $this->missingTargetJson);
+    }
+
 }

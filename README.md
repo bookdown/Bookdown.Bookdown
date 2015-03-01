@@ -2,6 +2,10 @@
 
 > **WARNING:** This project is incomplete and still under heavy development. Use at your own risk.
 
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/bookdown/Bookdown.Bookdown/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/bookdown/Bookdown.Bookdown/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/bookdown/Bookdown.Bookdown/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/bookdown/Bookdown.Bookdown/?branch=master)
+[![Build Status](https://scrutinizer-ci.com/g/bookdown/Bookdown.Bookdown/badges/build.png?b=master)](https://scrutinizer-ci.com/g/bookdown/Bookdown.Bookdown/build-status/master)
+
 Bookdown generates [DocBook](http://docbook.org)-like HTML output using [Markdown](http://daringfireball.net/projects/markdown/) and JSON files instead of XML.
 
 Bookdown is especially well-suited for publishing project documentation to GitHub Pages.

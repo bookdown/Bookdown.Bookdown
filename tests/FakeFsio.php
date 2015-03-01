@@ -25,11 +25,4 @@ class FakeFsio extends Fsio
     {
         $this->dirs[$dir] = true;
     }
-
-    public function realpath($file)
-    {
-        return isset($this->files[$file])
-            ? $file
-            : false;
-    }
 }

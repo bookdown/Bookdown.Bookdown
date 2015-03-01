@@ -57,17 +57,6 @@ class CommandTest extends \PHPUnit_Framework_TestCase
         $this->assertLastStderr('Please enter the path to a bookdown.json file as the first argument.');
     }
 
-    public function testNoRealpathToConfigFile()
-    {
-        $file = __DIR__ . '/no-such-file.json';
-        $argv = array(
-            1 => $file
-        );
-        $exit = $this->exec($argv);
-        $this->assertSame(1, $exit);
-        $this->assertLastStderr("Could not resolve '{$file}' to a real path.");
-    }
-
     public function testSuccess()
     {
         $argv = array(

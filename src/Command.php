@@ -40,21 +40,12 @@ class Command
 
     protected function init()
     {
-        $file = $this->context->argv->get(1);
-        if (! $file) {
+        $rootConfigFile = $this->context->argv->get(1);
+        if (! $rootConfigFile) {
             throw new Exception(
                 "Please enter the path to a bookdown.json file as the first argument."
             );
         }
-
-        $rootConfigFile = $this->fsio->realpath($file);
-        if (! $rootConfigFile) {
-            throw new Exception(
-                "Could not resolve '{$file}' to a real path."
-            );
-        }
-
-        $this->started = microtime(true);
         return $rootConfigFile;
     }
 }

@@ -22,7 +22,8 @@ class ProcessorBuilderTest extends \PHPUnit_Framework_TestCase
             "title": "Example Book",
             "content": {
                 "foo": "foo.md"
-            }
+            },
+            "target": "_site/"
         }');
 
         $this->assertInstanceOf(
@@ -38,6 +39,7 @@ class ProcessorBuilderTest extends \PHPUnit_Framework_TestCase
             "content": {
                 "foo": "foo.md"
             },
+            "target": "_site/",
             "tocProcess": "Bookdown\\\\Bookdown\\\\Process\\\\Fake\\\\FakeProcessUnimplementedBuilder"
         }');
 

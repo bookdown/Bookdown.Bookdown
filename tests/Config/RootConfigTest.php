@@ -30,7 +30,8 @@ class RootConfigTest extends \PHPUnit_Framework_TestCase
             "foo": "foo.md",
             "bar": "/bar.md",
             "baz": "http://example.com/baz.md"
-        }
+        },
+        "target": "_site"
     }';
 
     protected function newRootConfig($file, $data)

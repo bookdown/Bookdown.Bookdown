@@ -27,10 +27,11 @@ class RootConfig extends IndexConfig
 
     protected function initTarget()
     {
-        $target = isset($this->json->target)
-            ? $this->json->target
-            : '_site';
+        if (empty($this->json->target)) {
+            throw new Exception("No target set in '{$this->file}'.");
+        }
 
+        $target = $this->json->target;
         $target = rtrim($this->fixPath($target), DIRECTORY_SEPARATOR);
         $this->target = $target . DIRECTORY_SEPARATOR;
     }

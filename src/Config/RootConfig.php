@@ -10,15 +10,13 @@ class RootConfig extends IndexConfig
     protected $renderingProcess;
     protected $tocProcess;
     protected $headingsProcess;
-    protected $templates = array();
-    protected $templateName;
+    protected $template;
 
     protected function init()
     {
         parent::init();
         $this->initTarget();
-        $this->initTemplates();
-        $this->initTemplateName();
+        $this->initTemplate();
         $this->initConversionProcess();
         $this->initHeadingsProcess();
         $this->initTocProcess();
@@ -36,18 +34,11 @@ class RootConfig extends IndexConfig
         $this->target = $target . DIRECTORY_SEPARATOR;
     }
 
-    protected function initTemplates()
+    protected function initTemplate()
     {
-        $this->templates = empty($this->json->templates)
-            ? array()
-            : (array) $this->json->templates;
-    }
-
-    protected function initTemplateName()
-    {
-        $this->templateName = empty($this->json->templateName)
+        $this->template = empty($this->json->template)
             ? null
-            : $this->json->templateName;
+            : $this->json->template;
     }
 
     protected function initConversionProcess()
@@ -103,14 +94,9 @@ class RootConfig extends IndexConfig
         return $this->target;
     }
 
-    public function getTemplates()
+    public function getTemplate()
     {
-        return $this->templates;
-    }
-
-    public function getTemplateName()
-    {
-        return $this->templateName;
+        return $this->template;
     }
 
     public function get($key, $alt = null)

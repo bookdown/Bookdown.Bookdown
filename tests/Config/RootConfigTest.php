@@ -13,10 +13,7 @@ class RootConfigTest extends \PHPUnit_Framework_TestCase
             "baz": "http://example.com/baz.md"
         },
         "target": "my/target",
-        "templates": {
-            "master": "master.php"
-        },
-        "templateName": "master",
+        "template": "/path/to/templates/master.php",
         "conversionProcess": "My\\\\Conversion\\\\Builder",
         "headingsProcess": "My\\\\Headings\\\\Builder",
         "tocProcess": "My\\\\Toc\\\\Builder",
@@ -54,11 +51,7 @@ class RootConfigTest extends \PHPUnit_Framework_TestCase
         $this->assertBasics($config);
 
         $this->assertSame('/path/to/my/target/', $config->getTarget());
-        $expect = array(
-            'master' => 'master.php'
-        );
-        $this->assertSame($expect, $config->getTemplates());
-        $this->assertSame('master', $config->getTemplateName());
+        $this->assertSame('/path/to/templates/master.php', $config->getTemplate());
         $this->assertSame('My\\Conversion\\Builder', $config->getConversionProcess());
         $this->assertSame('My\\Headings\\Builder', $config->getHeadingsProcess());
         $this->assertSame('My\\Toc\\Builder', $config->getTocProcess());
@@ -86,8 +79,7 @@ class RootConfigTest extends \PHPUnit_Framework_TestCase
         $this->assertBasics($config);
 
         $this->assertSame('/path/to/_site/', $config->getTarget());
-        $this->assertSame(array(), $config->getTemplates());
-        $this->assertSame(null, $config->getTemplateName());
+        $this->assertSame(null, $config->getTemplate());
         $this->assertSame(
             'Bookdown\Bookdown\Process\Conversion\ConversionProcessBuilder',
             $config->getConversionProcess()
@@ -114,5 +106,4 @@ class RootConfigTest extends \PHPUnit_Framework_TestCase
         );
         $config = $this->newRootConfig('/path/to/bookdown.json', $this->missingTargetJson);
     }
-
 }

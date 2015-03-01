@@ -50,7 +50,7 @@ class FsioTest extends \PHPUnit_Framework_TestCase
 
         $this->setExpectedException(
             'Bookdown\Bookdown\Exception',
-            'failed to open stream: No such file or directory'
+            'No such file or directory'
         );
         $this->fsio->get($this->getPath('no-such-file'));
     }
@@ -71,7 +71,7 @@ class FsioTest extends \PHPUnit_Framework_TestCase
         $file = $this->getPath('no-such-directory/fakefile');
         $this->setExpectedException(
             'Bookdown\Bookdown\Exception',
-            'failed to open stream: No such file or directory'
+            'No such file or directory'
         );
         $this->fsio->put($file, $expect);
     }

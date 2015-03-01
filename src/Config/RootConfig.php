@@ -38,7 +38,7 @@ class RootConfig extends IndexConfig
     {
         $this->template = empty($this->json->template)
             ? null
-            : $this->json->template;
+            : $this->fixPath($this->json->template);
     }
 
     protected function initConversionProcess()

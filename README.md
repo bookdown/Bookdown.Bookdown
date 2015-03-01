@@ -16,26 +16,40 @@ Read more about it at <http://bookdown.github.io>.
 
 (In no particular order.)
 
-- Allow bookdown.json to specify `tocdepth`, indicating how many levels to show on the table of contents
+- new `bookdown.json` elements
 
-- Allow bookdown.json to specify `numbering`, indicating how to number the pages at this level (decimal, upper-alpha, lower-alpha, upper-roman, lower-roman)
+    - `"tocdepth"`: indicates how many levels to show on the table of contents
 
-- Allow bookdown.json to specify authors, editors, copyright, date-generated, and other meta-data, then render the meta-data on TOC index pages
+    - `"numbering"`: indicates how to number the pages at this level (decimal, upper-alpha, lower-alpha, upper-roman, lower-roman)
 
-- Add a sidebar-style navigational element
+    - `"authors"`: name, note, email, and website of book authors
 
-- Add a breadcrumb-style naviagtional element
+    - `"authors"`: name, note, email, and website of book editors
 
-- Take a PHPDocumentor structure.xml file and convert to Markdown files for conversion through Bookdown
+    - `"copyright"`: year and holder
 
-- A link-rewrite processor
+    - `"beforeToc"`: indicates a Markdown file to place on the index page before the TOC
 
-- No more default "target", must always be explicit
+    - `"afterToc"`: indicates a Markdown file to place on the index page after the TOC
 
-- Copying of images and other resources from the origin to the target
+- navigational elements
 
-- Pre-process and post-process behavior to copy and/or remove site files
+    - sidebar of siblings at the current level
 
-- Add "beforeToc" and "afterToc" elements to specify files to place before and after the table of contents
+    - breadcrumb-trail of parents leading to the current page
 
-- Treat the root page as different from other indexes, allow it to be a nice "front page" for sites
+- features
+
+    - Automatically add a "date/time generated" value to the root config object and display on the root page
+
+    - Display authors, editors, etc. on root page
+
+    - A command to take a PHPDocumentor structure.xml file and convert it to a Bookdown origin structure (Markdown files + bookdown.json files)
+
+    - A process to rewrite links on generated pages (this is for books collected from multiple different sources)
+
+    - A process to copying images and other resources from the origin to the target directory
+
+    - Pre-process and post-process behavior to copy and/or remove site files
+
+    - Treat the root page as different from other indexes, allow it to be a nice "front page" for sites

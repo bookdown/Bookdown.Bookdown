@@ -1,11 +1,12 @@
 <?php
-namespace Bookdown\Bookdown;
+namespace Bookdown\Bookdown\Service;
 
 use Aura\Cli\Stdio;
 use Bookdown\Bookdown\Config\ConfigFactory;
 use Bookdown\Bookdown\Content\IndexPage;
 use Bookdown\Bookdown\Content\PageFactory;
 use Bookdown\Bookdown\Content\Page;
+use Bookdown\Bookdown\Fsio;
 
 class Collector
 {

@@ -1,7 +1,10 @@
 <?php
 namespace Bookdown\Bookdown;
 
+use Bookdown\Bookdown\BookFixture;
 use Bookdown\Bookdown\Config\RootConfig;
+use Bookdown\Bookdown\Container;
+
 
 class ProcessorBuilderTest extends \PHPUnit_Framework_TestCase
 {
@@ -23,7 +26,7 @@ class ProcessorBuilderTest extends \PHPUnit_Framework_TestCase
         }');
 
         $this->assertInstanceOf(
-            'Bookdown\Bookdown\Processor',
+            'Bookdown\Bookdown\Service\Processor',
             $this->builder->newProcessor($rootConfig)
         );
     }

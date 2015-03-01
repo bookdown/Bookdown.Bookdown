@@ -1,8 +1,9 @@
 <?php
-namespace Bookdown\Bookdown;
+namespace Bookdown\Bookdown\Service;
 
 use Aura\Cli\Stdio;
 use Bookdown\Bookdown\Config\RootConfig;
+use Bookdown\Bookdown\Exception;
 use Bookdown\Bookdown\Fsio;
 
 class ProcessorBuilder

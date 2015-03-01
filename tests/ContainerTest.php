@@ -23,7 +23,7 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
     public function testNewCollector()
     {
         $this->assertInstanceOf(
-            'Bookdown\Bookdown\Collector',
+            'Bookdown\Bookdown\Service\Collector',
             $this->container->newCollector()
         );
     }
@@ -31,7 +31,7 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
     public function testNewProcessorBuilder()
     {
         $this->assertInstanceOf(
-            'Bookdown\Bookdown\ProcessorBuilder',
+            'Bookdown\Bookdown\Service\ProcessorBuilder',
             $this->container->newProcessorBuilder()
         );
     }

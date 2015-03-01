@@ -1,6 +1,8 @@
 <?php
-namespace Bookdown\Bookdown;
+namespace Bookdown\Bookdown\Service;
 
+use Bookdown\Bookdown\BookFixture;
+use Bookdown\Bookdown\Container;
 use Bookdown\Bookdown\Process\Fake\FakeProcess;
 
 class ProcessorTest extends \PHPUnit_Framework_TestCase

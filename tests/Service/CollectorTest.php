@@ -1,5 +1,8 @@
 <?php
-namespace Bookdown\Bookdown;
+namespace Bookdown\Bookdown\Service;
+
+use Bookdown\Bookdown\BookFixture;
+use Bookdown\Bookdown\Container;
 
 class CollectorTest extends \PHPUnit_Framework_TestCase
 {

@@ -42,7 +42,7 @@ class Container
 
     public function newCollector()
     {
-        return new Collector(
+        return new Service\Collector(
             $this->getStdio(),
             $this->getFsio(),
             new Config\ConfigFactory(),
@@ -52,7 +52,7 @@ class Container
 
     public function newProcessorBuilder()
     {
-        return new ProcessorBuilder(
+        return new Service\ProcessorBuilder(
             $this->getStdio(),
             $this->getFsio()
         );

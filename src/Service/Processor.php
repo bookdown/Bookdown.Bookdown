@@ -1,5 +1,5 @@
 <?php
-namespace Bookdown\Bookdown;
+namespace Bookdown\Bookdown\Service;
 
 use Aura\Cli\Stdio;
 use Bookdown\Bookdown\Content\RootPage;

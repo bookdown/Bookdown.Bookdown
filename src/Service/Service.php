@@ -1,9 +1,6 @@
 <?php
 namespace Bookdown\Bookdown\Service;
 
-use Bookdown\Bookdown\Collector;
-use Bookdown\Bookdown\ProcessorBuilder;
-
 class Service
 {
     protected $collector;

@@ -3,41 +3,34 @@ namespace Bookdown\Bookdown;
 
 use Aura\Cli\Stdio;
 use Aura\Cli\Context;
+use Bookdown\Bookdown\Service\Service;
 use Exception as AnyException;
 
 class Command
 {
-    protected $rootConfigFile;
-    protected $rootPage;
+    protected $context;
     protected $stdio;
     protected $fsio;
-    protected $context;
-    protected $started;
-    protected $container;
-    protected $rootConfig;
-    protected $collector;
+    protected $service;
 
     public function __construct(
         Context $context,
         Stdio $stdio,
         Fsio $fsio,
-        Collector $collector,
-        ProcessorBuilder $processorBuilder
+        Service $service
     ) {
         $this->context = $context;
         $this->stdio = $stdio;
         $this->fsio = $fsio;
-        $this->collector = $collector;
-        $this->processorBuilder = $processorBuilder;
+        $this->service = $service;
     }
 
     public function __invoke()
     {
         try {
-            $this->init();
-            $this->collect();
-            $this->process();
-            $this->reportTime();
+            $rootConfigFile = $this->init();
+            $this->service->__invoke($rootConfigFile);
+            $this->reportTime($this->service->getTime());
             return 0;
         } catch (AnyException $e) {
             $this->stdio->errln($e->getMessage());
@@ -55,31 +48,20 @@ class Command
             );
         }
 
-        $this->rootConfigFile = $this->fsio->realpath($file);
-        if (! $this->rootConfigFile) {
+        $rootConfigFile = $this->fsio->realpath($file);
+        if (! $rootConfigFile) {
             throw new Exception(
                 "Could not resolve '{$file}' to a real path."
             );
         }
 
         $this->started = microtime(true);
+        return $rootConfigFile;
     }
 
-    protected function collect()
+    protected function reportTime($time)
     {
-        $this->rootPage = $this->collector->__invoke($this->rootConfigFile);
-        $this->rootConfig = $this->rootPage->getConfig();
-    }
-
-    protected function process()
-    {
-        $processor = $this->processorBuilder->newProcessor($this->rootConfig);
-        $processor->__invoke($this->rootPage);
-    }
-
-    protected function reportTime()
-    {
-        $seconds = trim(sprintf("%10.2f", microtime(true) - $this->started));
+        $seconds = trim(sprintf("%10.2f", $time));
         $this->stdio->outln("Completed in {$seconds} seconds.");
     }
 }

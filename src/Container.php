@@ -28,6 +28,13 @@ class Container
             $this->getCliFactory()->newContext($globals),
             $this->getStdio(),
             $this->getFsio(),
+            $this->newService()
+        );
+    }
+
+    public function newService()
+    {
+        return new Service\Service(
             $this->newCollector(),
             $this->newProcessorBuilder()
         );

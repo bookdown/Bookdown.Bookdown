@@ -10,18 +10,15 @@ class Command
 {
     protected $context;
     protected $stdio;
-    protected $fsio;
     protected $service;
 
     public function __construct(
         Context $context,
         Stdio $stdio,
-        Fsio $fsio,
         Service $service
     ) {
         $this->context = $context;
         $this->stdio = $stdio;
-        $this->fsio = $fsio;
         $this->service = $service;
     }
 

@@ -28,55 +28,21 @@ class RenderingProcessBuilder implements ProcessBuilderInterface
         $viewFactory = new ViewFactory();
         $view = $viewFactory->newInstance($helpers);
 
-        $this->registerTemplates($view, $config);
-        $this->setTemplateName($view, $config);
+        $this->setTemplate($view, $config);
 
         return $view;
     }
 
-    protected function registerTemplates(View $view, RootConfig $config)
+    protected function setTemplate(View $view, RootConfig $config)
     {
+        $template = $config->getTemplate();
+        if (! $template) {
+            $template = dirname(dirname(dirname(__DIR__))) . '/templates/main.php';
+        }
+
         $registry = $view->getViewRegistry();
+        $registry->set('__BOOKDOWN__', $template);
 
-        // defaults
-        $templates = $this->getTemplates();
-        foreach ($templates as $name => $template) {
-            $registry->set($name, $template);
-        }
-
-        // overrides
-        $dir = $config->getDir();
-        $templates = (array) $config->getTemplates();
-        foreach ($templates as $name => $template) {
-            $registry->set($name, "{$dir}/{$template}");
-        }
-    }
-
-    protected function setTemplateName(View $view, RootConfig $config)
-    {
-        $templateName = $config->getTemplateName();
-        if (! $templateName) {
-            $templateName = $this->getTemplateName();
-        }
-        $view->setView($templateName);
-    }
-
-    protected function getTemplates()
-    {
-        $dir = dirname(dirname(dirname(__DIR__))) . '/templates';
-        return array(
-            "main" => "{$dir}/main.php",
-            "head" => "{$dir}/head.php",
-            "body" => "{$dir}/body.php",
-            "core" => "{$dir}/core.php",
-            "navheader" => "{$dir}/navheader.php",
-            "navfooter" => "{$dir}/navfooter.php",
-            "toc" => "{$dir}/toc.php",
-        );
-    }
-
-    protected function getTemplateName()
-    {
-        return 'main';
+        $view->setView('__BOOKDOWN__');
     }
 }

@@ -36,7 +36,8 @@ class Container
     {
         return new Service\Service(
             $this->newCollector(),
-            $this->newProcessorBuilder()
+            $this->newProcessorBuilder(),
+            $this->newTimer()
         );
     }
 
@@ -56,6 +57,11 @@ class Container
             $this->getStdio(),
             $this->getFsio()
         );
+    }
+
+    public function newTimer()
+    {
+        return new Service\Timer($this->getStdio());
     }
 
     public function getCliFactory()

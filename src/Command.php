@@ -30,7 +30,6 @@ class Command
         try {
             $rootConfigFile = $this->init();
             $this->service->__invoke($rootConfigFile);
-            $this->reportTime($this->service->getTime());
             return 0;
         } catch (AnyException $e) {
             $this->stdio->errln($e->getMessage());
@@ -57,11 +56,5 @@ class Command
 
         $this->started = microtime(true);
         return $rootConfigFile;
-    }
-
-    protected function reportTime($time)
-    {
-        $seconds = trim(sprintf("%10.2f", $time));
-        $this->stdio->outln("Completed in {$seconds} seconds.");
     }
 }

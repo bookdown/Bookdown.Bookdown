@@ -28,7 +28,7 @@ Bookdown has 100% test coverage. To run the tests, install [PHPUnit](http://phpu
 
     - `"authors"`: name, note, email, and website of book authors
 
-    - `"authors"`: name, note, email, and website of book editors
+    - `"editors"`: name, note, email, and website of book editors
 
     - `"copyright"`: year and holder
 

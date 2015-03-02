@@ -24,7 +24,7 @@ Read more about it at <http://bookdown.github.io>.
 
     - `"authors"`: name, note, email, and website of book authors
 
-    - `"authors"`: name, note, email, and website of book editors
+    - `"editors"`: name, note, email, and website of book editors
 
     - `"copyright"`: year and holder
 

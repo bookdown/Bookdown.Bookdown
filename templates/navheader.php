@@ -5,20 +5,20 @@ $next = $this->page->getNext();
 ?>
 
 <nav class="navheader">
-    <table width="100%">
+    <table>
         <tr>
-            <th colspan="3" align="center"><?php
+            <th colspan="3" class="curr"><?php
                 echo $this->page->getNumberAndTitle();
             ?></th>
         </tr>
         <tr>
-            <td width="20%" align="left"><?php if ($prev) {
+            <td class="prev"><?php if ($prev) {
                 echo $this->anchorRaw($prev->getHref(), $prev->getTitle());
             } ?></td>
-            <td width="60%" align="center"><?php if ($parent) {
+            <td class="parent" align="center"><?php if ($parent) {
                 echo $parent->getNumberAndTitle();
             } ?></th>
-            <td width="20%" align="right"><?php if ($next) {
+            <td class="next" align="right"><?php if ($next) {
                 echo $this->anchorRaw($next->getHref(), $next->getTitle());
             } ?></td>
         </tr>

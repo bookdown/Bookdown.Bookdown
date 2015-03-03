@@ -12,6 +12,10 @@ Bookdown is especially well-suited for publishing project documentation to GitHu
 
 Read more about it at <http://bookdown.github.io>.
 
+## Tests
+
+Bookdown has 100% test coverage. To run the tests, install [PHPUnit](http://phpunit.de), then issue `phpunit` at the repository root.
+
 ## Todo
 
 (In no particular order.)
@@ -24,7 +28,7 @@ Read more about it at <http://bookdown.github.io>.
 
     - `"authors"`: name, note, email, and website of book authors
 
-    - `"authors"`: name, note, email, and website of book editors
+    - `"editors"`: name, note, email, and website of book editors
 
     - `"copyright"`: year and holder
 
@@ -46,7 +50,7 @@ Read more about it at <http://bookdown.github.io>.
 
     - A command to take a PHPDocumentor structure.xml file and convert it to a Bookdown origin structure (Markdown files + bookdown.json files)
 
-    - A process to rewrite links on generated pages (this is for books collected from multiple different sources)
+    - A process to rewrite links on generated pages (this is for books collected from multiple different sources, and for changing origin `*.md` links to target `*.html` links)
 
     - A process to copying images and other resources from the origin to the target directory
 

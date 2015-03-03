@@ -115,8 +115,8 @@ class RenderingProcessTest extends \PHPUnit_Framework_TestCase
         </tr>
         <tr>
             <td class="prev"><a href="/">Example Book</a></td>
-            <td class="parent" align="center">Example Book</th>
-            <td class="next" align="right"><a href="/chapter/section.html">Title</a></td>
+            <td class="parent">Example Book</th>
+            <td class="next"><a href="/chapter/section.html">Title</a></td>
         </tr>
     </table>
 </nav>

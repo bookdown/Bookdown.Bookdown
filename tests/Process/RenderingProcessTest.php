@@ -59,18 +59,64 @@ class RenderingProcessTest extends \PHPUnit_Framework_TestCase
         $expect = '<html>
 <head>
     <title>Chapter</title>
+    <style>
+        nav table {
+            width: 100%;
+        }
+
+        nav.navheader td.curr,
+        nav.navheader th.curr {
+            text-align: center;
+        }
+
+        nav.navheader td.prev,
+        nav.navheader th.prev {
+            width: 30%;
+            text-align: left;
+        }
+
+        nav.navheader td.parent,
+        nav.navheader th.parent {
+            width: 40%;
+            text-align: center;
+        }
+
+        nav.navheader td.next,
+        nav.navheader th.next {
+            text-align: right;
+            width: 30%;
+        }
+
+        nav.navfooter td.prev,
+        nav.navfooter th.prev {
+            width: 30%;
+            text-align: left;
+        }
+
+        nav.navfooter td.parent,
+        nav.navfooter th.parent {
+            width: 40%;
+            text-align: center;
+        }
+
+        nav.navfooter td.next,
+        nav.navfooter th.next {
+            text-align: right;
+            width: 30%;
+        }
+    </style>
 </head>
 <body>
 
 <nav class="navheader">
-    <table width="100%">
+    <table>
         <tr>
-            <th colspan="3" align="center">1. Chapter</th>
+            <th colspan="3" class="curr">1. Chapter</th>
         </tr>
         <tr>
-            <td width="20%" align="left"><a href="/">Example Book</a></td>
-            <td width="60%" align="center">Example Book</th>
-            <td width="20%" align="right"><a href="/chapter/section.html">Title</a></td>
+            <td class="prev"><a href="/">Example Book</a></td>
+            <td class="parent" align="center">Example Book</th>
+            <td class="next" align="right"><a href="/chapter/section.html">Title</a></td>
         </tr>
     </table>
 </nav>
@@ -88,16 +134,16 @@ class RenderingProcessTest extends \PHPUnit_Framework_TestCase
 </dl>
 
 <nav class="navfooter">
-    <table width="100%">
+    <table>
         <tr>
-            <td width="40%" align="left"><a href="/">Prev</a></td>
-            <td width="20%" align="center"><a href="/">Up</a></td>
-            <td width="40%" align="right"><a href="/chapter/section.html">Next</a></td>
+            <td class="prev"><a href="/">Prev</a></td>
+            <td class="parent"><a href="/">Up</a></td>
+            <td class="next"><a href="/chapter/section.html">Next</a></td>
         </tr>
         <tr>
-            <td width="40%" align="left" valign="top">Example Book</td>
-            <td width="20%" align="center" valign="top">Example Book</td>
-            <td width="40%" align="right" valign="top">1.1. Title</td>
+            <td class="prev">Example Book</td>
+            <td class="parent">Example Book</td>
+            <td class="next">1.1. Title</td>
         </tr>
     </table>
 </nav>

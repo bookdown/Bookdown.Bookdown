@@ -10,9 +10,9 @@ class BookFixture
     public $rootConfigFile = '/path/to/bookdown.json';
     public $rootConfigData = '{
         "title": "Example Book",
-        "content": {
-            "chapter": "chapter/bookdown.json"
-        },
+        "content": [
+            {"chapter": "chapter/bookdown.json"}
+        ],
         "target": "/_site",
         "templates": {
             "foo": "/foo.php"
@@ -24,9 +24,9 @@ class BookFixture
     public $indexConfigFile = '/path/to/chapter/bookdown.json';
     public $indexConfigData = '{
         "title": "Chapter",
-        "content": {
-            "section": "section.md"
-        }
+        "content": [
+            {"section": "section.md"}
+        ]
     }';
     public $indexConfig;
     public $indexPage;

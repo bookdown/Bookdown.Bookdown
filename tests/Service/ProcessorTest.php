@@ -38,17 +38,17 @@ class ProcessorTest extends \PHPUnit_Framework_TestCase
     {
         $this->fsio->put('/path/to/bookdown.json', '{
             "title": "Example Book",
-            "content": {
-                "chapter-1": "chapter-1/bookdown.json"
-            },
+            "content": [
+                {"chapter-1": "chapter-1/bookdown.json"}
+            ],
             "target": "/_site"
         }');
 
         $this->fsio->put('/path/to/chapter-1/bookdown.json', '{
             "title": "Chapter 1",
-            "content": {
-                "section-1": "section-1.md"
-            }
+            "content": [
+                {"section-1": "section-1.md"}
+            ]
         }');
     }
 

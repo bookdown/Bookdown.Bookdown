@@ -1,48 +1,48 @@
 <?php
 namespace Bookdown\Bookdown\Config;
 
-class ConfigTest extends \PHPUnit_Framework_TestCase
+class IndexConfigTest extends \PHPUnit_Framework_TestCase
 {
     protected $config;
 
     protected $validLocalJson = '{
         "title": "Example Title",
-        "content": {
-            "foo": "foo.md",
-            "bar": "/bar.md",
-            "baz": "http://example.com/baz.md"
-        }
+        "content": [
+            {"foo": "foo.md"},
+            {"bar": "/bar.md"},
+            {"baz": "http://example.com/baz.md"}
+        ]
     }';
 
     protected $validRemoteJson = '{
         "title": "Example Title",
-        "content": {
-            "zim": "zim.md",
-            "dib": "dib.md",
-            "gir": "http://example.com/gir.md"
-        }
+        "content": [
+            {"zim": "zim.md"},
+            {"dib": "dib.md"},
+            {"gir": "http://example.com/gir.md"}
+        ]
     }';
 
     protected $malformedJson = '{';
 
     protected $jsonMissingTitle = '{
-        "content": {
-            "foo": "foo.md",
-            "bar": "/bar.md",
-            "baz": "http://example.com/baz.md"
-        }
+        "content": [
+            {"foo": "foo.md"},
+            {"bar": "/bar.md"},
+            {"baz": "http://example.com/baz.md"}
+        ]
     }';
 
     protected $jsonMissingContent = '{
         "title": "Example Title",
-        "content" : {}
+        "content" : []
     }';
 
     protected $jsonContentIndex = '{
         "title": "Example Title",
-        "content" : {
-            "index": "index.md"
-        }
+        "content" : [
+            {"index": "index.md"}
+        ]
     }';
 
     protected function newIndexConfig($file, $data)
@@ -81,7 +81,7 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
     {
         $this->setExpectedException(
             'Bookdown\Bookdown\Exception',
-            "Disallowed 'index' content in /path/to/bookdown.json."
+            "Disallowed 'index' content name in /path/to/bookdown.json."
         );
         $config = $this->newIndexConfig('/path/to/bookdown.json', $this->jsonContentIndex);
     }

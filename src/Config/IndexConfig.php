@@ -84,7 +84,7 @@ class IndexConfig
 
         $name = basename($origin);
         if (substr($name, -13) == 'bookdown.json') {
-            $name = basename(dirname($name));
+            $name = basename(dirname($origin));
             return $this->addContent($name, $origin);
         }
 
@@ -99,11 +99,11 @@ class IndexConfig
     protected function addContent($name, $origin)
     {
         if ($name == 'index') {
-            throw new Exception("Disallowed 'index' content name in {$this->file}.");
+            throw new Exception("Disallowed 'index' content name in '{$this->file}'.");
         }
 
         if (isset($this->content[$name])) {
-            throw new Exception("Content name '{$name}' already set in {$this->file}.");
+            throw new Exception("Content name '{$name}' already set in '{$this->file}'.");
         }
 
         $this->content[$name] = $this->fixPath($origin);

@@ -5,7 +5,7 @@ class IndexConfigTest extends \PHPUnit_Framework_TestCase
 {
     protected $config;
 
-    protected $validLocalJson = '{
+    protected $jsonValidLocal = '{
         "title": "Example Title",
         "content": [
             {"foo": "foo.md"},
@@ -14,7 +14,7 @@ class IndexConfigTest extends \PHPUnit_Framework_TestCase
         ]
     }';
 
-    protected $validRemoteJson = '{
+    protected $jsonValidRemote = '{
         "title": "Example Title",
         "content": [
             {"zim": "zim.md"},
@@ -35,13 +35,36 @@ class IndexConfigTest extends \PHPUnit_Framework_TestCase
 
     protected $jsonMissingContent = '{
         "title": "Example Title",
-        "content" : []
+        "content": []
     }';
 
     protected $jsonContentIndex = '{
         "title": "Example Title",
-        "content" : [
+        "content": [
             {"index": "index.md"}
+        ]
+    }';
+
+    protected $jsonContentNotArray = '{
+        "title": "Example Title",
+        "content": "not an array"
+    }';
+
+    protected $jsonContentConvenience = '{
+        "title": "Example Title",
+        "content": [
+            "foo.md",
+            "bar/bookdown.json",
+            "http://example.com/baz.md",
+            "http://example.dom/dib/bookdown.json"
+        ]
+    }';
+
+    protected $jsonReusedContentName = '{
+        "title": "Example Title",
+        "content": [
+            "foo.md",
+            "foo/bookdown.json"
         ]
     }';
 
@@ -77,18 +100,27 @@ class IndexConfigTest extends \PHPUnit_Framework_TestCase
         $config = $this->newIndexConfig('/path/to/bookdown.json', $this->jsonMissingContent);
     }
 
+    public function testContentNotArray()
+    {
+        $this->setExpectedException(
+            'Bookdown\Bookdown\Exception',
+            "Content must be an array in '/path/to/bookdown.json'."
+        );
+        $config = $this->newIndexConfig('/path/to/bookdown.json', $this->jsonContentNotArray);
+    }
+
     public function testContentIndex()
     {
         $this->setExpectedException(
             'Bookdown\Bookdown\Exception',
-            "Disallowed 'index' content name in /path/to/bookdown.json."
+            "Disallowed 'index' content name in '/path/to/bookdown.json'."
         );
         $config = $this->newIndexConfig('/path/to/bookdown.json', $this->jsonContentIndex);
     }
 
-    public function testValidLocalJson()
+    public function testValidLocal()
     {
-        $config = $this->newIndexConfig('/path/to/bookdown.json', $this->validLocalJson);
+        $config = $this->newIndexConfig('/path/to/bookdown.json', $this->jsonValidLocal);
 
         $this->assertSame('/path/to/bookdown.json', $config->getFile());
         $this->assertSame('/path/to/', $config->getDir());
@@ -101,11 +133,11 @@ class IndexConfigTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($expect, $config->getContent());
     }
 
-    public function testValidRemoteJson()
+    public function testValidRemote()
     {
         $config = $this->newIndexConfig(
             'http://example.net/path/to/bookdown.json',
-            $this->validRemoteJson
+            $this->jsonValidRemote
         );
 
         $this->assertSame('http://example.net/path/to/bookdown.json', $config->getFile());
@@ -118,7 +150,38 @@ class IndexConfigTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($expect, $config->getContent());
     }
 
-    public function testInvalidRemoteJson()
+    public function testContentConvenience()
+    {
+        $config = $this->newIndexConfig(
+            '/path/to/bookdown.json',
+            $this->jsonContentConvenience
+        );
+
+        $this->assertSame('/path/to/bookdown.json', $config->getFile());
+
+        $expect = array(
+            'foo' => '/path/to/foo.md',
+            'bar' => '/path/to/bar/bookdown.json',
+            'baz' => 'http://example.com/baz.md',
+            'dib' => 'http://example.dom/dib/bookdown.json',
+        );
+
+        $this->assertSame($expect, $config->getContent());
+    }
+
+    public function testReusedContentName()
+    {
+        $this->setExpectedException(
+            'Bookdown\Bookdown\Exception',
+            "Content name 'foo' already set in '/path/to/bookdown.json'."
+        );
+        $config = $this->newIndexConfig(
+            '/path/to/bookdown.json',
+            $this->jsonReusedContentName
+        );
+    }
+
+    public function testInvalidRemote()
     {
         $this->setExpectedException(
             'Bookdown\Bookdown\Exception',
@@ -126,7 +189,7 @@ class IndexConfigTest extends \PHPUnit_Framework_TestCase
         );
         $config = $this->newIndexConfig(
             'http://example.net/path/to/bookdown.json',
-            $this->validLocalJson
+            $this->jsonValidLocal
         );
     }
 }

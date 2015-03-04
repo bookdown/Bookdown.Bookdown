@@ -82,8 +82,11 @@ class IndexConfig
             return $this->addContent($name, $origin);
         }
 
-        $name = basename($origin);
-        if (substr($name, -13) == 'bookdown.json') {
+        if (! is_string($origin)) {
+            throw new Exception("Content origin must be object or string in '{$this->file}'.");
+        }
+
+        if (substr($origin, -13) == 'bookdown.json') {
             $name = basename(dirname($origin));
             return $this->addContent($name, $origin);
         }

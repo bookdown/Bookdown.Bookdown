@@ -50,6 +50,13 @@ class IndexConfigTest extends \PHPUnit_Framework_TestCase
         "content": "not an array"
     }';
 
+    protected $jsonContentItemNotStringOrObject = '{
+        "title": "Example Title",
+        "content": [
+            ["neither string", "nor object"]
+        ]
+    }';
+
     protected $jsonContentConvenience = '{
         "title": "Example Title",
         "content": [
@@ -107,6 +114,15 @@ class IndexConfigTest extends \PHPUnit_Framework_TestCase
             "Content must be an array in '/path/to/bookdown.json'."
         );
         $config = $this->newIndexConfig('/path/to/bookdown.json', $this->jsonContentNotArray);
+    }
+
+    public function testContentItemNotStringOrObject()
+    {
+        $this->setExpectedException(
+            'Bookdown\Bookdown\Exception',
+            "Content origin must be object or string in '/path/to/bookdown.json'."
+        );
+        $config = $this->newIndexConfig('/path/to/bookdown.json', $this->jsonContentItemNotStringOrObject);
     }
 
     public function testContentIndex()

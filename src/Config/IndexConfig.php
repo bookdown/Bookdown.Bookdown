@@ -56,21 +56,60 @@ class IndexConfig
 
     protected function initContent()
     {
-        $this->content = empty($this->json->content)
+        $content = empty($this->json->content)
             ? array()
-            : (array) $this->json->content;
+            : $this->json->content;
 
-        if (! $this->content) {
+        if (! $content) {
             throw new Exception("No content listed in '{$this->file}'.");
         }
 
-        if (isset($this->content['index'])) {
-            throw new Exception("Disallowed 'index' content in {$this->file}.");
+        if (! is_array($content)) {
+            throw new Exception("Content must be an array in '{$this->file}'.");
         }
 
-        foreach ($this->content as $name => $origin) {
-            $this->content[$name] = $this->fixPath($origin);
+        foreach ($content as $key => $val) {
+            $this->initContentItem($val);
         }
+    }
+
+    protected function initContentItem($origin)
+    {
+        if (is_object($origin)) {
+            $spec = (array) $origin;
+            $name = key($spec);
+            $origin = current($spec);
+            return $this->addContent($name, $origin);
+        }
+
+        if (! is_string($origin)) {
+            throw new Exception("Content origin must be object or string in '{$this->file}'.");
+        }
+
+        if (substr($origin, -13) == 'bookdown.json') {
+            $name = basename(dirname($origin));
+            return $this->addContent($name, $origin);
+        }
+
+        $name = basename($origin);
+        $pos = strrpos($name, '.');
+        if ($pos !== false) {
+            $name = substr($name, 0, $pos);
+        }
+        return $this->addContent($name, $origin);
+    }
+
+    protected function addContent($name, $origin)
+    {
+        if ($name == 'index') {
+            throw new Exception("Disallowed 'index' content name in '{$this->file}'.");
+        }
+
+        if (isset($this->content[$name])) {
+            throw new Exception("Content name '{$name}' already set in '{$this->file}'.");
+        }
+
+        $this->content[$name] = $this->fixPath($origin);
     }
 
     protected function fixPath($path)

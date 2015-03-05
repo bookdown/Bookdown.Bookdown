@@ -36,6 +36,8 @@ Bookdown has 100% test coverage. To run the tests, install [PHPUnit](http://phpu
 
     - `"afterToc"`: indicates a Markdown file to place on the index page after the TOC
 
+    - `"subtitle"`: indicates a subtitle on an index page
+
 - navigational elements
 
     - sidebar of siblings at the current level

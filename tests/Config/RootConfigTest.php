@@ -7,11 +7,11 @@ class RootConfigTest extends \PHPUnit_Framework_TestCase
 
     protected $maxRootJson = '{
         "title": "Example Title",
-        "content": {
-            "foo": "foo.md",
-            "bar": "/bar.md",
-            "baz": "http://example.com/baz.md"
-        },
+        "content": [
+            {"foo": "foo.md"},
+            {"bar": "/bar.md"},
+            {"baz": "http://example.com/baz.md"}
+        ],
         "target": "my/target",
         "template": "../templates/master.php",
         "conversionProcess": "My\\\\Conversion\\\\Builder",
@@ -23,21 +23,21 @@ class RootConfigTest extends \PHPUnit_Framework_TestCase
 
     protected $minRootJson = '{
         "title": "Example Title",
-        "content": {
-            "foo": "foo.md",
-            "bar": "/bar.md",
-            "baz": "http://example.com/baz.md"
-        },
+        "content": [
+            {"foo": "foo.md"},
+            {"bar": "/bar.md"},
+            {"baz": "http://example.com/baz.md"}
+        ],
         "target": "_site"
     }';
 
     protected $missingTargetJson = '{
         "title": "Example Title",
-        "content": {
-            "foo": "foo.md",
-            "bar": "/bar.md",
-            "baz": "http://example.com/baz.md"
-        }
+        "content": [
+            {"foo": "foo.md"},
+            {"bar": "/bar.md"},
+            {"baz": "http://example.com/baz.md"}
+        ]
     }';
 
     protected function newRootConfig($file, $data)

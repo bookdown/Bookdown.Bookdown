@@ -1,5 +1,5 @@
 <?php
-namespace Bookdown\Bookdown;
+namespace Bookdown\Bookdown\Service;
 
 use Bookdown\Bookdown\BookFixture;
 use Bookdown\Bookdown\Config\RootConfig;
@@ -20,9 +20,9 @@ class ProcessorBuilderTest extends \PHPUnit_Framework_TestCase
     {
         $rootConfig = new RootConfig('/path/to/bookdown.json', '{
             "title": "Example Book",
-            "content": {
-                "foo": "foo.md"
-            },
+            "content": [
+                {"foo": "foo.md"}
+            ],
             "target": "_site/"
         }');
 
@@ -36,9 +36,9 @@ class ProcessorBuilderTest extends \PHPUnit_Framework_TestCase
     {
         $rootConfig = new RootConfig('/path/to/bookdown.json', '{
             "title": "Example Book",
-            "content": {
-                "foo": "foo.md"
-            },
+            "content": [
+                {"foo": "foo.md"}
+            ],
             "target": "_site/",
             "tocProcess": "Bookdown\\\\Bookdown\\\\Process\\\\Fake\\\\FakeProcessUnimplementedBuilder"
         }');

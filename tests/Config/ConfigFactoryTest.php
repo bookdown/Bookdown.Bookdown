@@ -11,11 +11,11 @@ class ConfigFactoryTest extends \PHPUnit_Framework_TestCase
 
     protected $data = '{
         "title": "Example Title",
-        "content": {
-            "foo": "foo.md",
-            "bar": "/bar.md",
-            "baz": "http://example.com/baz.md"
-        },
+        "content": [
+            {"foo": "foo.md"},
+            {"bar": "/bar.md"},
+            {"baz": "http://example.com/baz.md"}
+        ],
         "target": "/_site"
     }';
 

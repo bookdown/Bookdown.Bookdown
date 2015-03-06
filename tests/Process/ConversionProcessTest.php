@@ -33,7 +33,7 @@ class ConversionProcessTest extends \PHPUnit_Framework_TestCase
         $this->process->__invoke($this->fixture->page);
         $expect = '<h1>Title</h1>
 <p>Text under title.</p>
-<h2>Subtitle A</h2>
+<h2>Subtitle <code>code</code> A</h2>
 <p>Text under subtitle A.</p>
 <h3>Sub-subtitle</h3>
 <p>Text under sub-subtitle.</p>

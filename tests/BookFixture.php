@@ -36,7 +36,7 @@ class BookFixture
 
 Text under title.
 
-## Subtitle A
+## Subtitle `code` A
 
 Text under subtitle A.
 

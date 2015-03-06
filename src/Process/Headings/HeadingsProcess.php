@@ -9,6 +9,7 @@ use Bookdown\Bookdown\Process\ProcessInterface;
 use DomDocument;
 use DomNode;
 use DomNodeList;
+use DomText;
 use DomXpath;
 
 class HeadingsProcess implements ProcessInterface
@@ -130,7 +131,11 @@ class HeadingsProcess implements ProcessInterface
     {
         $heading = $this->newHeading($node);
         $this->headings[] = $heading;
-        $node->nodeValue = $heading->getNumber() . $node->C14N();
+
+        $number = new DOMText();
+        $number->nodeValue = $heading->getNumber() . ' ';
+        $node->insertBefore($number, $node->firstChild);
+
         $node->setAttribute('id', $heading->getId());
     }
 

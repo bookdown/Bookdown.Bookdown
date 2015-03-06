@@ -76,7 +76,7 @@ class TocProcessTest extends \PHPUnit_Framework_TestCase
             ),
             array(
                 'number' => '1.1.1.',
-                'title' => 'Subtitle A',
+                'title' => 'Subtitle <code>code</code> A',
                 'id' => '1.1.1',
                 'href' => '/chapter/section.html',
                 'level' => 3,
@@ -125,7 +125,7 @@ class TocProcessTest extends \PHPUnit_Framework_TestCase
             ),
             array(
                 'number' => '1.1.1.',
-                'title' => 'Subtitle A',
+                'title' => 'Subtitle <code>code</code> A',
                 'id' => '1.1.1',
                 'href' => '/chapter/section.html',
                 'level' => 3,

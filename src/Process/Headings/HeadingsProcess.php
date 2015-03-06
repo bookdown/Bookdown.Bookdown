@@ -130,7 +130,7 @@ class HeadingsProcess implements ProcessInterface
     {
         $heading = $this->newHeading($node);
         $this->headings[] = $heading;
-        $node->nodeValue = $heading->getNumber() . " {$node->nodeValue}";
+        $node->nodeValue = $heading->getNumber() . $node->C14N();
         $node->setAttribute('id', $heading->getId());
     }
 

@@ -125,7 +125,7 @@ class RenderingProcessTest extends \PHPUnit_Framework_TestCase
 <dl>
 <dt>1.1. <a href="/chapter/section.html#1.1">Title</a></dt>
 <dd><dl>
-<dt>1.1.1. <a href="/chapter/section.html#1.1.1">Subtitle A</a></dt>
+<dt>1.1.1. <a href="/chapter/section.html#1.1.1">Subtitle <code>code</code> A</a></dt>
 <dd><dl>
 <dt>1.1.1.1. <a href="/chapter/section.html#1.1.1.1">Sub-subtitle</a></dt>
 </dl></dd>

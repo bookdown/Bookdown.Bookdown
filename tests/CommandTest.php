@@ -6,20 +6,23 @@ class CommandTest extends \PHPUnit_Framework_TestCase
     protected $container;
     protected $fixture;
     protected $fsio;
-    protected $stdio;
+    protected $stdout;
+    protected $stderr;
 
     protected function setUp()
     {
+        $this->stdout = fopen('php://memory', 'a+');
+        $this->stderr = fopen('php://memory', 'a+');
+
         $this->container = new Container(
-            'php://memory',
-            'php://memory',
+            $this->stdout,
+            $this->stderr,
             'Bookdown\Bookdown\FakeFsio'
         );
 
         $this->fsio = $this->container->getFsio();
         $this->fixture = new BookFixture($this->fsio);
 
-        $this->stdio = $this->container->getStdio();
     }
 
     protected function exec(array $argv)
@@ -40,10 +43,9 @@ class CommandTest extends \PHPUnit_Framework_TestCase
 
     protected function getStderr()
     {
-        $handle = $this->stdio->getStderr();
-        $handle->rewind();
+        rewind($this->stderr);
         $string = '';
-        while ($chars = $handle->fread()) {
+        while ($chars = fread($this->stderr, 8192)) {
             $string .= $chars;
         }
         return $string;

@@ -1,7 +1,7 @@
 <?php
 namespace Bookdown\Bookdown;
 
-use Aura\Cli\Stdio;
+use Psr\Log\LoggerInterface;
 use Aura\Cli\Context;
 use Bookdown\Bookdown\Service\Service;
 use Exception as AnyException;
@@ -9,16 +9,16 @@ use Exception as AnyException;
 class Command
 {
     protected $context;
-    protected $stdio;
+    protected $logger;
     protected $service;
 
     public function __construct(
         Context $context,
-        Stdio $stdio,
+        LoggerInterface $logger,
         Service $service
     ) {
         $this->context = $context;
-        $this->stdio = $stdio;
+        $this->logger = $logger;
         $this->service = $service;
     }
 
@@ -29,7 +29,7 @@ class Command
             $this->service->__invoke($rootConfigFile);
             return 0;
         } catch (AnyException $e) {
-            $this->stdio->errln($e->getMessage());
+            $this->logger->error($e->getMessage());
             $code = $e->getCode() ? $e->getCode() : 1;
             return $code;
         }

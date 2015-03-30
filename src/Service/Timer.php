@@ -1,15 +1,15 @@
 <?php
 namespace Bookdown\Bookdown\Service;
 
-use Aura\Cli\Stdio;
+use Psr\Log\LoggerInterface;
 
 class Timer
 {
     protected $start;
 
-    public function __construct(Stdio $stdio)
+    public function __construct(LoggerInterface $logger)
     {
-        $this->stdio = $stdio;
+        $this->logger = $logger;
         $this->start = microtime(true);
     }
 
@@ -17,6 +17,6 @@ class Timer
     {
         $seconds = microtime(true) - $this->start;
         $seconds = trim(sprintf("%10.2f", $seconds));
-        $this->stdio->outln("Completed in {$seconds} seconds.");
+        $this->logger->info("Completed in {$seconds} seconds.");
     }
 }

@@ -1,7 +1,7 @@
 <?php
 namespace Bookdown\Bookdown\Process\Headings;
 
-use Aura\Cli\Stdio;
+use Psr\Log\LoggerInterface;
 use Bookdown\Bookdown\Content\Page;
 use Bookdown\Bookdown\Content\HeadingFactory;
 use Bookdown\Bookdown\Fsio;
@@ -28,21 +28,21 @@ class HeadingsProcess implements ProcessInterface
 
     protected $fsio;
 
-    protected $stdio;
+    protected $logger;
 
     public function __construct(
-        Stdio $stdio,
+        LoggerInterface $logger,
         Fsio $fsio,
         HeadingFactory $headingFactory
     ) {
-        $this->stdio = $stdio;
+        $this->logger = $logger;
         $this->fsio = $fsio;
         $this->headingFactory = $headingFactory;
     }
 
     public function __invoke(Page $page)
     {
-        $this->stdio->outln("    Processing headings for {$page->getTarget()}");
+        $this->logger->info("    Processing headings for {$page->getTarget()}");
 
         $this->reset($page);
 

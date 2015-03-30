@@ -1,29 +1,29 @@
 <?php
 namespace Bookdown\Bookdown\Process\Toc;
 
-use Aura\Cli\Stdio;
+use Psr\Log\LoggerInterface;
 use Bookdown\Bookdown\Content\Page;
 use Bookdown\Bookdown\Content\IndexPage;
 use Bookdown\Bookdown\Process\ProcessInterface;
 
 class TocProcess implements ProcessInterface
 {
-    protected $stdio;
+    protected $logger;
     protected $tocEntries;
 
-    public function __construct(Stdio $stdio)
+    public function __construct(LoggerInterface $logger)
     {
-        $this->stdio = $stdio;
+        $this->logger = $logger;
     }
 
     public function __invoke(Page $page)
     {
         if (! $page->isIndex()) {
-            $this->stdio->outln("    Skipping TOC entries for non-index {$page->getTarget()}");
+            $this->logger->info("    Skipping TOC entries for non-index {$page->getTarget()}");
             return;
         }
 
-        $this->stdio->outln("    Adding TOC entries for {$page->getTarget()}");
+        $this->logger->info("    Adding TOC entries for {$page->getTarget()}");
         $this->tocEntries = array();
         $this->addTocEntries($page);
         $page->setTocEntries($this->tocEntries);

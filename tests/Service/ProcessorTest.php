@@ -9,7 +9,7 @@ class ProcessorTest extends \PHPUnit_Framework_TestCase
 {
     protected $root;
     protected $collector;
-    protected $stdio;
+    protected $logger;
     protected $fsio;
 
     protected function setUp()
@@ -20,7 +20,7 @@ class ProcessorTest extends \PHPUnit_Framework_TestCase
             'Bookdown\Bookdown\FakeFsio'
         );
 
-        $this->stdio = $container->getStdio();
+        $this->logger = $container->getLogger();
         $this->fsio = $container->getFsio();
         $this->setUpFsio();
 
@@ -55,7 +55,7 @@ class ProcessorTest extends \PHPUnit_Framework_TestCase
     public function testProcessor()
     {
         $processor = new Processor(
-            $this->stdio,
+            $this->logger,
             $this->processes
         );
 

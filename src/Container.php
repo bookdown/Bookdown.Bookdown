@@ -10,11 +10,10 @@ class Container
 {
     protected $stdout;
     protected $stderr;
-    protected $stdio;
+    protected $logger;
     protected $cliFactory;
     protected $fsioClass;
     protected $fsio;
-    protected $logger;
 
     public function __construct(
         $stdout = 'php://stdout',
@@ -30,7 +29,7 @@ class Container
     {
         return new Command(
             $this->getCliFactory()->newContext($globals),
-            $this->getStdio(),
+            $this->getLogger(),
             $this->newService()
         );
     }
@@ -57,14 +56,14 @@ class Container
     public function newProcessorBuilder()
     {
         return new Service\ProcessorBuilder(
-            $this->getStdio(),
+            $this->getLogger(),
             $this->getFsio()
         );
     }
 
     public function newTimer()
     {
-        return new Service\Timer($this->getStdio());
+        return new Service\Timer($this->getLogger());
     }
 
     public function getCliFactory()
@@ -73,18 +72,6 @@ class Container
             $this->cliFactory = new CliFactory();
         }
         return $this->cliFactory;
-    }
-
-    public function getStdio()
-    {
-        if (! $this->stdio) {
-            $this->stdio = $this->getCliFactory()->newStdio(
-                'php://stdin',
-                $this->stdout,
-                $this->stderr
-            );
-        }
-        return $this->stdio;
     }
 
     public function getLogger()

@@ -1,7 +1,7 @@
 <?php
 namespace Bookdown\Bookdown\Service;
 
-use Aura\Cli\Stdio;
+use Psr\Log\LoggerInterface;
 use Bookdown\Bookdown\Config\ConfigFactory;
 use Bookdown\Bookdown\Content\IndexPage;
 use Bookdown\Bookdown\Content\PageFactory;
@@ -13,13 +13,13 @@ class Collector
     protected $pages = array();
     protected $configFactory;
     protected $pageFactory;
-    protected $stdio;
+    protected $logger;
     protected $fsio;
     protected $level = 0;
     protected $prev;
 
     public function __construct(
-        $logger,
+        LoggerInterface $logger,
         Fsio $fsio,
         ConfigFactory $configFactory,
         PageFactory $pageFactory

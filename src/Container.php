@@ -2,6 +2,9 @@
 namespace Bookdown\Bookdown;
 
 use Aura\Cli\CliFactory;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+use Monolog\Formatter\LineFormatter;
 
 class Container
 {
@@ -11,6 +14,7 @@ class Container
     protected $cliFactory;
     protected $fsioClass;
     protected $fsio;
+    protected $logger;
 
     public function __construct(
         $stdout = 'php://stdout',
@@ -43,7 +47,7 @@ class Container
     public function newCollector()
     {
         return new Service\Collector(
-            $this->getStdio(),
+            $this->getLogger(),
             $this->getFsio(),
             new Config\ConfigFactory(),
             new Content\PageFactory()
@@ -81,6 +85,23 @@ class Container
             );
         }
         return $this->stdio;
+    }
+
+    public function getLogger()
+    {
+        if (! $this->logger) {
+            $formatter = new LineFormatter('%message%' . PHP_EOL);
+
+            $stderr = new StreamHandler($this->stderr, Logger::ERROR, false);
+            $stderr->setFormatter($formatter);
+
+            $stdout = new StreamHandler($this->stdout, Logger::DEBUG, false);
+            $stdout->setFormatter($formatter);
+
+            $this->logger = new Logger('Bookdown', array($stderr, $stdout));
+        }
+
+        return $this->logger;
     }
 
     public function getFsio()

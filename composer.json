@@ -10,7 +10,7 @@
         "static site"
     ],
     "homepage": "https://github.com/bookdown/Bookdown.Bookdown",
-    "license": "BSD-2-Clause",
+    "license": "MIT",
     "authors": [
         {
             "name": "Bookdown.Bookdown Contributors",
@@ -22,7 +22,8 @@
         "aura/cli": "~2.0",
         "aura/html": "~2.0",
         "aura/view": "~2.0",
-        "league/commonmark": "~0.7"
+        "league/commonmark": "~0.7",
+        "monolog/monolog": "~1.0"
     },
     "autoload": {
         "psr-4": {

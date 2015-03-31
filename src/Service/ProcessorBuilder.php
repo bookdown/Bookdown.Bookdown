@@ -1,23 +1,26 @@
 <?php
 namespace Bookdown\Bookdown\Service;
 
-use Aura\Cli\Stdio;
+use Psr\Log\LoggerInterface;
 use Bookdown\Bookdown\Config\RootConfig;
 use Bookdown\Bookdown\Exception;
 use Bookdown\Bookdown\Fsio;
 
 class ProcessorBuilder
 {
-    public function __construct(Stdio $stdio, Fsio $fsio)
+    protected $logger;
+    protected $fsio;
+
+    public function __construct(LoggerInterface $logger, Fsio $fsio)
     {
-        $this->stdio = $stdio;
+        $this->logger = $logger;
         $this->fsio = $fsio;
     }
 
     public function newProcessor(RootConfig $config)
     {
         return new Processor(
-            $this->stdio,
+            $this->logger,
             array(
                 $this->newProcess($config, 'Conversion'),
                 $this->newProcess($config, 'Headings'),
@@ -43,6 +46,6 @@ class ProcessorBuilder
         }
 
         $builder = new $class();
-        return $builder->newInstance($config, $this->stdio, $this->fsio);
+        return $builder->newInstance($config, $this->logger, $this->fsio);
     }
 }

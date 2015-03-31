@@ -44,12 +44,12 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($factory, $again);
     }
 
-    public function testGetStdio()
+    public function testGetLogger()
     {
-        $stdio = $this->container->getStdio();
-        $this->assertInstanceOf('Aura\Cli\Stdio', $stdio);
-        $again = $this->container->getStdio();
-        $this->assertSame($stdio, $again);
+        $logger = $this->container->getLogger();
+        $this->assertInstanceOf('Monolog\Logger', $logger);
+        $again = $this->container->getLogger();
+        $this->assertSame($logger, $again);
     }
 
     public function testGetFsio()

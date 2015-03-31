@@ -1,7 +1,7 @@
 <?php
 namespace Bookdown\Bookdown\Process\Conversion;
 
-use Aura\Cli\Stdio;
+use Psr\Log\LoggerInterface;
 use Bookdown\Bookdown\Content\Page;
 use Bookdown\Bookdown\Exception;
 use Bookdown\Bookdown\Fsio;
@@ -11,16 +11,16 @@ use League\CommonMark\CommonMarkConverter;
 class ConversionProcess implements ProcessInterface
 {
     protected $page;
-    protected $stdio;
+    protected $logger;
     protected $fsio;
     protected $commonMarkConverter;
 
     public function __construct(
-        Stdio $stdio,
+        LoggerInterface $logger,
         Fsio $fsio,
         CommonMarkConverter $commonMarkConverter
     ) {
-        $this->stdio = $stdio;
+        $this->logger = $logger;
         $this->fsio = $fsio;
         $this->commonMarkConverter = $commonMarkConverter;
     }
@@ -37,11 +37,11 @@ class ConversionProcess implements ProcessInterface
     {
         $file = $this->page->getOrigin();
         if (! $file) {
-            $this->stdio->outln("    No origin for {$this->page->getTarget()}");
+            $this->logger->info("    No origin for {$this->page->getTarget()}");
             return;
         }
 
-        $this->stdio->outln("    Reading origin {$file}");
+        $this->logger->info("    Reading origin {$file}");
         return $this->fsio->get($file);
     }
 
@@ -50,11 +50,11 @@ class ConversionProcess implements ProcessInterface
         $file = $this->page->getTarget();
         $dir = dirname($file);
         if (! $this->fsio->isDir($dir)) {
-            $this->stdio->outln("    Making directory {$dir}");
+            $this->logger->info("    Making directory {$dir}");
             $this->fsio->mkdir($dir);
         }
 
-        $this->stdio->outln("    Saving target {$file}");
+        $this->logger->info("    Saving target {$file}");
         $this->fsio->put($file, $html);
     }
 }

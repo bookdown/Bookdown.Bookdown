@@ -1,7 +1,7 @@
 <?php
 namespace Bookdown\Bookdown\Process\Rendering;
 
-use Aura\Cli\Stdio;
+use Psr\Log\LoggerInterface;
 use Aura\Html\HelperLocatorFactory;
 use Aura\View\View;
 use Aura\View\ViewFactory;
@@ -11,10 +11,10 @@ use Bookdown\Bookdown\Process\ProcessBuilderInterface;
 
 class RenderingProcessBuilder implements ProcessBuilderInterface
 {
-    public function newInstance(RootConfig $config, Stdio $stdio, Fsio $fsio)
+    public function newInstance(RootConfig $config, LoggerInterface $logger, Fsio $fsio)
     {
         return new RenderingProcess(
-            $stdio,
+            $logger,
             $fsio,
             $this->newView($config)
         );

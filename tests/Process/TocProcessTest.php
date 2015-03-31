@@ -8,18 +8,21 @@ use Bookdown\Bookdown\FakeFsio;
 class TocProcessTest extends \PHPUnit_Framework_TestCase
 {
     protected $fsio;
-    protected $stdio;
+    protected $stdout;
+    protected $stderr;
     protected $fixture;
 
     protected function setUp()
     {
+        $this->stdout = fopen('php://memory', 'a+');
+        $this->stderr = fopen('php://memory', 'a+');
+
         $container = new Container(
-            'php://memory',
-            'php://memory',
+            $this->stdout,
+            $this->stderr,
             'Bookdown\Bookdown\FakeFsio'
         );
         $this->fsio = $container->getFsio();
-        $this->stdio = $container->getStdio();
 
         $this->fixture = new BookFixture($this->fsio);
 
@@ -50,10 +53,9 @@ class TocProcessTest extends \PHPUnit_Framework_TestCase
     public function testToc()
     {
         $this->process->__invoke($this->fixture->page);
-        $stdout = $this->stdio->getStdout();
-        $stdout->rewind();
+        rewind($this->stdout);
         $string = '';
-        while ($chars = $stdout->fread()) {
+        while ($chars = fread($this->stdout, 8192)) {
             $string .= $chars;
         }
         $lines = explode(PHP_EOL, trim($string));

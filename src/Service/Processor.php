@@ -1,27 +1,27 @@
 <?php
 namespace Bookdown\Bookdown\Service;
 
-use Aura\Cli\Stdio;
+use Psr\Log\LoggerInterface;
 use Bookdown\Bookdown\Content\RootPage;
 
 class Processor
 {
-    protected $stdio;
+    protected $logger;
     protected $processes;
 
     public function __construct(
-        Stdio $stdio,
+        LoggerInterface $logger,
         array $processes
     ) {
-        $this->stdio = $stdio;
+        $this->logger = $logger;
         $this->processes = $processes;
     }
 
     public function __invoke(RootPage $root)
     {
-        $this->stdio->outln("Processing content.");
+        $this->logger->info("Processing content.");
         foreach ($this->processes as $process) {
-            $this->stdio->outln("  Applying " . get_class($process));
+            $this->logger->info("  Applying " . get_class($process));
             $page = $root;
             while ($page) {
                 $process($page);

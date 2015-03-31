@@ -1,11 +1,11 @@
 <?php
 namespace Bookdown\Bookdown\Process;
 
-use Aura\Cli\Stdio;
+use Psr\Log\LoggerInterface;
 use Bookdown\Bookdown\Config\RootConfig;
 use Bookdown\Bookdown\Fsio;
 
 interface ProcessBuilderInterface
 {
-    public function newInstance(RootConfig $config, Stdio $stdio, Fsio $fsio);
+    public function newInstance(RootConfig $config, LoggerInterface $logger, Fsio $fsio);
 }

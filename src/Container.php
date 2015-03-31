@@ -2,12 +2,15 @@
 namespace Bookdown\Bookdown;
 
 use Aura\Cli\CliFactory;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+use Monolog\Formatter\LineFormatter;
 
 class Container
 {
     protected $stdout;
     protected $stderr;
-    protected $stdio;
+    protected $logger;
     protected $cliFactory;
     protected $fsioClass;
     protected $fsio;
@@ -26,7 +29,7 @@ class Container
     {
         return new Command(
             $this->getCliFactory()->newContext($globals),
-            $this->getStdio(),
+            $this->getLogger(),
             $this->newService()
         );
     }
@@ -43,7 +46,7 @@ class Container
     public function newCollector()
     {
         return new Service\Collector(
-            $this->getStdio(),
+            $this->getLogger(),
             $this->getFsio(),
             new Config\ConfigFactory(),
             new Content\PageFactory()
@@ -53,14 +56,14 @@ class Container
     public function newProcessorBuilder()
     {
         return new Service\ProcessorBuilder(
-            $this->getStdio(),
+            $this->getLogger(),
             $this->getFsio()
         );
     }
 
     public function newTimer()
     {
-        return new Service\Timer($this->getStdio());
+        return new Service\Timer($this->getLogger());
     }
 
     public function getCliFactory()
@@ -71,16 +74,21 @@ class Container
         return $this->cliFactory;
     }
 
-    public function getStdio()
+    public function getLogger()
     {
-        if (! $this->stdio) {
-            $this->stdio = $this->getCliFactory()->newStdio(
-                'php://stdin',
-                $this->stdout,
-                $this->stderr
-            );
+        if (! $this->logger) {
+            $formatter = new LineFormatter('%message%' . PHP_EOL);
+
+            $stderr = new StreamHandler($this->stderr, Logger::ERROR, false);
+            $stderr->setFormatter($formatter);
+
+            $stdout = new StreamHandler($this->stdout, Logger::DEBUG, false);
+            $stdout->setFormatter($formatter);
+
+            $this->logger = new Logger('Bookdown', array($stderr, $stdout));
         }
-        return $this->stdio;
+
+        return $this->logger;
     }
 
     public function getFsio()

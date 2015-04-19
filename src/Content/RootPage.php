@@ -13,7 +13,7 @@ class RootPage extends IndexPage
 
     public function getHref()
     {
-        return '/';
+        return $this->config->getRootHref();
     }
 
     public function getNumber()

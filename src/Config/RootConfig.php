@@ -11,11 +11,13 @@ class RootConfig extends IndexConfig
     protected $tocProcess;
     protected $headingsProcess;
     protected $template;
+    protected $rootHref;
 
     protected function init()
     {
         parent::init();
         $this->initTarget();
+        $this->initRootHref();
         $this->initTemplate();
         $this->initConversionProcess();
         $this->initHeadingsProcess();
@@ -32,6 +34,13 @@ class RootConfig extends IndexConfig
         $target = $this->json->target;
         $target = rtrim($this->fixPath($target), DIRECTORY_SEPARATOR);
         $this->target = $target . DIRECTORY_SEPARATOR;
+    }
+
+    protected function initRootHref()
+    {
+        $this->rootHref = empty($this->json->rootHref)
+            ? '/'
+            : $this->json->rootHref;
     }
 
     protected function initTemplate()
@@ -92,6 +101,11 @@ class RootConfig extends IndexConfig
     public function getTarget()
     {
         return $this->target;
+    }
+
+    public function getRootHref()
+    {
+        return $this->rootHref;
     }
 
     public function getTemplate()

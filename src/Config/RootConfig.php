@@ -27,13 +27,15 @@ class RootConfig extends IndexConfig
             return;
         }
 
+        $key = ltrim($key, '-');
+
         if ($key === 'template') {
             $this->template = $this->fixPath($val);
             return;
         }
 
         if ($key === 'target') {
-            $this->target = $this->fixPath($val);
+            $this->setTarget($val);
         }
     }
 
@@ -55,7 +57,11 @@ class RootConfig extends IndexConfig
             throw new Exception("No target set in '{$this->file}'.");
         }
 
-        $target = $this->json->target;
+        $this->setTarget($this->json->target);
+    }
+
+    protected function setTarget($target)
+    {
         $target = rtrim($this->fixPath($target), DIRECTORY_SEPARATOR);
         $this->target = $target . DIRECTORY_SEPARATOR;
     }

@@ -62,6 +62,7 @@ class CommandTest extends \PHPUnit_Framework_TestCase
     public function testSuccess()
     {
         $argv = array(
+            0 => './vendor/bin/bookdown',
             1 => $this->fixture->rootConfigFile,
         );
         $exit = $this->exec($argv);
@@ -72,6 +73,7 @@ class CommandTest extends \PHPUnit_Framework_TestCase
     public function testOptions()
     {
         $argv = array(
+            0 => './vendor/bin/bookdown',
             1 => $this->fixture->rootConfigFile,
             2 => '--template=foo',
             3 => '--target=bar',

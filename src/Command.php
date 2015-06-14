@@ -42,7 +42,7 @@ class Command
             '--target:'
         ));
 
-        $rootConfigFile = $getopt->get(0);
+        $rootConfigFile = $getopt->get(1);
         if (! $rootConfigFile) {
             throw new Exception(
                 "Please enter the path to a bookdown.json file as the first argument."

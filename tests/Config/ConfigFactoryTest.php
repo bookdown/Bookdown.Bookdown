@@ -37,27 +37,17 @@ class ConfigFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Bookdown\Bookdown\Config\RootConfig', $config);
     }
 
-    public function testNewRootConfigWithTemplate()
+    public function testNewRootConfigOverrides()
     {
-        $random = md5(uniqid());
         $overrides = array(
-            '--template' => $random,
+            'template' => md5(uniqid()),
+            'target' => md5(uniqid()),
         );
 
-        $config = $this->factory->newRootConfig($this->file, $this->data, $overrides);
+        $this->factory->setRootConfigOverrides($overrides);
+        $config = $this->factory->newRootConfig($this->file, $this->data);
         $this->assertInstanceOf('Bookdown\Bookdown\Config\RootConfig', $config);
-        $this->assertSame("/path/to/{$random}", $config->getTemplate());
-    }
-
-    public function testNewRootConfigWithTarget()
-    {
-        $random = md5(uniqid());
-        $overrides = array(
-            '--target' => $random,
-        );
-
-        $config = $this->factory->newRootConfig($this->file, $this->data, $overrides);
-        $this->assertInstanceOf('Bookdown\Bookdown\Config\RootConfig', $config);
-        $this->assertSame("/path/to/{$random}", $config->getTarget());
+        $this->assertSame("/path/to/{$overrides['template']}", $config->getTemplate());
+        $this->assertSame("/path/to/{$overrides['target']}", $config->getTarget());
     }
 }

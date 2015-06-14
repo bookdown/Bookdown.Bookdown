@@ -17,9 +17,10 @@ class Service
         $this->timer = $timer;
     }
 
-    public function __invoke($rootConfigFile, array $configOverrides)
+    public function __invoke($rootConfigFile, array $rootConfigOverrides)
     {
-        $rootPage = $this->collector->__invoke($rootConfigFile, $configOverrides);
+        $this->collector->setRootConfigOverrides($rootConfigOverrides);
+        $rootPage = $this->collector->__invoke($rootConfigFile);
         $processor = $this->processorBuilder->newProcessor($rootPage->getConfig());
         $processor->__invoke($rootPage);
         $this->timer->report();

@@ -27,14 +27,12 @@ class RootConfig extends IndexConfig
             return;
         }
 
-        $key = ltrim($key, '-');
-
-        if ($key == 'template') {
+        if ($key === 'template') {
             $this->template = $this->fixPath($val);
             return;
         }
 
-        if ($key == 'target') {
+        if ($key === 'target') {
             $this->target = $this->fixPath($val);
         }
     }

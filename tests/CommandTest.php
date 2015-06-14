@@ -69,17 +69,4 @@ class CommandTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(0, $exit);
         $this->assertLastStderr('');
     }
-
-    public function testOptions()
-    {
-        $argv = array(
-            0 => './vendor/bin/bookdown',
-            1 => $this->fixture->rootConfigFile,
-            2 => '--template=foo',
-            3 => '--target=bar',
-        );
-        $exit = $this->exec($argv);
-        $this->assertSame(0, $exit);
-        $this->assertLastStderr('');
-    }
 }

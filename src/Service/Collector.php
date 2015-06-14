@@ -22,14 +22,17 @@ class Collector
         LoggerInterface $logger,
         Fsio $fsio,
         ConfigFactory $configFactory,
-        PageFactory $pageFactory,
-        array $configOverrides = array()
+        PageFactory $pageFactory
     ) {
         $this->logger = $logger;
         $this->fsio = $fsio;
         $this->configFactory = $configFactory;
         $this->pageFactory = $pageFactory;
-        $this->configOverrides = $configOverrides;
+    }
+
+    public function setRootConfigOverrides($rootConfigOverrides)
+    {
+        $this->configFactory->setRootConfigOverrides($rootConfigOverrides);
     }
 
     public function __invoke($configFile, $name = '', $parent = null, $count = 0)
@@ -45,7 +48,7 @@ class Collector
     protected function newIndex($configFile, $name, $parent, $count)
     {
         if (! $parent) {
-            return $this->addRootPage($configFile, $this->configOverrides);
+            return $this->addRootPage($configFile);
         }
 
         return $this->addIndexPage($configFile, $name, $parent, $count);
@@ -80,10 +83,10 @@ class Collector
         return $this->append($page);
     }
 
-    protected function addRootPage($configFile, $configOverrides)
+    protected function addRootPage($configFile)
     {
         $data = $this->fsio->get($configFile);
-        $config = $this->configFactory->newRootConfig($configFile, $data, $configOverrides);
+        $config = $this->configFactory->newRootConfig($configFile, $data);
         $page = $this->pageFactory->newRootPage($config);
         $this->padlog("Added root page from {$configFile}");
         return $this->append($page);

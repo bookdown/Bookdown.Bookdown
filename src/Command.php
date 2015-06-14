@@ -25,8 +25,8 @@ class Command
     public function __invoke()
     {
         try {
-            list($rootConfigFile, $configOverrides) = $this->init();
-            $this->service->__invoke($rootConfigFile, $configOverrides);
+            list($rootConfigFile, $rootConfigOverrides) = $this->init();
+            $this->service->__invoke($rootConfigFile, $rootConfigOverrides);
             return 0;
         } catch (AnyException $e) {
             $this->logger->error($e->getMessage());
@@ -55,7 +55,7 @@ class Command
             );
         }
 
-        $configOverrides = $getopt->get();
-        return array($rootConfigFile, $configOverrides);
+        $rootConfigOverrides = $getopt->get();
+        return array($rootConfigFile, $rootConfigOverrides);
     }
 }

@@ -6,6 +6,7 @@ use Aura\Html\HelperLocatorFactory;
 use Aura\View\View;
 use Aura\View\ViewFactory;
 use Bookdown\Bookdown\Config\RootConfig;
+use Bookdown\Bookdown\Exception;
 use Bookdown\Bookdown\Fsio;
 use Bookdown\Bookdown\Process\ProcessBuilderInterface;
 
@@ -38,6 +39,10 @@ class RenderingProcessBuilder implements ProcessBuilderInterface
         $template = $config->getTemplate();
         if (! $template) {
             $template = dirname(dirname(dirname(__DIR__))) . '/templates/main.php';
+        }
+
+        if (! file_exists($template) && ! is_readable($template)) {
+            throw new Exception("Cannot find template '$template'.");
         }
 
         $registry = $view->getViewRegistry();

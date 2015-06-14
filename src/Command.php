@@ -25,8 +25,8 @@ class Command
     public function __invoke()
     {
         try {
-            $rootConfigFile = $this->init();
-            $this->service->__invoke($rootConfigFile);
+            list($rootConfigFile, $configOverrides) = $this->init();
+            $this->service->__invoke($rootConfigFile, $configOverrides);
             return 0;
         } catch (AnyException $e) {
             $this->logger->error($e->getMessage());
@@ -37,12 +37,19 @@ class Command
 
     protected function init()
     {
-        $rootConfigFile = $this->context->argv->get(1);
+        $getopt = $this->context->getopt(array(
+            '--template:',
+            '--target:'
+        ));
+
+        $rootConfigFile = $getopt->get(0);
         if (! $rootConfigFile) {
             throw new Exception(
                 "Please enter the path to a bookdown.json file as the first argument."
             );
         }
-        return $rootConfigFile;
+
+        $configOverrides = $getopt->get();
+        return array($rootConfigFile, $configOverrides);
     }
 }

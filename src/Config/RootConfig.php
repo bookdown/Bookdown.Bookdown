@@ -13,6 +13,32 @@ class RootConfig extends IndexConfig
     protected $template;
     protected $rootHref;
 
+    public function setOverrides(array $overrides)
+    {
+        foreach ($overrides as $key => $val) {
+            $this->setOverride($key, $val);
+        }
+    }
+
+    protected function setOverride($key, $val)
+    {
+        $val = trim($val);
+        if (! $val) {
+            return;
+        }
+
+        $key = ltrim($key, '-');
+
+        if ($key == 'template') {
+            $this->template = $this->fixPath($val);
+            return;
+        }
+
+        if ($key == 'target') {
+            $this->target = $this->fixPath($val);
+        }
+    }
+
     protected function init()
     {
         parent::init();

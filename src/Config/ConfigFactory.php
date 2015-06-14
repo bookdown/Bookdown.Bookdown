@@ -11,8 +11,10 @@ class ConfigFactory
         return new IndexConfig($file, $data);
     }
 
-    public function newRootConfig($file, $data)
+    public function newRootConfig($file, $data, $overrides)
     {
-        return new RootConfig($file, $data);
+        $config = new RootConfig($file, $data);
+        $config->setOverrides($overrides);
+        return $config;
     }
 }

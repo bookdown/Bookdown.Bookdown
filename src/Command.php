@@ -38,9 +38,15 @@ class Command
     protected function init()
     {
         $getopt = $this->context->getopt(array(
-            '--template:',
-            '--target:'
+            'template:',
+            'target:'
         ));
+
+        if ($getopt->hasErrors()) {
+            $errors = $getopt->getErrors();
+            $error = array_shift($errors);
+            throw $error;
+        }
 
         $rootConfigFile = $getopt->get(1);
         if (! $rootConfigFile) {

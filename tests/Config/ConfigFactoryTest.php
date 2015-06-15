@@ -40,14 +40,14 @@ class ConfigFactoryTest extends \PHPUnit_Framework_TestCase
     public function testNewRootConfigOverrides()
     {
         $overrides = array(
-            'template' => md5(uniqid()),
-            'target' => md5(uniqid()),
+            'template' => "../../" . md5(uniqid()),
+            'target' => "../../" . md5(uniqid()),
         );
 
         $this->factory->setRootConfigOverrides($overrides);
         $config = $this->factory->newRootConfig($this->file, $this->data);
         $this->assertInstanceOf('Bookdown\Bookdown\Config\RootConfig', $config);
-        $this->assertSame("/path/to/{$overrides['template']}", $config->getTemplate());
-        $this->assertSame("/path/to/{$overrides['target']}/", $config->getTarget());
+        $this->assertSame("{$overrides['template']}", $config->getTemplate());
+        $this->assertSame("{$overrides['target']}/", $config->getTarget());
     }
 }

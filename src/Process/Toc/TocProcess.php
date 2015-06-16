@@ -33,6 +33,10 @@ class TocProcess implements ProcessInterface
     {
         $tocDepth = $index->getRoot()->getConfig()->getTocDepth();
         $maxLevel = $level + $tocDepth;
+        if ($tocDepth && $index instanceof RootPage) {
+            $maxLevel --;
+        }
+
         foreach ($index->getChildren() as $child) {
             $headings = $child->getHeadings();
             foreach ($headings as $heading) {

@@ -29,19 +29,20 @@ class TocProcess implements ProcessInterface
         $page->setTocEntries($this->tocEntries);
     }
 
-    protected function addTocEntries(IndexPage $index)
+    protected function addTocEntries(IndexPage $index, $level = 0)
     {
         $tocDepth = $index->getRoot()->getConfig()->getTocDepth();
+        $maxLevel = $level + $tocDepth;
         foreach ($index->getChildren() as $child) {
             $headings = $child->getHeadings();
             foreach ($headings as $heading) {
-                if ($tocDepth && $heading->getLevel() > $tocDepth) {
+                if ($tocDepth && $heading->getLevel() > $maxLevel) {
                     continue;
                 }
                 $this->tocEntries[] = $heading;
             }
             if ($child->isIndex()) {
-                $this->addTocEntries($child);
+                $this->addTocEntries($child, $level + 1);
             }
         }
     }

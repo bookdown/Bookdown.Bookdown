@@ -4,6 +4,7 @@ namespace Bookdown\Bookdown\Process\Toc;
 use Psr\Log\LoggerInterface;
 use Bookdown\Bookdown\Content\Page;
 use Bookdown\Bookdown\Content\IndexPage;
+use Bookdown\Bookdown\Content\RootPage;
 use Bookdown\Bookdown\Process\ProcessInterface;
 
 class TocProcess implements ProcessInterface
@@ -33,7 +34,7 @@ class TocProcess implements ProcessInterface
     {
         $tocDepth = $index->getRoot()->getConfig()->getTocDepth();
         $maxLevel = $level + $tocDepth;
-        if ($tocDepth && $index instanceof RootPage) {
+        if ($tocDepth && $index->isRoot()) {
             $maxLevel --;
         }
 

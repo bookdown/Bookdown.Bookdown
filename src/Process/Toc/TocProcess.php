@@ -31,9 +31,13 @@ class TocProcess implements ProcessInterface
 
     protected function addTocEntries(IndexPage $index)
     {
+        $tocDepth = $index->getRoot()->getConfig()->getTocDepth();
         foreach ($index->getChildren() as $child) {
             $headings = $child->getHeadings();
             foreach ($headings as $heading) {
+                if ($tocDepth && $heading->getLevel() > $tocDepth) {
+                    continue;
+                }
                 $this->tocEntries[] = $heading;
             }
             if ($child->isIndex()) {

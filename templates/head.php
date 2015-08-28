@@ -1,5 +1,6 @@
 <head>
     <title><?php echo $this->page->getTitle(); ?></title>
+    <meta charset="UTF-8">
     <style>
         nav table {
             width: 100%;

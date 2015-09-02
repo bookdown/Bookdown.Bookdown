@@ -59,6 +59,7 @@ class RenderingProcessTest extends \PHPUnit_Framework_TestCase
         $expect = '<html>
 <head>
     <title>Chapter</title>
+    <meta charset="UTF-8">
     <style>
         nav table {
             width: 100%;

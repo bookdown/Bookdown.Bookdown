@@ -93,7 +93,7 @@ class HeadingsProcess implements ProcessInterface
     {
         $this->doc = new DomDocument();
         $this->doc->formatOutput = true;
-        $this->doc->loadHtml($this->html, LIBXML_HTML_NODEFDTD);
+        $this->doc->loadHtml(mb_convert_encoding($this->html, 'HTML-ENTITIES', 'UTF-8'), LIBXML_HTML_NODEFDTD);
     }
 
     protected function processHeadingNodes()

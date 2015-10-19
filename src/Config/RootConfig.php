@@ -38,6 +38,11 @@ class RootConfig extends IndexConfig
             $this->target = rtrim($val, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
             return;
         }
+
+        if ($key === 'root-href') {
+            $this->rootHref = $val;
+            return;
+        }
     }
 
     protected function init()

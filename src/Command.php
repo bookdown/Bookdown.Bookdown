@@ -39,7 +39,8 @@ class Command
     {
         $getopt = $this->context->getopt(array(
             'template:',
-            'target:'
+            'target:',
+            'root-href:'
         ));
 
         if ($getopt->hasErrors()) {

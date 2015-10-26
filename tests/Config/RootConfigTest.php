@@ -18,7 +18,8 @@ class RootConfigTest extends \PHPUnit_Framework_TestCase
         "headingsProcess": "My\\\\Headings\\\\Builder",
         "tocProcess": "My\\\\Toc\\\\Builder",
         "renderingProcess": "My\\\\Rendering\\\\Builder",
-        "extra": "whatever"
+        "extra": "whatever",
+        "rootHref": "http://awesome.io/docs/"
     }';
 
     protected $minRootJson = '{
@@ -58,6 +59,7 @@ class RootConfigTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('My\\Rendering\\Builder', $config->getRenderingProcess());
         $this->assertSame('whatever', $config->get('extra'));
         $this->assertSame('none', $config->get('no-such-key', 'none'));
+        $this->assertSame('http://awesome.io/docs/', $config->getRootHref());
     }
 
     protected function assertBasics($config)

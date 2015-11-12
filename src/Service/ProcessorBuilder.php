@@ -24,6 +24,7 @@ class ProcessorBuilder
             array(
                 $this->newProcess($config, 'Conversion'),
                 $this->newProcess($config, 'Headings'),
+                $this->newProcess($config, 'CopyImage'),
                 $this->newProcess($config, 'Toc'),
                 $this->newProcess($config, 'Rendering'),
             )

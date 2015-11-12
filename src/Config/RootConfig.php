@@ -10,6 +10,7 @@ class RootConfig extends IndexConfig
     protected $renderingProcess;
     protected $tocProcess;
     protected $headingsProcess;
+    protected $copyImageProcess;
     protected $template;
     protected $rootHref;
 
@@ -53,6 +54,7 @@ class RootConfig extends IndexConfig
         $this->initTemplate();
         $this->initConversionProcess();
         $this->initHeadingsProcess();
+        $this->initCopyImageProcess();
         $this->initTocProcess();
         $this->initRenderingProcess();
     }
@@ -96,6 +98,13 @@ class RootConfig extends IndexConfig
             : $this->json->headingsProcess;
     }
 
+    protected function initCopyImageProcess()
+    {
+        $this->copyImageProcess = empty($this->json->copyImageProcess)
+            ? 'Bookdown\Bookdown\Process\Resource\CopyImageProcessBuilder'
+            : $this->json->copyImageProcess;
+    }
+
     protected function initTocProcess()
     {
         $this->tocProcess = empty($this->json->tocProcess)
@@ -118,6 +127,11 @@ class RootConfig extends IndexConfig
     public function getHeadingsProcess()
     {
         return $this->headingsProcess;
+    }
+
+    public function getCopyImageProcess()
+    {
+        return $this->copyImageProcess;
     }
 
     public function getTocProcess()

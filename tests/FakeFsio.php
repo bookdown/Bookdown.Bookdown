@@ -25,4 +25,22 @@ class FakeFsio extends Fsio
     {
         $this->dirs[$dir] = true;
     }
+
+    /**
+     * @param array $dirs
+     */
+    public function setDirs(array $dirs)
+    {
+        $this->dirs = $dirs;
+    }
+
+    /**
+     * @param array $files
+     */
+    public function setFiles(array $files)
+    {
+        $this->files = $files;
+    }
+
+
 }

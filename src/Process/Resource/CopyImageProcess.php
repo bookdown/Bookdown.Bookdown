@@ -127,7 +127,7 @@ class CopyImageProcess implements ProcessInterface
             return '';
         }
         $imageName = basename($image);
-        $originFile = dirname($this->page->getOrigin()) . '/' . $image;
+        $originFile = dirname($this->page->getOrigin()) . '/' . ltrim($image, '/');
 
         $dir = dirname($this->page->getTarget()) . '/img/';
         $file = $dir . $imageName;
@@ -135,7 +135,7 @@ class CopyImageProcess implements ProcessInterface
         if (!$this->fsio->isDir($dir)) {
             $this->fsio->mkdir($dir);
         }
-        $this->fsio->put($file, file_get_contents($originFile));
+        $this->fsio->put($file, $this->fsio->get($originFile));
         return $this->config->getRootHref() . (str_replace($this->config->getTarget(), '', $dir)) . $imageName;
     }
 

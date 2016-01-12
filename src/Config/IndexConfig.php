@@ -12,6 +12,7 @@ class IndexConfig
     protected $title;
     protected $content;
     protected $indexOrigin = '';
+    protected $tocDepth;
 
     public function __construct($file, $data)
     {
@@ -25,6 +26,7 @@ class IndexConfig
         $this->initDir();
         $this->initTitle();
         $this->initContent();
+        $this->initTocDepth();
     }
 
     protected function initFile($file)
@@ -99,6 +101,13 @@ class IndexConfig
         return $this->addContent($name, $origin);
     }
 
+    protected function initTocDepth()
+    {
+        $this->tocDepth = empty($this->json->tocDepth)
+            ? 0
+            : (int) $this->json->tocDepth;
+    }
+
     protected function addContent($name, $origin)
     {
         if ($name == 'index') {
@@ -154,5 +163,10 @@ class IndexConfig
     public function getContent()
     {
         return $this->content;
+    }
+
+    public function getTocDepth()
+    {
+        return $this->tocDepth;
     }
 }

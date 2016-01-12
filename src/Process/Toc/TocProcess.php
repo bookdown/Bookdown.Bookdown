@@ -4,7 +4,6 @@ namespace Bookdown\Bookdown\Process\Toc;
 use Psr\Log\LoggerInterface;
 use Bookdown\Bookdown\Content\Page;
 use Bookdown\Bookdown\Content\IndexPage;
-use Bookdown\Bookdown\Content\RootPage;
 use Bookdown\Bookdown\Process\ProcessInterface;
 
 class TocProcess implements ProcessInterface
@@ -26,15 +25,23 @@ class TocProcess implements ProcessInterface
 
         $this->logger->info("    Adding TOC entries for {$page->getTarget()}");
         $this->tocEntries = array();
-        $this->addTocEntries($page);
+        // if there are multiple books, ensure correct toc level
+        $this->addTocEntries($page, $page->getConfig()->getTocDepth(), $page->isRoot() ? 0 : 1);
         $page->setTocEntries($this->tocEntries);
     }
 
-    protected function addTocEntries(IndexPage $index, $level = 0)
+    /**
+     * A toc depth of 0 means render all headings. A toc depth of 1 is a special case
+     *
+     * @param IndexPage $index
+     * @param $tocDepth
+     * @param int $level
+     */
+    protected function addTocEntries(IndexPage $index, $tocDepth, $level = 0)
     {
-        $tocDepth = $index->getRoot()->getConfig()->getTocDepth();
         $maxLevel = $level + $tocDepth;
-        if ($tocDepth && $index->isRoot()) {
+
+        if ($tocDepth !== 1 && $tocDepth && $index->isRoot()) {
             $maxLevel --;
         }
 
@@ -46,8 +53,8 @@ class TocProcess implements ProcessInterface
                 }
                 $this->tocEntries[] = $heading;
             }
-            if ($child->isIndex()) {
-                $this->addTocEntries($child, $level + 1);
+            if ($child->isIndex() && $tocDepth !== 1) {
+                $this->addTocEntries($child, $tocDepth, $level + 1);
             }
         }
     }

@@ -13,6 +13,7 @@ class RootConfig extends IndexConfig
     protected $copyImageProcess;
     protected $template;
     protected $rootHref;
+    protected $tocDepth;
 
     public function setOverrides(array $overrides)
     {
@@ -52,6 +53,7 @@ class RootConfig extends IndexConfig
         $this->initTarget();
         $this->initRootHref();
         $this->initTemplate();
+        $this->initTocDepth();
         $this->initConversionProcess();
         $this->initHeadingsProcess();
         $this->initCopyImageProcess();
@@ -82,6 +84,13 @@ class RootConfig extends IndexConfig
         $this->template = empty($this->json->template)
             ? null
             : $this->fixPath($this->json->template);
+    }
+
+    protected function initTocDepth()
+    {
+        $this->tocDepth = empty($this->json->tocDepth)
+            ? 0
+            : (int) $this->json->tocDepth;
     }
 
     protected function initConversionProcess()
@@ -157,6 +166,11 @@ class RootConfig extends IndexConfig
     public function getTemplate()
     {
         return $this->template;
+    }
+
+    public function getTocDepth()
+    {
+        return $this->tocDepth;
     }
 
     public function get($key, $alt = null)

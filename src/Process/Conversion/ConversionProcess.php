@@ -6,7 +6,7 @@ use Bookdown\Bookdown\Content\Page;
 use Bookdown\Bookdown\Exception;
 use Bookdown\Bookdown\Fsio;
 use Bookdown\Bookdown\Process\ProcessInterface;
-use League\CommonMark\CommonMarkConverter;
+use League\CommonMark\Converter;
 
 class ConversionProcess implements ProcessInterface
 {
@@ -18,7 +18,7 @@ class ConversionProcess implements ProcessInterface
     public function __construct(
         LoggerInterface $logger,
         Fsio $fsio,
-        CommonMarkConverter $commonMarkConverter
+        Converter $commonMarkConverter
     ) {
         $this->logger = $logger;
         $this->fsio = $fsio;

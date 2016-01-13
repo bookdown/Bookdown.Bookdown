@@ -15,6 +15,11 @@ class RootConfig extends IndexConfig
     protected $rootHref;
     protected $tocDepth;
 
+    /**
+     * @var array
+     */
+    protected $commonMarkExtensions = array();
+
     public function setOverrides(array $overrides)
     {
         foreach ($overrides as $key => $val) {
@@ -52,6 +57,7 @@ class RootConfig extends IndexConfig
         parent::init();
         $this->initTarget();
         $this->initRootHref();
+        $this->initCommonMarkExtensions();
         $this->initTemplate();
         $this->initTocDepth();
         $this->initConversionProcess();
@@ -77,6 +83,25 @@ class RootConfig extends IndexConfig
         $this->rootHref = empty($this->json->rootHref)
             ? '/'
             : $this->json->rootHref;
+    }
+
+    protected function initCommonMarkExtensions()
+    {
+        if (empty($this->json->extensions)
+            || empty($this->json->extensions->commonmark)
+        ) {
+            return;
+        }
+
+        if (!is_array($this->json->extensions->commonmark)) {
+            throw new \InvalidArgumentException(
+                sprintf('The extension parameter "commonmark" must be of type "array".')
+            );
+        }
+
+        foreach ($this->json->extensions->commonmark as $extension) {
+            $this->commonMarkExtensions[] = $extension;
+        }
     }
 
     protected function initTemplate()
@@ -179,5 +204,13 @@ class RootConfig extends IndexConfig
             return $this->json->$key;
         }
         return $alt;
+    }
+
+    /**
+     * @return array
+     */
+    public function getCommonMarkExtensions()
+    {
+        return $this->commonMarkExtensions;
     }
 }

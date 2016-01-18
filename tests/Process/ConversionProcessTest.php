@@ -39,6 +39,25 @@ class ConversionProcessTest extends \PHPUnit_Framework_TestCase
 <p>Text under sub-subtitle.</p>
 <h2>Subtitle B</h2>
 <p>Text under subtitle B.</p>
+<blockquote title="Blockquote title">
+<p>Blockqoute</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>th</th>
+<th align="center">th(center)</th>
+<th align="right">th(right)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>td</td>
+<td align="center">td</td>
+<td align="right">td</td>
+</tr>
+</tbody>
+</table>
 ';
         $actual = $this->fsio->get($this->fixture->page->getTarget());
         $this->assertSame($expect, $actual);

@@ -22,8 +22,6 @@ Bookdown has 100% test coverage. To run the tests, install [PHPUnit](http://phpu
 
 - new `bookdown.json` elements
 
-    - `"tocdepth"`: indicates how many levels to show on the table of contents
-
     - `"numbering"`: indicates how to number the pages at this level (decimal, upper-alpha, lower-alpha, upper-roman, lower-roman)
 
     - `"authors"`: name, note, email, and website of book authors
@@ -53,8 +51,6 @@ Bookdown has 100% test coverage. To run the tests, install [PHPUnit](http://phpu
     - A command to take a PHPDocumentor structure.xml file and convert it to a Bookdown origin structure (Markdown files + bookdown.json files)
 
     - A process to rewrite links on generated pages (this is for books collected from multiple different sources, and for changing origin `*.md` links to target `*.html` links)
-
-    - A process to copying images and other resources from the origin to the target directory
 
     - Pre-process and post-process behavior to copy and/or remove site files
 

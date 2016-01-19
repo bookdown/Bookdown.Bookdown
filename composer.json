@@ -25,6 +25,10 @@
         "league/commonmark": "~0.7",
         "monolog/monolog": "~1.0"
     },
+    "require-dev": {
+        "webuni/commonmark-table-extension": "^0.4.2",
+        "webuni/commonmark-attributes-extension": "^0.3.1"
+    },
     "autoload": {
         "psr-4": {
             "Bookdown\\Bookdown\\": "src/"

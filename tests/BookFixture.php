@@ -16,6 +16,12 @@ class BookFixture
         "target": "/_site",
         "templates": {
             "foo": "/foo.php"
+        },
+        "extensions": {
+            "commonmark": [
+                "Webuni\\\\CommonMark\\\\TableExtension\\\\TableExtension",
+                "Webuni\\\\CommonMark\\\\AttributesExtension\\\\AttributesExtension"
+            ]
         }
     }';
     public $rootConfig;
@@ -47,6 +53,13 @@ Text under sub-subtitle.
 ## Subtitle B
 
 Text under subtitle B.
+
+> Blockqoute
+{: title="Blockquote title"}
+
+th | th(center) | th(right)
+---|:----------:|----------:
+td |     td     |         td
 ';
     public $page;
 

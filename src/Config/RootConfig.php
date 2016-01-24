@@ -14,6 +14,8 @@ class RootConfig extends IndexConfig
     protected $template;
     protected $rootHref;
     protected $tocDepth;
+    protected $authors = [];
+    protected $editors = [];
 
     /**
      * @var array
@@ -60,6 +62,8 @@ class RootConfig extends IndexConfig
         $this->initCommonMarkExtensions();
         $this->initTemplate();
         $this->initTocDepth();
+        $this->initAuthors();
+        $this->initEditors();
         $this->initConversionProcess();
         $this->initHeadingsProcess();
         $this->initCopyImageProcess();
@@ -116,6 +120,40 @@ class RootConfig extends IndexConfig
         $this->tocDepth = empty($this->json->tocDepth)
             ? 0
             : (int) $this->json->tocDepth;
+    }
+
+    protected function initAuthors()
+    {
+        if (empty($this->json->authors) ) {
+            return;
+        }
+
+        if (!is_array($this->json->authors)) {
+            throw new \InvalidArgumentException(
+                sprintf('The authors parameter must be of type "array".')
+            );
+        }
+
+        foreach ($this->json->authors as $author) {
+            $this->authors[] = $author;
+        }
+    }
+
+    protected function initEditors()
+    {
+        if (empty($this->json->editors) ) {
+            return;
+        }
+
+        if (!is_array($this->json->editors)) {
+            throw new \InvalidArgumentException(
+                sprintf('The editors parameter must be of type "array".')
+            );
+        }
+
+        foreach ($this->json->editors as $editor) {
+            $this->editors[] = $editor;
+        }
     }
 
     protected function initConversionProcess()
@@ -196,6 +234,22 @@ class RootConfig extends IndexConfig
     public function getTocDepth()
     {
         return $this->tocDepth;
+    }
+
+    /**
+     * @return array
+     */
+    public function getEditors()
+    {
+        return $this->editors;
+    }
+
+    /**
+     * @return array
+     */
+    public function getAuthors()
+    {
+        return $this->authors;
     }
 
     public function get($key, $alt = null)

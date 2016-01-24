@@ -30,4 +30,14 @@ class RootPage extends IndexPage
     {
         return true;
     }
+
+    public function getAuthors()
+    {
+        return $this->config->getAuthors();
+    }
+
+    public function getEditors()
+    {
+        return $this->config->getEditors();
+    }
 }

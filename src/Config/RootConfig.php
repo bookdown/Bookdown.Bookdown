@@ -11,9 +11,11 @@ class RootConfig extends IndexConfig
     protected $tocProcess;
     protected $headingsProcess;
     protected $copyImageProcess;
+    protected $copyrightProcess;
     protected $template;
     protected $rootHref;
     protected $tocDepth;
+    protected $copyright;
 
     /**
      * @var array
@@ -60,11 +62,13 @@ class RootConfig extends IndexConfig
         $this->initCommonMarkExtensions();
         $this->initTemplate();
         $this->initTocDepth();
+        $this->initCopyright();
         $this->initConversionProcess();
         $this->initHeadingsProcess();
         $this->initCopyImageProcess();
         $this->initTocProcess();
         $this->initRenderingProcess();
+        $this->initCopyrightProcess();
     }
 
     protected function initTarget()
@@ -118,6 +122,14 @@ class RootConfig extends IndexConfig
             : (int) $this->json->tocDepth;
     }
 
+    protected function initCopyright()
+    {
+        $this->copyright = empty($this->json->copyright)
+            ? ''
+            : $this->json->copyright;
+    }
+
+
     protected function initConversionProcess()
     {
         $this->conversionProcess = empty($this->json->conversionProcess)
@@ -137,6 +149,13 @@ class RootConfig extends IndexConfig
         $this->copyImageProcess = empty($this->json->copyImageProcess)
             ? 'Bookdown\Bookdown\Process\Resource\CopyImageProcessBuilder'
             : $this->json->copyImageProcess;
+    }
+
+    protected function initCopyrightProcess()
+    {
+        $this->copyrightProcess = empty($this->json->copyrightProcess)
+            ? 'Bookdown\Bookdown\Process\Info\CopyrightProcessBuilder'
+            : $this->json->copyrightProcess;
     }
 
     protected function initTocProcess()
@@ -168,6 +187,11 @@ class RootConfig extends IndexConfig
         return $this->copyImageProcess;
     }
 
+    public function getCopyrightProcess()
+    {
+        return $this->copyrightProcess;
+    }
+
     public function getTocProcess()
     {
         return $this->tocProcess;
@@ -196,6 +220,11 @@ class RootConfig extends IndexConfig
     public function getTocDepth()
     {
         return $this->tocDepth;
+    }
+
+    public function getCopyright()
+    {
+        return $this->copyright;
     }
 
     public function get($key, $alt = null)

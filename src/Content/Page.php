@@ -1,8 +1,6 @@
 <?php
 namespace Bookdown\Bookdown\Content;
 
-use Bookdown\Bookdown\Config\Config;
-
 class Page
 {
     protected $name;
@@ -13,6 +11,7 @@ class Page
     protected $next;
     protected $title;
     protected $headings = array();
+    protected $copyright;
 
     public function __construct(
         $origin,
@@ -116,6 +115,22 @@ class Page
             DIRECTORY_SEPARATOR
         );
         return $base . DIRECTORY_SEPARATOR . $this->getName() . '.html';
+    }
+
+    /**
+     * @return string
+     */
+    public function getCopyright()
+    {
+        return $this->copyright;
+    }
+
+    /**
+     * @param string $copyright
+     */
+    public function setCopyright($copyright)
+    {
+        $this->copyright = $copyright;
     }
 
     public function setHeadings(array $headings)

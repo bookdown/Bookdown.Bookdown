@@ -23,6 +23,7 @@ class ProcessorBuilder
             $this->logger,
             array(
                 $this->newProcess($config, 'Conversion'),
+                $this->newProcess($config, 'Copyright'),
                 $this->newProcess($config, 'Headings'),
                 $this->newProcess($config, 'CopyImage'),
                 $this->newProcess($config, 'Toc'),

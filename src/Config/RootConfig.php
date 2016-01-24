@@ -14,6 +14,7 @@ class RootConfig extends IndexConfig
     protected $template;
     protected $rootHref;
     protected $tocDepth;
+    protected $menuProcess;
 
     /**
      * @var array
@@ -64,6 +65,7 @@ class RootConfig extends IndexConfig
         $this->initHeadingsProcess();
         $this->initCopyImageProcess();
         $this->initTocProcess();
+        $this->initMenuProcess();
         $this->initRenderingProcess();
     }
 
@@ -146,6 +148,13 @@ class RootConfig extends IndexConfig
             : $this->json->tocProcess;
     }
 
+    protected function initMenuProcess()
+    {
+        $this->menuProcess = empty($this->json->menuProcess)
+            ? 'Bookdown\Bookdown\Process\Navigation\MenuProcessBuilder'
+            : $this->json->menuProcess;
+    }
+
     protected function initRenderingProcess()
     {
         $this->renderingProcess = empty($this->json->renderingProcess)
@@ -171,6 +180,11 @@ class RootConfig extends IndexConfig
     public function getTocProcess()
     {
         return $this->tocProcess;
+    }
+
+    public function getMenuProcess()
+    {
+        return $this->menuProcess;
     }
 
     public function getRenderingProcess()

@@ -12,6 +12,11 @@ Bookdown is especially well-suited for publishing project documentation to GitHu
 
 Read more about it at <http://bookdown.io>.
 
+## Templates
+This is a list of custom bookdown.io templates
+
+* [tobiju/bookdown-bootswatch-templates](https://github.com/tobiju/bookdown-bootswatch-templates "Bootswatch styles and syntax highlighting")
+
 ## Tests
 
 Bookdown has 100% test coverage. To run the tests, install [PHPUnit](http://phpunit.de), then issue `phpunit` at the repository root.

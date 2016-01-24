@@ -28,8 +28,6 @@ Bookdown has 100% test coverage. To run the tests, install [PHPUnit](http://phpu
 
     - `"editors"`: name, note, email, and website of book editors
 
-    - `"copyright"`: year and holder
-
     - `"beforeToc"`: indicates a Markdown file to place on the index page before the TOC
 
     - `"afterToc"`: indicates a Markdown file to place on the index page after the TOC

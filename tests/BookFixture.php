@@ -22,7 +22,8 @@ class BookFixture
                 "Webuni\\\\CommonMark\\\\TableExtension\\\\TableExtension",
                 "Webuni\\\\CommonMark\\\\AttributesExtension\\\\AttributesExtension"
             ]
-        }
+        },
+        "copyright": "Copyright (c) 2016 <a href=\"http://bookdown.io/\">Bokdown.io</a>"
     }';
     public $rootConfig;
     public $rootPage;

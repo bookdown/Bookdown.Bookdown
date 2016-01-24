@@ -47,6 +47,14 @@ class RenderingProcessTest extends \PHPUnit_Framework_TestCase
         $toc->__invoke($this->fixture->indexPage);
         $toc->__invoke($this->fixture->page);
 
+        $toc = $builder->newProcess(
+            $this->fixture->rootConfig,
+            'Copyright'
+        );
+        $toc->__invoke($this->fixture->rootPage);
+        $toc->__invoke($this->fixture->indexPage);
+        $toc->__invoke($this->fixture->page);
+
         $this->process = $builder->newProcess(
             $this->fixture->rootConfig,
             'Rendering'
@@ -144,6 +152,11 @@ class RenderingProcessTest extends \PHPUnit_Framework_TestCase
             <td class="prev">Example Book</td>
             <td class="parent">Example Book</td>
             <td class="next">1.1. Title</td>
+        </tr>
+        <tr>
+            <td class="prev"></td>
+            <td class="parent">Copyright (c) 2016 <a href="http://bookdown.io/">Bokdown.io</a></td>
+            <td class="next"></td>
         </tr>
     </table>
 </nav>

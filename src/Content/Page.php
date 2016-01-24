@@ -13,6 +13,7 @@ class Page
     protected $next;
     protected $title;
     protected $headings = array();
+    protected $menuEntries = array();
 
     public function __construct(
         $origin,
@@ -150,5 +151,21 @@ class Page
             $page = $page->getParent();
         }
         return $page;
+    }
+
+    /**
+     * @return array
+     */
+    public function getMenuEntries()
+    {
+        return $this->menuEntries;
+    }
+
+    /**
+     * @param array $menuEntries
+     */
+    public function setMenuEntries($menuEntries)
+    {
+        $this->menuEntries = $menuEntries;
     }
 }

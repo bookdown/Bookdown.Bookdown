@@ -27,7 +27,7 @@ class ConversionProcessBuilder implements ProcessBuilderInterface
         foreach ($config->getCommonMarkExtensions() as $extension) {
             if (!class_exists($extension)) {
                 throw new \RuntimeException(
-                    'CommonMark extension class "%s" does not exists. You must use a FCQN!'
+                    sprintf('CommonMark extension class "%s" does not exists. You must use a FCQN!', $extension)
                 );
             }
             $environment->addExtension(new $extension());

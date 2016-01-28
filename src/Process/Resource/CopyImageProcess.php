@@ -142,7 +142,7 @@ class CopyImageProcess implements ProcessInterface
     protected function setHtmlFromDomDocument()
     {
         // retain the modified html
-        $this->html = trim($this->doc->saveHtml());
+        $this->html = trim($this->doc->saveHtml($this->doc->documentElement));
 
         // strip the html and body tags added by DomDocument
         $this->html = substr(

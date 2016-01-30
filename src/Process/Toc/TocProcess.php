@@ -54,7 +54,7 @@ class TocProcess implements ProcessInterface
                 $this->tocEntries[] = $heading;
             }
             if ($child->isIndex() && $tocDepth !== 1) {
-                $this->addTocEntries($child, $tocDepth, $level + 1);
+                $this->addTocEntries($child, $tocDepth, $index->isRoot() ? $level : ($level + 1));
             }
         }
     }

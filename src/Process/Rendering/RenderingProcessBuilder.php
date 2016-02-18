@@ -41,8 +41,8 @@ class RenderingProcessBuilder implements ProcessBuilderInterface
             $template = dirname(dirname(dirname(__DIR__))) . '/templates/main.php';
         }
 
-        if (! file_exists($template) && ! is_readable($template)) {
-            throw new Exception("Cannot find template '$template'.");
+        if (! is_readable($template)) {
+            throw new Exception("Cannot find template '$template' check file exists and is readable.");
         }
 
         $registry = $view->getViewRegistry();

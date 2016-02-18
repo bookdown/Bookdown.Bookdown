@@ -1,8 +1,6 @@
 <?php
 namespace Bookdown\Bookdown;
 
-use Bookdown\Bookdown\Exception;
-
 class Fsio
 {
     public function get($file)

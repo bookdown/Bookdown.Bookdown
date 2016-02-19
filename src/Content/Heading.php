@@ -41,9 +41,28 @@ class Heading
     {
         $href = $this->href;
         if ($this->id) {
-            $href .= '#' . $this->id;
+            $href .= $this->getHrefAnchor();
         }
         return $href;
+    }
+
+    /**
+     * Creates a complete anchor href attribute for links.
+     *
+     * @return string
+     */
+    public function getHrefAnchor(){
+        return '#' . $this->getAnchor();
+    }
+
+    /**
+     * Return a valid anchor string tag to use as html id attribute.
+     *
+     * @return string
+     */
+    public function getAnchor()
+    {
+        return str_replace('.', '-', $this->getId());
     }
 
     public function getLevel()

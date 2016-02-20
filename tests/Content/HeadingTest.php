@@ -3,6 +3,9 @@ namespace Bookdown\Bookdown\Content;
 
 class HeadingTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var HeadingFactory
+     */
     protected $headingFactory;
 
     protected function setUp()
@@ -12,6 +15,7 @@ class HeadingTest extends \PHPUnit_Framework_TestCase
 
     public function testHeadingWithId()
     {
+        /* @var Heading $heading */
         $heading = $this->headingFactory->newInstance(
             '1.2.3.',
             'Example Heading',
@@ -23,11 +27,14 @@ class HeadingTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($heading->getTitle(), 'Example Heading');
         $this->assertSame($heading->getId(), '1.2.3');
         $this->assertSame($heading->getLevel(), 3);
-        $this->assertSame($heading->getHref(), '/foo/bar/baz#1.2.3');
+        $this->assertSame($heading->getHref(), '/foo/bar/baz#1-2-3');
+        $this->assertSame($heading->getHrefAnchor(), '#1-2-3');
+        $this->assertSame($heading->getAnchor(), '1-2-3');
     }
 
     public function testHeadingWithoutId()
     {
+        /* @var Heading $heading */
         $heading = $this->headingFactory->newInstance(
             '1.2.3.',
             'Example Heading',
@@ -39,5 +46,7 @@ class HeadingTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($heading->getId(), null);
         $this->assertSame($heading->getLevel(), 3);
         $this->assertSame($heading->getHref(), '/foo/bar/baz');
+        $this->assertSame($heading->getHrefAnchor(), null);
+        $this->assertSame($heading->getAnchor(), null);
     }
 }

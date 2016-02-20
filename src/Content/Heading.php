@@ -51,8 +51,14 @@ class Heading
      *
      * @return string
      */
-    public function getHrefAnchor(){
-        return '#' . $this->getAnchor();
+    public function getHrefAnchor()
+    {
+        $hrefAnchor = null;
+
+        if ($this->id) {
+            return '#' . $this->getAnchor();
+        }
+        return $hrefAnchor;
     }
 
     /**
@@ -62,7 +68,12 @@ class Heading
      */
     public function getAnchor()
     {
-        return str_replace('.', '-', $this->getId());
+        $anchor = null;
+
+        if ($this->id) {
+            $anchor = str_replace('.', '-', $this->getId());
+        }
+        return $anchor;
     }
 
     public function getLevel()

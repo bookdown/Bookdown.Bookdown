@@ -136,7 +136,7 @@ class HeadingsProcess implements ProcessInterface
         $number->nodeValue = $heading->getNumber() . ' ';
         $node->insertBefore($number, $node->firstChild);
 
-        $node->setAttribute('id', $heading->getId());
+        $node->setAttribute('id', $heading->getAnchor());
     }
 
     protected function newHeading(DomNode $node)

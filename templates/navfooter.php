@@ -28,5 +28,12 @@ $next = $this->page->getNext();
                 echo $next->getNumberAndTitle();
             } ?></td>
         </tr>
+<?php if ($copyright = $this->page->getCopyright()) : ?>
+        <tr>
+            <td class="prev"></td>
+            <td class="parent"><?= $copyright; ?></td>
+            <td class="next"></td>
+        </tr>
+<?php endif; ?>
     </table>
 </nav>

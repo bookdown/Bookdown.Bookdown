@@ -47,6 +47,14 @@ class RenderingProcessTest extends \PHPUnit_Framework_TestCase
         $toc->__invoke($this->fixture->indexPage);
         $toc->__invoke($this->fixture->page);
 
+        $toc = $builder->newProcess(
+            $this->fixture->rootConfig,
+            'Copyright'
+        );
+        $toc->__invoke($this->fixture->rootPage);
+        $toc->__invoke($this->fixture->indexPage);
+        $toc->__invoke($this->fixture->page);
+
         $this->process = $builder->newProcess(
             $this->fixture->rootConfig,
             'Rendering'
@@ -124,13 +132,13 @@ class RenderingProcessTest extends \PHPUnit_Framework_TestCase
 
 <h1>1. Chapter</h1>
 <dl>
-<dt>1.1. <a href="/chapter/section.html#1.1">Title</a></dt>
+<dt>1.1. <a href="/chapter/section.html#1-1">Title</a></dt>
 <dd><dl>
-<dt>1.1.1. <a href="/chapter/section.html#1.1.1">Subtitle <code>code</code> A</a></dt>
+<dt>1.1.1. <a href="/chapter/section.html#1-1-1">Subtitle <code>code</code> A</a></dt>
 <dd><dl>
-<dt>1.1.1.1. <a href="/chapter/section.html#1.1.1.1">Sub-subtitle</a></dt>
+<dt>1.1.1.1. <a href="/chapter/section.html#1-1-1-1">Sub-subtitle</a></dt>
 </dl></dd>
-<dt>1.1.2. <a href="/chapter/section.html#1.1.2">Subtitle B</a></dt>
+<dt>1.1.2. <a href="/chapter/section.html#1-1-2">Subtitle B</a></dt>
 </dl></dd>
 </dl>
 
@@ -145,6 +153,11 @@ class RenderingProcessTest extends \PHPUnit_Framework_TestCase
             <td class="prev">Example Book</td>
             <td class="parent">Example Book</td>
             <td class="next">1.1. Title</td>
+        </tr>
+        <tr>
+            <td class="prev"></td>
+            <td class="parent">Copyright (c) 2016 <a href="http://bookdown.io/">Bokdown.io</a></td>
+            <td class="next"></td>
         </tr>
     </table>
 </nav>

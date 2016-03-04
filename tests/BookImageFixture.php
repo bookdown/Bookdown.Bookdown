@@ -5,7 +5,7 @@ use Bookdown\Bookdown\Content\PageFactory;
 use Bookdown\Bookdown\Config\IndexConfig;
 use Bookdown\Bookdown\Config\RootConfig;
 
-class BookFixture
+class BookImageFixture
 {
     public $rootConfigFile = '/path/to/bookdown.json';
     public $rootConfigData = '{
@@ -14,16 +14,10 @@ class BookFixture
             {"chapter": "chapter/bookdown.json"}
         ],
         "target": "/_site",
+        "rootHref": "/",
         "templates": {
             "foo": "/foo.php"
-        },
-        "extensions": {
-            "commonmark": [
-                "Webuni\\\\CommonMark\\\\TableExtension\\\\TableExtension",
-                "Webuni\\\\CommonMark\\\\AttributesExtension\\\\AttributesExtension"
-            ]
-        },
-        "copyright": "Copyright (c) 2016 <a href=\"http://bookdown.io/\">Bokdown.io</a>"
+        }
     }';
     public $rootConfig;
     public $rootPage;
@@ -51,16 +45,15 @@ Text under subtitle A.
 
 Text under sub-subtitle.
 
+![Build Status](http://test.dev/img/test1.jpg)
+![Build Status](https://test.dev/test2.jpg)
+![Build Status](//test.dev/img/test3.jpg)
+![Build Status](/img/test4.jpg)
+![Build Status](../img/test5.jpg)
+
 ## Subtitle B
 
 Text under subtitle B.
-
-> Blockqoute
-{: title="Blockquote title"}
-
-th | th(center) | th(right)
----|:----------:|----------:
-td |     td     |         td
 ';
     public $page;
 

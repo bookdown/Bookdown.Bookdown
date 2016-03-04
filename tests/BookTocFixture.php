@@ -5,36 +5,15 @@ use Bookdown\Bookdown\Content\PageFactory;
 use Bookdown\Bookdown\Config\IndexConfig;
 use Bookdown\Bookdown\Config\RootConfig;
 
-class BookFixture
+class BookTocFixture
 {
     public $rootConfigFile = '/path/to/bookdown.json';
-    public $rootConfigData = '{
-        "title": "Example Book",
-        "content": [
-            {"chapter": "chapter/bookdown.json"}
-        ],
-        "target": "/_site",
-        "templates": {
-            "foo": "/foo.php"
-        },
-        "extensions": {
-            "commonmark": [
-                "Webuni\\\\CommonMark\\\\TableExtension\\\\TableExtension",
-                "Webuni\\\\CommonMark\\\\AttributesExtension\\\\AttributesExtension"
-            ]
-        },
-        "copyright": "Copyright (c) 2016 <a href=\"http://bookdown.io/\">Bokdown.io</a>"
-    }';
+    public $rootConfigData;
     public $rootConfig;
     public $rootPage;
 
     public $indexConfigFile = '/path/to/chapter/bookdown.json';
-    public $indexConfigData = '{
-        "title": "Chapter",
-        "content": [
-            {"section": "section.md"}
-        ]
-    }';
+    public $indexConfigData = '';
     public $indexConfig;
     public $indexPage;
 
@@ -47,25 +26,47 @@ Text under title.
 
 Text under subtitle A.
 
-### Sub-subtitle
+### Sub-subtitle A
 
 Text under sub-subtitle.
+
+#### Sub-Sub-subtitle A
+
+Text under sub sub subtitle A.
 
 ## Subtitle B
 
 Text under subtitle B.
 
-> Blockqoute
-{: title="Blockquote title"}
+### Sub-subtitle B
 
-th | th(center) | th(right)
----|:----------:|----------:
-td |     td     |         td
+Text under sub subtitle B.
+
+#### Sub-Sub-subtitle B
+
+Text under sub sub subtitle B.
 ';
     public $page;
 
-    public function __construct(FakeFsio $fsio)
+    public function __construct(FakeFsio $fsio, $tocDepth)
     {
+        $this->rootConfigData = '{
+            "title": "Example Book",
+            "content": [
+                {"chapter": "chapter/bookdown.json"}
+            ],
+            "target": "/_site",
+            "tocDepth": ' . $tocDepth . '
+        }';
+
+        $this->indexConfigData = '{
+            "title": "Index Page",
+            "content": [
+                {"section": "section.md"}
+            ],
+            "tocDepth": ' . $tocDepth . '
+        }';
+
         $pageFactory = new PageFactory();
 
         $fsio->put($this->rootConfigFile, $this->rootConfigData);

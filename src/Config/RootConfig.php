@@ -10,8 +10,17 @@ class RootConfig extends IndexConfig
     protected $renderingProcess;
     protected $tocProcess;
     protected $headingsProcess;
+    protected $copyImageProcess;
+    protected $copyrightProcess;
     protected $template;
     protected $rootHref;
+    protected $tocDepth;
+    protected $copyright;
+
+    /**
+     * @var array
+     */
+    protected $commonMarkExtensions = array();
 
     public function setOverrides(array $overrides)
     {
@@ -38,6 +47,11 @@ class RootConfig extends IndexConfig
             $this->target = rtrim($val, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
             return;
         }
+
+        if ($key === 'root-href') {
+            $this->rootHref = $val;
+            return;
+        }
     }
 
     protected function init()
@@ -45,11 +59,16 @@ class RootConfig extends IndexConfig
         parent::init();
         $this->initTarget();
         $this->initRootHref();
+        $this->initCommonMarkExtensions();
         $this->initTemplate();
+        $this->initTocDepth();
+        $this->initCopyright();
         $this->initConversionProcess();
         $this->initHeadingsProcess();
+        $this->initCopyImageProcess();
         $this->initTocProcess();
         $this->initRenderingProcess();
+        $this->initCopyrightProcess();
     }
 
     protected function initTarget()
@@ -70,12 +89,46 @@ class RootConfig extends IndexConfig
             : $this->json->rootHref;
     }
 
+    protected function initCommonMarkExtensions()
+    {
+        if (empty($this->json->extensions)
+            || empty($this->json->extensions->commonmark)
+        ) {
+            return;
+        }
+
+        if (!is_array($this->json->extensions->commonmark)) {
+            throw new \InvalidArgumentException(
+                sprintf('The extension parameter "commonmark" must be of type "array".')
+            );
+        }
+
+        foreach ($this->json->extensions->commonmark as $extension) {
+            $this->commonMarkExtensions[] = $extension;
+        }
+    }
+
     protected function initTemplate()
     {
         $this->template = empty($this->json->template)
             ? null
             : $this->fixPath($this->json->template);
     }
+
+    protected function initTocDepth()
+    {
+        $this->tocDepth = empty($this->json->tocDepth)
+            ? 0
+            : (int) $this->json->tocDepth;
+    }
+
+    protected function initCopyright()
+    {
+        $this->copyright = empty($this->json->copyright)
+            ? ''
+            : $this->json->copyright;
+    }
+
 
     protected function initConversionProcess()
     {
@@ -89,6 +142,20 @@ class RootConfig extends IndexConfig
         $this->headingsProcess = empty($this->json->headingsProcess)
             ? 'Bookdown\Bookdown\Process\Headings\HeadingsProcessBuilder'
             : $this->json->headingsProcess;
+    }
+
+    protected function initCopyImageProcess()
+    {
+        $this->copyImageProcess = empty($this->json->copyImageProcess)
+            ? 'Bookdown\Bookdown\Process\Resource\CopyImageProcessBuilder'
+            : $this->json->copyImageProcess;
+    }
+
+    protected function initCopyrightProcess()
+    {
+        $this->copyrightProcess = empty($this->json->copyrightProcess)
+            ? 'Bookdown\Bookdown\Process\Info\CopyrightProcessBuilder'
+            : $this->json->copyrightProcess;
     }
 
     protected function initTocProcess()
@@ -113,6 +180,16 @@ class RootConfig extends IndexConfig
     public function getHeadingsProcess()
     {
         return $this->headingsProcess;
+    }
+
+    public function getCopyImageProcess()
+    {
+        return $this->copyImageProcess;
+    }
+
+    public function getCopyrightProcess()
+    {
+        return $this->copyrightProcess;
     }
 
     public function getTocProcess()
@@ -140,11 +217,29 @@ class RootConfig extends IndexConfig
         return $this->template;
     }
 
+    public function getTocDepth()
+    {
+        return $this->tocDepth;
+    }
+
+    public function getCopyright()
+    {
+        return $this->copyright;
+    }
+
     public function get($key, $alt = null)
     {
         if (isset($this->json->$key)) {
             return $this->json->$key;
         }
         return $alt;
+    }
+
+    /**
+     * @return array
+     */
+    public function getCommonMarkExtensions()
+    {
+        return $this->commonMarkExtensions;
     }
 }

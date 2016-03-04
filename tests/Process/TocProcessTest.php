@@ -2,14 +2,19 @@
 namespace Bookdown\Bookdown\Process;
 
 use Bookdown\Bookdown\BookFixture;
+use Bookdown\Bookdown\BookTocFixture;
 use Bookdown\Bookdown\Container;
-use Bookdown\Bookdown\FakeFsio;
 
 class TocProcessTest extends \PHPUnit_Framework_TestCase
 {
     protected $fsio;
     protected $stdout;
     protected $stderr;
+    protected $builder;
+
+    /**
+     * @var BookFixture
+     */
     protected $fixture;
 
     protected function setUp()
@@ -24,11 +29,13 @@ class TocProcessTest extends \PHPUnit_Framework_TestCase
         );
         $this->fsio = $container->getFsio();
 
-        $this->fixture = new BookFixture($this->fsio);
+        $this->builder = $container->newProcessorBuilder();
 
-        $builder = $container->newProcessorBuilder();
+    }
 
-        $conversion = $builder->newProcess(
+    private function setupProcess()
+    {
+        $conversion = $this->builder->newProcess(
             $this->fixture->rootConfig,
             'Conversion'
         );
@@ -36,7 +43,7 @@ class TocProcessTest extends \PHPUnit_Framework_TestCase
         $conversion->__invoke($this->fixture->indexPage);
         $conversion->__invoke($this->fixture->page);
 
-        $headings = $builder->newProcess(
+        $headings = $this->builder->newProcess(
             $this->fixture->rootConfig,
             'Headings'
         );
@@ -44,7 +51,7 @@ class TocProcessTest extends \PHPUnit_Framework_TestCase
         $headings->__invoke($this->fixture->indexPage);
         $headings->__invoke($this->fixture->page);
 
-        $this->process = $builder->newProcess(
+        $this->process = $this->builder->newProcess(
             $this->fixture->rootConfig,
             'Toc'
         );
@@ -52,6 +59,9 @@ class TocProcessTest extends \PHPUnit_Framework_TestCase
 
     public function testToc()
     {
+        $this->fixture = new BookFixture($this->fsio);
+        $this->setupProcess();
+
         $this->process->__invoke($this->fixture->page);
         rewind($this->stdout);
         $string = '';
@@ -66,6 +76,9 @@ class TocProcessTest extends \PHPUnit_Framework_TestCase
 
     public function testTocIndex()
     {
+        $this->fixture = new BookFixture($this->fsio);
+        $this->setupProcess();
+
         $this->process->__invoke($this->fixture->indexPage);
 
         $expect = array(
@@ -108,6 +121,9 @@ class TocProcessTest extends \PHPUnit_Framework_TestCase
 
     public function testTocRoot()
     {
+        $this->fixture = new BookFixture($this->fsio);
+        $this->setupProcess();
+
         $this->process->__invoke($this->fixture->rootPage);
 
         $expect = array(
@@ -153,5 +169,193 @@ class TocProcessTest extends \PHPUnit_Framework_TestCase
         foreach ($headings as $key => $actual) {
             $this->assertSame($expect[$key], $actual->asArray());
         }
+    }
+
+    /**
+     * @dataProvider providerForTocDepthRoot
+     */
+    public function testTocDepthRoot($tocDepth, $expect)
+    {
+        $this->fixture = new BookTocFixture($this->fsio, $tocDepth);
+        $this->setupProcess();
+
+        $this->process->__invoke($this->fixture->rootPage);
+
+        $headings = $this->fixture->rootPage->getTocEntries();
+        $this->assertCount(count($expect), $headings);
+        foreach ($headings as $key => $actual) {
+            $this->assertSame($expect[$key], $actual->asArray());
+        }
+    }
+
+    public function providerForTocDepthRoot()
+    {
+        return [
+            [
+                1,
+                [
+                    [
+                        'number' => '1.',
+                        'title' => 'Index Page',
+                        'id' => null,
+                        'href' => '/chapter/',
+                        'level' => 1,
+                    ],
+                ],
+            ],
+            [
+                2,
+                [
+                    [
+                        'number' => '1.',
+                        'title' => 'Index Page',
+                        'id' => null,
+                        'href' => '/chapter/',
+                        'level' => 1,
+                    ],
+                    [
+                        'number' => '1.1.',
+                        'title' => 'Title',
+                        'id' => '1.1',
+                        'href' => '/chapter/section.html',
+                        'level' => 2,
+                    ],
+                ],
+            ],
+            [
+                3,
+                [
+                    [
+                        'number' => '1.',
+                        'title' => 'Index Page',
+                        'id' => null,
+                        'href' => '/chapter/',
+                        'level' => 1,
+                    ],
+                    [
+                        'number' => '1.1.',
+                        'title' => 'Title',
+                        'id' => '1.1',
+                        'href' => '/chapter/section.html',
+                        'level' => 2,
+                    ],
+                    [
+                        'number' => '1.1.1.',
+                        'title' => 'Subtitle <code>code</code> A',
+                        'id' => '1.1.1',
+                        'href' => '/chapter/section.html',
+                        'level' => 3,
+                    ],
+                    [
+                        'number' => '1.1.2.',
+                        'title' => 'Subtitle B',
+                        'id' => '1.1.2',
+                        'href' => '/chapter/section.html',
+                        'level' => 3,
+                    ],
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider providerForTocDepthIndex
+     */
+    public function testTocDepthIndex($tocDepth, $expect)
+    {
+        $this->fixture = new BookTocFixture($this->fsio, $tocDepth);
+        $this->setupProcess();
+
+        $this->process->__invoke($this->fixture->indexPage);
+
+        $headings = $this->fixture->indexPage->getTocEntries();
+        $this->assertCount(count($expect), $headings);
+        foreach ($headings as $key => $actual) {
+            $this->assertSame($expect[$key], $actual->asArray());
+        }
+    }
+
+    public function providerForTocDepthIndex()
+    {
+        return [
+            [
+                1,
+                [
+                    [
+                        'number' => '1.1.',
+                        'title' => 'Title',
+                        'id' => '1.1',
+                        'href' => '/chapter/section.html',
+                        'level' => 2,
+                    ],
+                ],
+            ],
+            [
+                2,
+                [
+                    [
+                        'number' => '1.1.',
+                        'title' => 'Title',
+                        'id' => '1.1',
+                        'href' => '/chapter/section.html',
+                        'level' => 2,
+                    ],
+                    [
+                        'number' => '1.1.1.',
+                        'title' => 'Subtitle <code>code</code> A',
+                        'id' => '1.1.1',
+                        'href' => '/chapter/section.html',
+                        'level' => 3,
+                    ],
+                    [
+                        'number' => '1.1.2.',
+                        'title' => 'Subtitle B',
+                        'id' => '1.1.2',
+                        'href' => '/chapter/section.html',
+                        'level' => 3,
+                    ],
+                ],
+            ],
+            [
+                3,
+                [
+                    [
+                        'number' => '1.1.',
+                        'title' => 'Title',
+                        'id' => '1.1',
+                        'href' => '/chapter/section.html',
+                        'level' => 2,
+                    ],
+                    [
+                        'number' => '1.1.1.',
+                        'title' => 'Subtitle <code>code</code> A',
+                        'id' => '1.1.1',
+                        'href' => '/chapter/section.html',
+                        'level' => 3,
+                    ],
+                    [
+                        'number' => '1.1.1.1.',
+                        'title' => 'Sub-subtitle A',
+                        'id' => '1.1.1.1',
+                        'href' => '/chapter/section.html',
+                        'level' => 4,
+                    ],
+                    [
+                        'number' => '1.1.2.',
+                        'title' => 'Subtitle B',
+                        'id' => '1.1.2',
+                        'href' => '/chapter/section.html',
+                        'level' => 3,
+                    ],
+                    [
+                        'number' => '1.1.2.1.',
+                        'title' => 'Sub-subtitle B',
+                        'id' => '1.1.2.1',
+                        'href' => '/chapter/section.html',
+                        'level' => 4,
+                    ],
+                ],
+            ],
+        ];
     }
 }

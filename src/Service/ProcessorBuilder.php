@@ -28,6 +28,7 @@ class ProcessorBuilder
                 $this->newProcess($config, 'CopyImage'),
                 $this->newProcess($config, 'Toc'),
                 $this->newProcess($config, 'Rendering'),
+                $this->newProcess($config, 'Index'),
             )
         );
     }

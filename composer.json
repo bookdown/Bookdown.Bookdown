@@ -27,7 +27,8 @@
     },
     "require-dev": {
         "webuni/commonmark-table-extension": "^0.4.2",
-        "webuni/commonmark-attributes-extension": "^0.3.1"
+        "webuni/commonmark-attributes-extension": "^0.3.1",
+        "phpunit/phpunit": "^5.3"
     },
     "autoload": {
         "psr-4": {

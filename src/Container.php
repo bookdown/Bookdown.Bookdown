@@ -14,6 +14,7 @@ class Container
     protected $cliFactory;
     protected $fsioClass;
     protected $fsio;
+    protected $assetManager;
 
     public function __construct(
         $stdout = 'php://stdout',
@@ -39,7 +40,8 @@ class Container
         return new Service\Service(
             $this->newCollector(),
             $this->newProcessorBuilder(),
-            $this->newTimer()
+            $this->newTimer(),
+            $this->getAssetManager()
         );
     }
 
@@ -57,13 +59,22 @@ class Container
     {
         return new Service\ProcessorBuilder(
             $this->getLogger(),
-            $this->getFsio()
+            $this->getFsio(),
+            $this->getAssetManager()
         );
     }
 
     public function newTimer()
     {
         return new Service\Timer($this->getLogger());
+    }
+
+    public function newAssetManager()
+    {
+        return new Service\AssetManager(
+            $this->getLogger(),
+            $this->getFsio()
+        );
     }
 
     public function getCliFactory()
@@ -98,5 +109,14 @@ class Container
             $this->fsio = new $class();
         }
         return $this->fsio;
+    }
+
+    public function getAssetManager()
+    {
+        if(! $this->assetManager) {
+            $this->assetManager = $this->newAssetManager();
+        }
+
+        return $this->assetManager;
     }
 }

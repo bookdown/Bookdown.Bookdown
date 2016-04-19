@@ -27,7 +27,7 @@ class AssetManager
     public function addFile($file, $target = null)
     {
         if(is_null($target))
-            $target = basename($file);
+            $target = $file;
 
         if(!$this->assetExists($target)) {
             $this->logger->info("    Adding asset '{$file}' as '{$target}'");
@@ -52,7 +52,17 @@ class AssetManager
         foreach($this->assets as $name => $source) {
             $this->logger->info("    $source => $name");
 
-            $this->fsio->put($config->getTarget() . DIRECTORY_SEPARATOR . $name, $this->fsio->get(dirname($config->getTemplate()) . DIRECTORY_SEPARATOR . $source));
+            $targetFilename = $config->getTarget() . DIRECTORY_SEPARATOR . $name;
+            $targetDir = dirname($targetFilename);
+
+            if(!$this->fsio->isDir($targetDir)) {
+                $this->fsio->mkdir($targetDir);
+            }
+
+            $this->fsio->put(
+                $targetFilename,
+                $this->fsio->get(dirname($config->getTemplate()) . DIRECTORY_SEPARATOR . $source)
+            );
         }
     }
 }

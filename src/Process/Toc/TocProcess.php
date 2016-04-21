@@ -10,6 +10,8 @@ class TocProcess implements ProcessInterface
 {
     protected $logger;
     protected $tocEntries;
+    protected $tocDepth;
+    protected $maxLevel;
 
     public function __construct(LoggerInterface $logger)
     {
@@ -24,38 +26,42 @@ class TocProcess implements ProcessInterface
         }
 
         $this->logger->info("    Adding TOC entries for {$page->getTarget()}");
+
         $this->tocEntries = array();
-        // if there are multiple books, ensure correct toc level
-        $this->addTocEntries($page, $page->getConfig()->getTocDepth(), $page->isRoot() ? 0 : 1);
+        $this->tocDepth = $page->getConfig()->getTocDepth();
+        $this->maxLevel = $this->tocDepth + $page->getLevel();
+
+        $this->addTocEntries($page);
         $page->setTocEntries($this->tocEntries);
     }
 
     /**
-     * A toc depth of 0 means render all headings. A toc depth of 1 is a special case
      *
      * @param IndexPage $index
-     * @param $tocDepth
-     * @param int $level
      */
-    protected function addTocEntries(IndexPage $index, $tocDepth, $level = 0)
+    protected function addTocEntries(IndexPage $index)
     {
-        $maxLevel = $level + $tocDepth;
-
-        if ($tocDepth !== 1 && $tocDepth && $index->isRoot()) {
-            $maxLevel --;
-        }
-
         foreach ($index->getChildren() as $child) {
             $headings = $child->getHeadings();
             foreach ($headings as $heading) {
-                if ($tocDepth && $heading->getLevel() > $maxLevel) {
-                    continue;
-                }
-                $this->tocEntries[] = $heading;
+                $this->addTocEntry($heading);
             }
-            if ($child->isIndex() && $tocDepth !== 1) {
-                $this->addTocEntries($child, $tocDepth, $index->isRoot() ? $level : ($level + 1));
+            if ($child->isIndex()) {
+                $this->addTocEntries($child);
             }
+        }
+    }
+
+    /**
+     * A toc depth of 0 means render all headings.
+     *
+     * @param IndexPage $index
+     * @param int $level
+     */
+    protected function addTocEntry($heading)
+    {
+        if (! $this->tocDepth || $heading->getLevel() <= $this->maxLevel) {
+            $this->tocEntries[] = $heading;
         }
     }
 }

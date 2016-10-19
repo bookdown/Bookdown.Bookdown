@@ -139,7 +139,7 @@ class CopyImageProcess implements ProcessInterface
         if (file_exists($originFile)) {
             $this->fsio->put($file, $this->fsio->get($originFile));
         } else {
-            $this->logger->warning("      Images {$originFile} does not exists.");
+            $this->logger->warning("      Image {$originFile} does not exist.");
         }
         return $this->config->getRootHref() . (str_replace($this->config->getTarget(), '', $dir)) . $imageName;
     }

@@ -3,6 +3,9 @@ namespace Bookdown\Bookdown\Content;
 
 class HeadingTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var HeadingFactory
+     */
     protected $headingFactory;
 
     protected function setUp()
@@ -12,6 +15,7 @@ class HeadingTest extends \PHPUnit_Framework_TestCase
 
     public function testHeadingWithId()
     {
+        /* @var Heading $heading */
         $heading = $this->headingFactory->newInstance(
             '1.2.3.',
             'Example Heading',
@@ -30,6 +34,7 @@ class HeadingTest extends \PHPUnit_Framework_TestCase
 
     public function testHeadingWithoutId()
     {
+        /* @var Heading $heading */
         $heading = $this->headingFactory->newInstance(
             '1.2.3.',
             'Example Heading',

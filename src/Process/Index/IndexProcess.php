@@ -132,8 +132,6 @@ class IndexProcess implements ProcessInterface
 
     /**
      * Create the content index entries related to the correct title.
-     *
-     * @return array
      */
     protected function buildRelatedContent()
     {

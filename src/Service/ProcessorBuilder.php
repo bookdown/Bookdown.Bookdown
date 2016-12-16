@@ -1,6 +1,7 @@
 <?php
 namespace Bookdown\Bookdown\Service;
 
+use Bookdown\Bookdown\Service\AssetManager\AssetManagerAwareInterface;
 use Psr\Log\LoggerInterface;
 use Bookdown\Bookdown\Config\RootConfig;
 use Bookdown\Bookdown\Exception;
@@ -10,11 +11,13 @@ class ProcessorBuilder
 {
     protected $logger;
     protected $fsio;
+    protected $assetManager;
 
-    public function __construct(LoggerInterface $logger, Fsio $fsio)
+    public function __construct(LoggerInterface $logger, Fsio $fsio, AssetManager $assetManager)
     {
         $this->logger = $logger;
         $this->fsio = $fsio;
+        $this->assetManager = $assetManager;
     }
 
     public function newProcessor(RootConfig $config)
@@ -49,6 +52,13 @@ class ProcessorBuilder
         }
 
         $builder = new $class();
-        return $builder->newInstance($config, $this->logger, $this->fsio);
+        $instance = $builder->newInstance($config, $this->logger, $this->fsio);
+        
+        if(is_subclass_of($instance, AssetManagerAwareInterface::class))
+        {
+            $instance->setAssetManager($this->assetManager);
+        }
+        
+        return $instance;
     }
 }

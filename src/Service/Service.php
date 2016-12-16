@@ -6,15 +6,18 @@ class Service
     protected $collector;
     protected $processorBuilder;
     protected $timer;
+    protected $assetManager;
 
     public function __construct(
         Collector $collector,
         ProcessorBuilder $processorBuilder,
-        Timer $timer
+        Timer $timer,
+        AssetManager $assetManager
     ) {
         $this->collector = $collector;
         $this->processorBuilder = $processorBuilder;
         $this->timer = $timer;
+        $this->assetManager = $assetManager;
     }
 
     public function __invoke($rootConfigFile, array $rootConfigOverrides)
@@ -23,6 +26,7 @@ class Service
         $rootPage = $this->collector->__invoke($rootConfigFile);
         $processor = $this->processorBuilder->newProcessor($rootPage->getConfig());
         $processor->__invoke($rootPage);
+        $this->assetManager->flush($rootPage->getConfig());
         $this->timer->report();
     }
 }

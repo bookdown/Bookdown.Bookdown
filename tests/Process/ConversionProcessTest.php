@@ -39,6 +39,11 @@ class ConversionProcessTest extends \PHPUnit_Framework_TestCase
 <p>Text under sub-subtitle.</p>
 <h2>Subtitle B</h2>
 <p>Text under subtitle B.</p>
+<h2>Subtitle C</h2>
+<h2>Subtitle D</h2>
+<h2>Subtitle E</h2>
+<h2>Subtitle F</h2>
+<h2>Subtitle H</h2>
 <blockquote title="Blockquote title">
 <p>Blockqoute</p>
 </blockquote>

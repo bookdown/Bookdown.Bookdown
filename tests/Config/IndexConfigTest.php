@@ -67,6 +67,14 @@ class IndexConfigTest extends \PHPUnit_Framework_TestCase
         ]
     }';
 
+    protected $jsonContentSameResolvedName = '{
+        "title": "Example Title",
+        "content": [
+            "http://test1.example.dom/master/bookdown.json",
+            "http://test2.example.dom/master/bookdown.json"
+        ]
+    }';
+
     protected $jsonReusedContentName = '{
         "title": "Example Title",
         "content": [
@@ -133,6 +141,16 @@ class IndexConfigTest extends \PHPUnit_Framework_TestCase
         );
         $config = $this->newIndexConfig('/path/to/bookdown.json', $this->jsonContentIndex);
     }
+
+    public function testDuplicateName()
+    {
+        $this->setExpectedException(
+            'Bookdown\Bookdown\Exception',
+            "Content name 'master' already set in '/path/to/bookdown.json'."
+        );
+        $config = $this->newIndexConfig('/path/to/bookdown.json', $this->jsonContentSameResolvedName);
+    }
+
 
     public function testValidLocal()
     {

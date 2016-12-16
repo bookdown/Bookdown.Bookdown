@@ -3,7 +3,6 @@ namespace Bookdown\Bookdown\Process\Conversion;
 
 use Psr\Log\LoggerInterface;
 use Bookdown\Bookdown\Content\Page;
-use Bookdown\Bookdown\Exception;
 use Bookdown\Bookdown\Fsio;
 use Bookdown\Bookdown\Process\ProcessInterface;
 use League\CommonMark\Converter;

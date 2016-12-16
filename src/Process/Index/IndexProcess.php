@@ -124,7 +124,7 @@ class IndexProcess implements ProcessInterface
                 if (empty($this->contents[$i])) {
                     $this->contents[$i] = '';
                 }
-                $this->contents[$i] .= preg_replace('/\s+/', ' ',strip_tags($domDocument->saveHtml($element)));
+                $this->contents[$i] .= preg_replace('/\s+/', ' ', strip_tags($domDocument->saveHtml($element)));
             }
         }
     }
@@ -153,7 +153,14 @@ class IndexProcess implements ProcessInterface
     {
         $xpath = new \DomXpath($domDocument);
 
-        $query = '//div[@id="htmlcontainer"]//h1|h2|h3|h4|h5|h6/../*';
+        $query = '
+            //div[@id="htmlcontainer"]//h1/../* | 
+            //div[@id="htmlcontainer"]//h2/../* | 
+            //div[@id="htmlcontainer"]//h3/../* | 
+            //div[@id="htmlcontainer"]//h4/../* | 
+            //div[@id="htmlcontainer"]//h5/../* |
+            //div[@id="htmlcontainer"]//h6/../*';
+
         return $xpath->query($query);
     }
 

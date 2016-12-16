@@ -16,6 +16,7 @@ Read more about it at <http://bookdown.io>.
 This is a list of custom bookdown.io templates
 
 * [tobiju/bookdown-bootswatch-templates](https://github.com/tobiju/bookdown-bootswatch-templates "Bootswatch styles and syntax highlighting")
+* [bdudelsack/bookdown-template](https://github.com/bdudelsack/bookdown-template "Template for the bookdown project using Bootstrap and HighlightJS")
 
 ## Tests
 

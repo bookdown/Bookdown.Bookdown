@@ -60,6 +60,15 @@ class Page
         return $this->count;
     }
 
+    public function getLevel()
+    {
+        if ($this->hasParent()) {
+            return $this->parent->getLevel() + 1;
+        }
+
+        return 0;
+    }
+
     public function setPrev($prev)
     {
         $this->prev = $prev;

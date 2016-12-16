@@ -115,7 +115,7 @@ class IndexProcess implements ProcessInterface
                 $heading = $page->getHeadings()[$i];
                 $i++;
                 $this->headings[$i] = array(
-                    'title' => strip_tags($domDocument->saveHtml($element)),
+                    'title' => strip_tags($domDocument->saveHTML($element)),
                     'href' => $heading->getHref()
                 );
             }
@@ -125,7 +125,7 @@ class IndexProcess implements ProcessInterface
                 if (empty($this->contents[$i])) {
                     $this->contents[$i] = '';
                 }
-                $this->contents[$i] .= preg_replace('/\s+/', ' ',strip_tags($domDocument->saveHtml($element)));
+                $this->contents[$i] .= preg_replace('/\s+/', ' ', strip_tags($domDocument->saveHTML($element)));
             }
         }
     }
@@ -137,12 +137,16 @@ class IndexProcess implements ProcessInterface
      */
     protected function buildRelatedContent()
     {
-        foreach ($this->getContents() as $key => $content) {
-            array_push($this->searchIndex, array(
-                'id' => $this->getHeadings()[$key]['href'],
-                'title' => $this->getHeadings()[$key]['title'],
-                'content' => $content
-            ));
+        $contents = $this->getContents();
+
+        if (count($contents) > 0) {
+            foreach ($contents as $key => $content) {
+                array_push($this->searchIndex, array(
+                    'id' => $this->getHeadings()[$key]['href'],
+                    'title' => $this->getHeadings()[$key]['title'],
+                    'content' => $content
+                ));
+            }
         }
     }
 
@@ -155,7 +159,7 @@ class IndexProcess implements ProcessInterface
     protected function getHtmlDomBody(\DOMDocument $domDocument)
     {
         $xpath = new \DomXpath($domDocument);
-        $query = '//h1/../*|//h2/../*|//h3/../*| //h4/../*| //h5/../*| //h6/../*';
+        $query = '//div[@id="section-main"]//h1/../*|//div[@id="section-main"]//h2/../*|//div[@id="section-main"]//h3/../*|//div[@id="section-main"]//h4/../*|//div[@id="section-main"]//h5/../*|//div[@id="section-main"]//h6/../*';
         return $xpath->query($query);
     }
 
@@ -170,7 +174,7 @@ class IndexProcess implements ProcessInterface
         $domDocument = new \DOMDocument();
         libxml_use_internal_errors(true);
         $domDocument->formatOutput = true;
-        $domDocument->loadHtml(mb_convert_encoding(
+        $domDocument->loadHTML(mb_convert_encoding(
             $html,
             'HTML-ENTITIES',
             'UTF-8'
@@ -234,7 +238,8 @@ class IndexProcess implements ProcessInterface
     /**
      * Reset class member.
      */
-    protected function reset(){
+    protected function reset()
+    {
         $this->headings = null;
         $this->contents = null;
     }

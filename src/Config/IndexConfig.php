@@ -81,7 +81,8 @@ class IndexConfig
             $spec = (array) $origin;
             $name = key($spec);
             $origin = current($spec);
-            return $this->addContent($name, $origin);
+            $this->addContent($name, $origin);
+            return;
         }
 
         if (! is_string($origin)) {
@@ -90,7 +91,8 @@ class IndexConfig
 
         if (substr($origin, -13) == 'bookdown.json') {
             $name = basename(dirname($origin));
-            return $this->addContent($name, $origin);
+            $this->addContent($name, $origin);
+            return;
         }
 
         $name = basename($origin);
@@ -98,7 +100,7 @@ class IndexConfig
         if ($pos !== false) {
             $name = substr($name, 0, $pos);
         }
-        return $this->addContent($name, $origin);
+        $this->addContent($name, $origin);
     }
 
     protected function initTocDepth()

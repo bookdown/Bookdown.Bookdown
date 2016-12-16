@@ -106,7 +106,6 @@ class IndexProcess implements ProcessInterface
         $elements = $this->getHtmlDomBody($domDocument);
 
         foreach ($elements as $element) {
-
             $isHeading = in_array($element->nodeName, $headingTags);
 
             // add heading
@@ -132,8 +131,6 @@ class IndexProcess implements ProcessInterface
 
     /**
      * Create the content index entries related to the correct title.
-     *
-     * @return array
      */
     protected function buildRelatedContent()
     {
@@ -155,7 +152,8 @@ class IndexProcess implements ProcessInterface
     protected function getHtmlDomBody(\DOMDocument $domDocument)
     {
         $xpath = new \DomXpath($domDocument);
-        $query = '//h1/../*|//h2/../*|//h3/../*| //h4/../*| //h5/../*| //h6/../*';
+
+        $query = '//div[@id="htmlcontainer"]//h1|h2|h3|h4|h5|h6/../*';
         return $xpath->query($query);
     }
 

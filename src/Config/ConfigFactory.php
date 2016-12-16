@@ -1,9 +1,6 @@
 <?php
 namespace Bookdown\Bookdown\Config;
 
-use Bookdown\Bookdown\Exception;
-use Bookdown\Bookdown\Fsio;
-
 class ConfigFactory
 {
     protected $rootConfigOverrides = array();

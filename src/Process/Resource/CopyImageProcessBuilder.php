@@ -1,7 +1,6 @@
 <?php
 namespace Bookdown\Bookdown\Process\Resource;
 
-use Bookdown\Bookdown\Content\ImageFactory;
 use Psr\Log\LoggerInterface;
 use Bookdown\Bookdown\Config\RootConfig;
 use Bookdown\Bookdown\Fsio;

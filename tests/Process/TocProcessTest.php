@@ -110,10 +110,45 @@ class TocProcessTest extends \PHPUnit_Framework_TestCase
                 'href' => '/chapter/section.html',
                 'level' => 3,
             ),
+            array(
+                'number' => '1.1.3.',
+                'title' => 'Subtitle C',
+                'id' => '1.1.3',
+                'href' => '/chapter/section.html',
+                'level' => 3,
+            ),
+            array(
+                'number' => '1.1.4.',
+                'title' => 'Subtitle D',
+                'id' => '1.1.4',
+                'href' => '/chapter/section.html',
+                'level' => 3,
+            ),
+            array(
+                'number' => '1.1.5.',
+                'title' => 'Subtitle E',
+                'id' => '1.1.5',
+                'href' => '/chapter/section.html',
+                'level' => 3,
+            ),
+            array(
+                'number' => '1.1.6.',
+                'title' => 'Subtitle F',
+                'id' => '1.1.6',
+                'href' => '/chapter/section.html',
+                'level' => 3,
+            ),
+            array(
+                'number' => '1.1.7.',
+                'title' => 'Subtitle H',
+                'id' => '1.1.7',
+                'href' => '/chapter/section.html',
+                'level' => 3,
+            )
         );
 
         $headings = $this->fixture->indexPage->getTocEntries();
-        $this->assertCount(4, $headings);
+        $this->assertCount(9, $headings);
         foreach ($headings as $key => $actual) {
             $this->assertSame($expect[$key], $actual->asArray());
         }
@@ -128,11 +163,11 @@ class TocProcessTest extends \PHPUnit_Framework_TestCase
 
         $expect = array(
             array(
-              'number' => '1.',
-              'title' => 'Chapter',
-              'id' => null,
-              'href' => '/chapter/',
-              'level' => 1,
+                'number' => '1.',
+                'title' => 'Chapter',
+                'id' => null,
+                'href' => '/chapter/',
+                'level' => 1,
             ),
             array(
                 'number' => '1.1.',
@@ -162,10 +197,45 @@ class TocProcessTest extends \PHPUnit_Framework_TestCase
                 'href' => '/chapter/section.html',
                 'level' => 3,
             ),
+            array(
+                'number' => '1.1.3.',
+                'title' => 'Subtitle C',
+                'id' => '1.1.3',
+                'href' => '/chapter/section.html',
+                'level' => 3,
+            ),
+            array(
+                'number' => '1.1.4.',
+                'title' => 'Subtitle D',
+                'id' => '1.1.4',
+                'href' => '/chapter/section.html',
+                'level' => 3,
+            ),
+            array(
+                'number' => '1.1.5.',
+                'title' => 'Subtitle E',
+                'id' => '1.1.5',
+                'href' => '/chapter/section.html',
+                'level' => 3,
+            ),
+            array(
+                'number' => '1.1.6.',
+                'title' => 'Subtitle F',
+                'id' => '1.1.6',
+                'href' => '/chapter/section.html',
+                'level' => 3,
+            ),
+            array(
+                'number' => '1.1.7.',
+                'title' => 'Subtitle H',
+                'id' => '1.1.7',
+                'href' => '/chapter/section.html',
+                'level' => 3,
+            )
         );
 
         $headings = $this->fixture->rootPage->getTocEntries();
-        $this->assertCount(5, $headings);
+        $this->assertCount(10, $headings);
         foreach ($headings as $key => $actual) {
             $this->assertSame($expect[$key], $actual->asArray());
         }

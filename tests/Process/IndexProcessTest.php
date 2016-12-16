@@ -68,7 +68,7 @@ class IndexProcessTest extends \PHPUnit_Framework_TestCase
         $this->process->__invoke($this->fixture->indexPage);
         $this->process->__invoke($this->fixture->page);
 
-        $expect = '[{"id":"\/chapter\/section.html#1-1","title":"1.1. Title","content":"Text under title."},{"id":"\/chapter\/section.html#1-1-1","title":"1.1.1. Subtitle code A","content":"Text under subtitle A."},{"id":"\/chapter\/section.html#1-1-1-1","title":"1.1.1.1. Sub-subtitle","content":"Text under sub-subtitle."},{"id":"\/chapter\/section.html#1-1-2","title":"1.1.2. Subtitle B","content":"Text under subtitle B. Blockqoute  th th(center) th(right) td td td "}]';
+        $expect = '[{"id":"\/chapter\/section.html#1-1","title":"1.1. Title","content":"Text under title."},{"id":"\/chapter\/section.html#1-1-1","title":"1.1.1. Subtitle code A","content":"Text under subtitle A."},{"id":"\/chapter\/section.html#1-1-1-1","title":"1.1.1.1. Sub-subtitle","content":"Text under sub-subtitle."},{"id":"\/chapter\/section.html#1-1-2","title":"1.1.2. Subtitle B","content":"Text under subtitle B."},{"id":"\/chapter\/section.html#1-1-7","title":"1.1.7. Subtitle H","content":" Blockqoute  th th(center) th(right) td td td "}]';
 
         $actual = $this->fsio->get('/_site/index.json');
         $this->assertSame($expect, $actual);

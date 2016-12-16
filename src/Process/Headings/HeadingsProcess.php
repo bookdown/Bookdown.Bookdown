@@ -1,6 +1,7 @@
 <?php
 namespace Bookdown\Bookdown\Process\Headings;
 
+use DOMText;
 use Psr\Log\LoggerInterface;
 use Bookdown\Bookdown\Content\Page;
 use Bookdown\Bookdown\Content\HeadingFactory;
@@ -9,7 +10,6 @@ use Bookdown\Bookdown\Process\ProcessInterface;
 use DomDocument;
 use DomNode;
 use DomNodeList;
-use DomText;
 use DomXpath;
 
 class HeadingsProcess implements ProcessInterface

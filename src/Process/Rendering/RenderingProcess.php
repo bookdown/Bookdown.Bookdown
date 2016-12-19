@@ -28,7 +28,9 @@ class RenderingProcess implements ProcessInterface
         $file = $page->getTarget();
         $this->logger->info("    Rendering {$file}");
         $this->view->page = $page;
-        $this->view->html = $this->fsio->get($page->getTarget());
+        $this->view->html = '<div id="section-main">'
+            .$this->fsio->get($page->getTarget())
+            .'</div>';
         $result = $this->view->__invoke();
         $this->fsio->put($file, $result);
     }

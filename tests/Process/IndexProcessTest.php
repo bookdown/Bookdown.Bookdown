@@ -33,6 +33,8 @@ class IndexProcessTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->fsio = $container->getFsio();
+        $this->fsio->setFiles(array('/_site/index.json' => ''));
+
         $this->fixture = new BookFixture($this->fsio);
 
         $builder = $container->newProcessorBuilder();
@@ -54,6 +56,30 @@ class IndexProcessTest extends \PHPUnit_Framework_TestCase
         $headings->__invoke($this->fixture->rootPage);
         $headings->__invoke($this->fixture->indexPage);
         $headings->__invoke($this->fixture->page);
+
+        $toc = $builder->newProcess(
+            $this->fixture->rootConfig,
+            'Toc'
+        );
+        $toc->__invoke($this->fixture->rootPage);
+        $toc->__invoke($this->fixture->indexPage);
+        $toc->__invoke($this->fixture->page);
+
+        $toc = $builder->newProcess(
+            $this->fixture->rootConfig,
+            'Copyright'
+        );
+        $toc->__invoke($this->fixture->rootPage);
+        $toc->__invoke($this->fixture->indexPage);
+        $toc->__invoke($this->fixture->page);
+
+        $render = $builder->newProcess(
+            $this->fixture->rootConfig,
+            'Rendering'
+        );
+        $render->__invoke($this->fixture->rootPage);
+        $render->__invoke($this->fixture->indexPage);
+        $render->__invoke($this->fixture->page);
 
         $this->process = $builder->newProcess(
             $this->fixture->rootConfig,

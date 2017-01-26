@@ -17,6 +17,7 @@ class RootConfig extends IndexConfig
     protected $rootHref;
     protected $tocDepth;
     protected $copyright;
+    protected $numbering;
 
     /**
      * @var array
@@ -71,6 +72,7 @@ class RootConfig extends IndexConfig
         $this->initRenderingProcess();
         $this->initIndexProcess();
         $this->initCopyrightProcess();
+        $this->initNumbering();
     }
 
     protected function initTarget()
@@ -131,6 +133,12 @@ class RootConfig extends IndexConfig
             : $this->json->copyright;
     }
 
+    protected function initNumbering()
+    {
+        $this->numbering = !isset($this->json->numbering)
+            ? 'decimal'
+            : $this->json->numbering;
+    }
 
     protected function initConversionProcess()
     {
@@ -240,6 +248,12 @@ class RootConfig extends IndexConfig
     {
         return $this->copyright;
     }
+
+    public function getNumbering()
+    {
+        return $this->numbering;
+    }
+
 
     public function get($key, $alt = null)
     {

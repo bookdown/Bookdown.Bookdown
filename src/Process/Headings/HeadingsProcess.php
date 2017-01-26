@@ -30,14 +30,18 @@ class HeadingsProcess implements ProcessInterface
 
     protected $logger;
 
+    protected $numbering;
+
     public function __construct(
         LoggerInterface $logger,
         Fsio $fsio,
-        HeadingFactory $headingFactory
+        HeadingFactory $headingFactory,
+        $numbering
     ) {
         $this->logger = $logger;
         $this->fsio = $fsio;
         $this->headingFactory = $headingFactory;
+        $this->numbering = $numbering;
     }
 
     public function __invoke(Page $page)
@@ -133,7 +137,17 @@ class HeadingsProcess implements ProcessInterface
         $this->headings[] = $heading;
 
         $number = new DOMText();
-        $number->nodeValue = $heading->getNumber() . ' ';
+
+        switch ($this->numbering) {
+            case false:
+                $number->nodeValue = '';
+                break;
+            case 'decimal':
+            default:
+                $number->nodeValue = $heading->getNumber() . ' ';
+                break;
+        }
+
         $node->insertBefore($number, $node->firstChild);
 
         $node->setAttribute('id', $heading->getAnchor());

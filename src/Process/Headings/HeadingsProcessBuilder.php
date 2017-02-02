@@ -14,7 +14,8 @@ class HeadingsProcessBuilder implements ProcessBuilderInterface
         return new HeadingsProcess(
             $logger,
             $fsio,
-            $this->newHeadingFactory()
+            $this->newHeadingFactory(),
+            $config->getNumbering()
         );
     }
 

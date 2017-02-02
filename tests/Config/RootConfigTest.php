@@ -20,6 +20,7 @@ class RootConfigTest extends \PHPUnit_Framework_TestCase
         "renderingProcess": "My\\\\Rendering\\\\Builder",
         "extra": "whatever",
         "rootHref": "http://awesome.io/docs/",
+        "numbering": "decimal",
         "extensions": {
             "commonmark": [
                 "Webuni\\\\CommonMark\\\\TableExtension\\\\TableExtension",
@@ -66,6 +67,7 @@ class RootConfigTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('whatever', $config->get('extra'));
         $this->assertSame('none', $config->get('no-such-key', 'none'));
         $this->assertSame('http://awesome.io/docs/', $config->getRootHref());
+        $this->assertSame('decimal', $config->getNumbering());
 
         $extensions = $config->getCommonMarkExtensions();
 

@@ -1,14 +1,17 @@
 <?php
+
 namespace Bookdown\Bookdown\Process;
 
 use Bookdown\Bookdown\BookFixture;
+use Bookdown\Bookdown\BookNumberingFixture;
 use Bookdown\Bookdown\Container;
-use Bookdown\Bookdown\FakeFsio;
 
 class HeadingsProcessTest extends \PHPUnit_Framework_TestCase
 {
     protected $fsio;
     protected $fixture;
+    protected $process;
+    protected $builder;
 
     protected function setUp()
     {
@@ -18,12 +21,12 @@ class HeadingsProcessTest extends \PHPUnit_Framework_TestCase
             'Bookdown\Bookdown\FakeFsio'
         );
         $this->fsio = $container->getFsio();
+        $this->builder = $container->newProcessorBuilder();
+    }
 
-        $this->fixture = new BookFixture($this->fsio);
-
-        $builder = $container->newProcessorBuilder();
-
-        $conversion = $builder->newProcess(
+    protected function initializeProcess()
+    {
+        $conversion = $this->builder->newProcess(
             $this->fixture->rootConfig,
             'Conversion'
         );
@@ -31,7 +34,7 @@ class HeadingsProcessTest extends \PHPUnit_Framework_TestCase
         $conversion->__invoke($this->fixture->indexPage);
         $conversion->__invoke($this->fixture->page);
 
-        $this->process = $builder->newProcess(
+        $this->process = $this->builder->newProcess(
             $this->fixture->rootConfig,
             'Headings'
         );
@@ -39,6 +42,9 @@ class HeadingsProcessTest extends \PHPUnit_Framework_TestCase
 
     public function testHeadings()
     {
+        $this->fixture = new BookFixture($this->fsio);
+        $this->initializeProcess();
+
         $this->assertNull($this->fixture->page->getTitle());
         $this->process->__invoke($this->fixture->page);
 
@@ -84,6 +90,9 @@ class HeadingsProcessTest extends \PHPUnit_Framework_TestCase
 
     public function testHeadingsOnIndex()
     {
+        $this->fixture = new BookFixture($this->fsio);
+        $this->initializeProcess();
+
         $this->assertSame('Chapter', $this->fixture->indexPage->getTitle());
 
         $this->process->__invoke($this->fixture->indexPage);
@@ -103,5 +112,34 @@ class HeadingsProcessTest extends \PHPUnit_Framework_TestCase
         }
 
         $this->assertSame('Chapter', $this->fixture->indexPage->getTitle());
+    }
+
+    public function testHeadingsWithoutNumbering()
+    {
+        $this->fixture = new BookNumberingFixture($this->fsio);
+        $this->initializeProcess();
+
+        $this->assertNull($this->fixture->page->getTitle());
+        $this->process->__invoke($this->fixture->page);
+
+        $reflectionClass = new \ReflectionClass($this->process);
+        $reflectionProperty = $reflectionClass->getProperty('html');
+        $reflectionProperty->setAccessible(true);
+
+        $this->assertSame('Title', $this->fixture->page->getTitle());
+
+        $expected = <<<EOF
+<h1 id="1-1">Title</h1>
+<p>Text under title.</p>
+<h2 id="1-1-1">Subtitle <code>code</code> A</h2>
+<p>Text under subtitle A.</p>
+<h3 id="1-1-1-1">Sub-subtitle</h3>
+<p>Text under sub-subtitle.</p>
+<h2 id="1-1-2">Subtitle B</h2>
+<p>Text under subtitle B.</p>
+
+EOF;
+
+        $this->assertSame($expected, $reflectionProperty->getValue($this->process));
     }
 }

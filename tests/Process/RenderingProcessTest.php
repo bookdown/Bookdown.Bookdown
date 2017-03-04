@@ -141,7 +141,7 @@ class RenderingProcessTest extends \PHPUnit_Framework_TestCase
 <dt>1.1.2. <a href="/chapter/section.html#1-1-2">Subtitle B</a></dt>
 </dl></dd>
 </dl>
-
+<div id="section-main"></div>
 <nav class="navfooter">
     <table>
         <tr>

@@ -15,8 +15,8 @@ class ProcessorTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $container = new Container(
-            'php://memory',
-            'php://memory',
+            fopen('php://memory', 'w+'),
+            fopen('php://memory', 'w+'),
             'Bookdown\Bookdown\FakeFsio'
         );
 

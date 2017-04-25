@@ -47,7 +47,7 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
     public function testGetLogger()
     {
         $logger = $this->container->getLogger();
-        $this->assertInstanceOf('Monolog\Logger', $logger);
+        $this->assertInstanceOf('Psr\Log\LoggerInterface', $logger);
         $again = $this->container->getLogger();
         $this->assertSame($logger, $again);
     }

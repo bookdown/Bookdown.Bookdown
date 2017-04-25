@@ -20,8 +20,8 @@ class CopyImageProcessTest extends \PHPUnit_Framework_TestCase
     private function initializeBook($fixtureClass)
     {
         $container = new Container(
-            'php://memory',
-            'php://memory',
+            fopen('php://memory', 'w+'),
+            fopen('php://memory', 'w+'),
             'Bookdown\Bookdown\FakeFsio'
         );
         $this->fsio = $container->getFsio();

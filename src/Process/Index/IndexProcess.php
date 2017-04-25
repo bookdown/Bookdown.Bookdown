@@ -4,6 +4,7 @@ namespace Bookdown\Bookdown\Process\Index;
 use Bookdown\Bookdown\Content\Heading;
 use Psr\Log\LoggerInterface;
 use Bookdown\Bookdown\Content\Page;
+use Bookdown\Bookdown\Exception;
 use Bookdown\Bookdown\Fsio;
 use Bookdown\Bookdown\Process\ProcessInterface;
 use Bookdown\Bookdown\Config\RootConfig;
@@ -140,9 +141,9 @@ class IndexProcess implements ProcessInterface
         if (count($contents) > 0) {
             foreach ($contents as $key => $content) {
                 array_push($this->searchIndex, array(
-                    'id' => $this->getHeadings()[$key]['href'],
-                    'title' => $this->getHeadings()[$key]['title'],
-                    'content' => $content
+                    'id' => utf8_encode($this->getHeadings()[$key]['href']),
+                    'title' => utf8_encode($this->getHeadings()[$key]['title']),
+                    'content' => utf8_encode($content)
                 ));
             }
         }
@@ -214,6 +215,9 @@ class IndexProcess implements ProcessInterface
     protected function writeJson(array $content, $file)
     {
         $json = json_encode($content);
+        if ($json === false) {
+            throw new Exception(json_last_error_msg(), json_last_error());
+        }
         $this->fsio->put($file, $json);
     }
 

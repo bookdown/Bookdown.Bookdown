@@ -20,7 +20,7 @@ This is a list of custom bookdown.io templates
 
 ## Tests
 
-Bookdown has 100% test coverage. To run the tests, install [PHPUnit](http://phpunit.de), then issue `phpunit` at the repository root.
+Bookdown has 100% test coverage. To run the tests after `composer install`, issue `./vendor/bin/phpunit` at the package root.
 
 ## Todo
 

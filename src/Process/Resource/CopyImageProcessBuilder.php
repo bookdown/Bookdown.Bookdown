@@ -23,6 +23,19 @@ use Bookdown\Bookdown\Process\ProcessBuilderInterface;
  */
 class CopyImageProcessBuilder implements ProcessBuilderInterface
 {
+    /**
+     *
+     * Returns a new CopyImageProcess object.
+     *
+     * @param RootConfig $rootConfig The root-level config object.
+     *
+     * @param LoggerInterface $logger A logger implementation.
+     *
+     * @param Fsio $fsio A filesystem I/O object.
+     *
+     * @return CopyImageProcess
+     *
+     */
     public function newInstance(RootConfig $config, LoggerInterface $logger, Fsio $fsio)
     {
         return new CopyImageProcess(

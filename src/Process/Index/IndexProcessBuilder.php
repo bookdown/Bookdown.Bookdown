@@ -22,6 +22,19 @@ use Bookdown\Bookdown\Process\ProcessBuilderInterface;
  */
 class IndexProcessBuilder implements ProcessBuilderInterface
 {
+    /**
+     *
+     * Returns a new IndexProcess object.
+     *
+     * @param RootConfig $rootConfig The root-level config object.
+     *
+     * @param LoggerInterface $logger A logger implementation.
+     *
+     * @param Fsio $fsio A filesystem I/O object.
+     *
+     * @return IndexProcess
+     *
+     */
     public function newInstance(RootConfig $config, LoggerInterface $logger, Fsio $fsio)
     {
         return new IndexProcess(

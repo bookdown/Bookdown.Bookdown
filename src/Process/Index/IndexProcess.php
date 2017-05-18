@@ -42,17 +42,29 @@ class IndexProcess implements ProcessInterface
     protected $searchIndex;
 
     /**
+     *
+     * A logger implementation.
+     *
      * @var LoggerInterface
+     *
      */
     protected $logger;
 
     /**
+     *
+     * A filesystem I/O object.
+     *
      * @var Fsio
+     *
      */
     protected $fsio;
 
     /**
+     *
+     * The page being processed.
+     *
      * @var Page
+     *
      */
     protected $page;
 
@@ -61,6 +73,13 @@ class IndexProcess implements ProcessInterface
      */
     protected $config;
 
+    /**
+     *
+     * @param LoggerInterface $logger A logger implementation.
+     *
+     * @param Fsio $fsio A filesystem I/O object.
+     *
+     */
     public function __construct(
         LoggerInterface $logger,
         Fsio $fsio,
@@ -72,6 +91,13 @@ class IndexProcess implements ProcessInterface
         $this->config = $config;
     }
 
+    /**
+     *
+     * Invokes the processor.
+     *
+     * @param Page $page The Page to process.
+     *
+     */
     public function __invoke(Page $page)
     {
         $file = $this->config->getTarget() . 'index.json';

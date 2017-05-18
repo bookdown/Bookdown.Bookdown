@@ -27,7 +27,11 @@ use DomXpath;
 class CopyImageProcess implements ProcessInterface
 {
     /**
+     *
+     * The page being processed.
+     *
      * @var Page
+     *
      */
     protected $page;
 
@@ -47,15 +51,30 @@ class CopyImageProcess implements ProcessInterface
     protected $doc;
 
     /**
+     *
+     * A logger implementation.
+     *
+     * @var LoggerInterface
+     *
+     */
+    protected $logger;
+
+    /**
+     *
+     * A filesystem I/O object.
+     *
      * @var Fsio
+     *
      */
     protected $fsio;
 
     /**
-     * @var LoggerInterface
+     *
+     * @param LoggerInterface $logger A logger implementation.
+     *
+     * @param Fsio $fsio A filesystem I/O object.
+     *
      */
-    protected $logger;
-
     public function __construct(
         LoggerInterface $logger,
         Fsio $fsio,
@@ -66,6 +85,13 @@ class CopyImageProcess implements ProcessInterface
         $this->config = $config;
     }
 
+    /**
+     *
+     * Invokes the processor.
+     *
+     * @param Page $page The Page to process.
+     *
+     */
     public function __invoke(Page $page)
     {
         $this->logger->info("    Processing copy images for {$page->getTarget()}");

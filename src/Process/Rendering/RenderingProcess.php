@@ -23,10 +23,33 @@ use Bookdown\Bookdown\Process\ProcessInterface;
  */
 class RenderingProcess implements ProcessInterface
 {
+    /**
+     *
+     * A logger implementation.
+     *
+     * @var LoggerInterface
+     *
+     */
     protected $logger;
+
+    /**
+     *
+     * A filesystem I/O object.
+     *
+     * @var Fsio
+     *
+     */
     protected $fsio;
+
     protected $view;
 
+    /**
+     *
+     * @param LoggerInterface $logger A logger implementation.
+     *
+     * @param Fsio $fsio A filesystem I/O object.
+     *
+     */
     public function __construct(
         LoggerInterface $logger,
         Fsio $fsio,
@@ -37,6 +60,13 @@ class RenderingProcess implements ProcessInterface
         $this->view = $view;
     }
 
+    /**
+     *
+     * Invokes the processor.
+     *
+     * @param Page $page The Page to process.
+     *
+     */
     public function __invoke(Page $page)
     {
         $file = $page->getTarget();

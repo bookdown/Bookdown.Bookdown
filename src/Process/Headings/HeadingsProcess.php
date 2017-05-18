@@ -28,6 +28,13 @@ use DomXpath;
  */
 class HeadingsProcess implements ProcessInterface
 {
+    /**
+     *
+     * The page being processed.
+     *
+     * @var Page
+     *
+     */
     protected $page;
 
     protected $html;
@@ -40,12 +47,40 @@ class HeadingsProcess implements ProcessInterface
 
     protected $headingFactory;
 
-    protected $fsio;
-
+    /**
+     *
+     * A logger implementation.
+     *
+     * @var LoggerInterface
+     *
+     */
     protected $logger;
 
+    /**
+     *
+     * A filesystem I/O object.
+     *
+     * @var Fsio
+     *
+     */
+    protected $fsio;
+
+    /**
+     *
+     * The numbering style to use.
+     *
+     * @param string
+     *
+     */
     protected $numbering;
 
+    /**
+     *
+     * @param LoggerInterface $logger A logger implementation.
+     *
+     * @param Fsio $fsio A filesystem I/O object.
+     *
+     */
     public function __construct(
         LoggerInterface $logger,
         Fsio $fsio,
@@ -58,6 +93,13 @@ class HeadingsProcess implements ProcessInterface
         $this->numbering = $numbering;
     }
 
+    /**
+     *
+     * Invokes the processor.
+     *
+     * @param Page $page The Page to process.
+     *
+     */
     public function __invoke(Page $page)
     {
         $this->logger->info("    Processing headings for {$page->getTarget()}");

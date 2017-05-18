@@ -22,6 +22,19 @@ use Bookdown\Bookdown\Process\ProcessBuilderInterface;
  */
 class TocProcessBuilder implements ProcessBuilderInterface
 {
+    /**
+     *
+     * Returns a new TocProcess object.
+     *
+     * @param RootConfig $rootConfig The root-level config object.
+     *
+     * @param LoggerInterface $logger A logger implementation.
+     *
+     * @param Fsio $fsio A filesystem I/O object.
+     *
+     * @return TocProcess
+     *
+     */
     public function newInstance(RootConfig $config, LoggerInterface $logger, Fsio $fsio)
     {
         return new TocProcess($logger);

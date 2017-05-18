@@ -29,14 +29,22 @@ class CopyrightProcess implements ProcessInterface
     protected $config;
 
     /**
-     * @var Fsio
-     */
-    protected $fsio;
-
-    /**
+     *
+     * A logger implementation.
+     *
      * @var LoggerInterface
+     *
      */
     protected $logger;
+
+    /**
+     *
+     * A filesystem I/O object.
+     *
+     * @var Fsio
+     *
+     */
+    protected $fsio;
 
     /**
      * Process already executed
@@ -45,6 +53,13 @@ class CopyrightProcess implements ProcessInterface
      */
     protected $processExecuted = false;
 
+    /**
+     *
+     * @param LoggerInterface $logger A logger implementation.
+     *
+     * @param Fsio $fsio A filesystem I/O object.
+     *
+     */
     public function __construct(
         LoggerInterface $logger,
         Fsio $fsio,
@@ -55,6 +70,13 @@ class CopyrightProcess implements ProcessInterface
         $this->config = $config;
     }
 
+    /**
+     *
+     * Invokes the processor.
+     *
+     * @param Page $page The Page to process.
+     *
+     */
     public function __invoke(Page $page)
     {
         $page->setCopyright($this->config->getCopyright());

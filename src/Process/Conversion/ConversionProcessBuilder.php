@@ -8,6 +8,7 @@
  */
 namespace Bookdown\Bookdown\Process\Conversion;
 
+use League\CommonMark\Converter;
 use League\CommonMark\DocParser;
 use League\CommonMark\Environment;
 use League\CommonMark\HtmlRenderer;
@@ -18,13 +19,26 @@ use Bookdown\Bookdown\Process\ProcessBuilderInterface;
 
 /**
  *
- *
+ * Builds a ConversionProcess object.
  *
  * @package bookdown/bookdown
  *
  */
 class ConversionProcessBuilder implements ProcessBuilderInterface
 {
+    /**
+     *
+     * Returns a new ConversionProcess object.
+     *
+     * @param RootConfig $rootConfig The root-level config object.
+     *
+     * @param LoggerInterface $logger A logger implementation.
+     *
+     * @param Fsio $fsio A filesystem I/O object.
+     *
+     * @return ConversionProcess
+     *
+     */
     public function newInstance(RootConfig $config, LoggerInterface $logger, Fsio $fsio)
     {
         return new ConversionProcess(
@@ -34,12 +48,24 @@ class ConversionProcessBuilder implements ProcessBuilderInterface
         );
     }
 
+    /**
+     *
+     * Returns a new Converter object.
+     *
+     * @param RootConfig $config The root-level config object.
+     *
+     * @return Converter
+     *
+     * @throws \RuntimeException when a requested CommonMark extension class
+     * does not exist.
+     *
+     */
     protected function newCommonMarkConverter(RootConfig $config)
     {
         $environment = Environment::createCommonMarkEnvironment();
 
         foreach ($config->getCommonMarkExtensions() as $extension) {
-            if (!class_exists($extension)) {
+            if (! class_exists($extension)) {
                 throw new \RuntimeException(
                     sprintf('CommonMark extension class "%s" does not exists. You must use a FCQN!', $extension)
                 );
@@ -47,6 +73,9 @@ class ConversionProcessBuilder implements ProcessBuilderInterface
             $environment->addExtension(new $extension());
         }
 
-        return new \League\CommonMark\Converter(new DocParser($environment), new HtmlRenderer($environment));
+        return new Converter(
+            new DocParser($environment),
+            new HtmlRenderer($environment)
+        );
     }
 }

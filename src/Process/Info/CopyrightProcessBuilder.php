@@ -22,6 +22,19 @@ use Bookdown\Bookdown\Process\ProcessBuilderInterface;
  */
 class CopyrightProcessBuilder implements ProcessBuilderInterface
 {
+    /**
+     *
+     * Returns a new CopyrightProcess object.
+     *
+     * @param RootConfig $rootConfig The root-level config object.
+     *
+     * @param LoggerInterface $logger A logger implementation.
+     *
+     * @param Fsio $fsio A filesystem I/O object.
+     *
+     * @return CopyrightProcess
+     *
+     */
     public function newInstance(RootConfig $config, LoggerInterface $logger, Fsio $fsio)
     {
         return new CopyrightProcess(

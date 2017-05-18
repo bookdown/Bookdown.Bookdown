@@ -22,16 +22,36 @@ use Bookdown\Bookdown\Process\ProcessInterface;
  */
 class TocProcess implements ProcessInterface
 {
+    /**
+     *
+     * A logger implementation.
+     *
+     * @var LoggerInterface
+     *
+     */
     protected $logger;
+
     protected $tocEntries;
     protected $tocDepth;
     protected $maxLevel;
 
+    /**
+     *
+     * @param LoggerInterface $logger A logger implementation.
+     *
+     */
     public function __construct(LoggerInterface $logger)
     {
         $this->logger = $logger;
     }
 
+    /**
+     *
+     * Invokes the processor.
+     *
+     * @param Page $page The Page to process.
+     *
+     */
     public function __invoke(Page $page)
     {
         if (! $page->isIndex()) {

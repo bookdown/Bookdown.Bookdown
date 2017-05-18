@@ -17,18 +17,60 @@ use League\CommonMark\Converter;
 
 /**
  *
- *
+ * Converts CommandMark Markdown to HTML.
  *
  * @package bookdown/bookdown
  *
  */
 class ConversionProcess implements ProcessInterface
 {
+    /**
+     *
+     * The page being processed.
+     *
+     * @var Page
+     *
+     */
     protected $page;
+
+    /**
+     *
+     * A logger implementation.
+     *
+     * @var LoggerInterface
+     *
+     */
     protected $logger;
+
+    /**
+     *
+     * A filesystem I/O object.
+     *
+     * @var Fsio
+     *
+     */
     protected $fsio;
+
+    /**
+     *
+     * CommonMark-to-HTML converter.
+     *
+     * @var Converter
+     *
+     */
     protected $commonMarkConverter;
 
+    /**
+     *
+     * Constructor.
+     *
+     * @param LoggerInterface $logger A logger implementation.
+     *
+     * @param Fsio $fsio A filesystem I/O object.
+     *
+     * @param Converter $converter A CommonMark-to-HTML converter.
+     *
+     */
     public function __construct(
         LoggerInterface $logger,
         Fsio $fsio,
@@ -39,6 +81,13 @@ class ConversionProcess implements ProcessInterface
         $this->commonMarkConverter = $commonMarkConverter;
     }
 
+    /**
+     *
+     * Invokes the processor.
+     *
+     * @param Page $page The Page to process.
+     *
+     */
     public function __invoke(Page $page)
     {
         $this->page = $page;
@@ -47,6 +96,13 @@ class ConversionProcess implements ProcessInterface
         $this->saveTarget($html);
     }
 
+    /**
+     *
+     * Returns the origin file Markdown.
+     *
+     * @return string
+     *
+     */
     protected function readOrigin()
     {
         $file = $this->page->getOrigin();
@@ -59,6 +115,13 @@ class ConversionProcess implements ProcessInterface
         return $this->fsio->get($file);
     }
 
+    /**
+     *
+     * Saves the converted HTML file.
+     *
+     * @param string $html The HTML converted from Markdown.
+     *
+     */
     protected function saveTarget($html)
     {
         $file = $this->page->getTarget();

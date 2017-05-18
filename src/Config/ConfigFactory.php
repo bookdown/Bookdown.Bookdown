@@ -47,7 +47,7 @@ class ConfigFactory
      *
      * Returns a new index-level config object.
      *
-     * @param string $file The name of the configuration file.
+     * @param string $file The path of the configuration file.
      *
      * @param string $data The contents of the configuration file.
      *
@@ -63,7 +63,7 @@ class ConfigFactory
      *
      * Returns a new root-level config object.
      *
-     * @param string $file The name of the configuration file.
+     * @param string $file The path of the configuration file.
      *
      * @param string $data The contents of the configuration file.
      *

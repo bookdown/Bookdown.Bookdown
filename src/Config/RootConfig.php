@@ -12,7 +12,7 @@ use Bookdown\Bookdown\Exception;
 
 /**
  *
- *
+ * A special root-level index configuration.
  *
  * @package bookdown/bookdown
  *

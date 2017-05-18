@@ -12,18 +12,66 @@ use Aura\Cli\CliFactory;
 
 /**
  *
- *
+ * A package-level Container for Bookdown objects.
  *
  * @package bookdown/bookdown
  *
  */
 class Container
 {
+    /**
+     *
+     * A stream to STDOUT.
+     *
+     * @var resource
+     *
+     */
     protected $stdout;
+
+    /**
+     *
+     * A stream to STDERR.
+     *
+     * @var resource
+     *
+     */
     protected $stderr;
+
+    /**
+     *
+     * A logger instance.
+     *
+     * @var LoggerInterface
+     *
+     */
     protected $logger;
+
+    /**
+     *
+     * A factory to create CLI objects.
+     *
+     * @var CliFactory
+     *
+     */
     protected $cliFactory;
+
+    /**
+     *
+     * A class name to use for the filesystem I/O operations. Mostly for
+     * testing.
+     *
+     * @var string
+     *
+     */
     protected $fsioClass;
+
+    /**
+     *
+     * A filesystem I/O instance.
+     *
+     * @var Fsio
+     *
+     */
     protected $fsio;
 
     public function __construct(
@@ -36,6 +84,15 @@ class Container
         $this->fsioClass = $fsioClass;
     }
 
+    /**
+     *
+     * Returns a new Bookdown command object.
+     *
+     * @param array $globals Typically the PHP $GLOBALS array.
+     *
+     * @return Command
+     *
+     */
     public function newCommand($globals)
     {
         return new Command(
@@ -45,6 +102,13 @@ class Container
         );
     }
 
+    /**
+     *
+     * Returns a new Bookdown service layer object.
+     *
+     * @return Service\Service
+     *
+     */
     public function newService()
     {
         return new Service\Service(
@@ -54,6 +118,13 @@ class Container
         );
     }
 
+    /**
+     *
+     * Returns a new Bookdown page-collector.
+     *
+     * @return Service\Collector
+     *
+     */
     public function newCollector()
     {
         return new Service\Collector(
@@ -64,6 +135,13 @@ class Container
         );
     }
 
+    /**
+     *
+     * Returns a new Bookdown builder for processor objects.
+     *
+     * @return Service\ProcessorBuilder
+     *
+     */
     public function newProcessorBuilder()
     {
         return new Service\ProcessorBuilder(
@@ -72,11 +150,25 @@ class Container
         );
     }
 
+    /**
+     *
+     * Returns a new Bookdown timer.
+     *
+     * @return Service\Timer
+     *
+     */
     public function newTimer()
     {
         return new Service\Timer($this->getLogger());
     }
 
+    /**
+     *
+     * Returns the shared CLI factory object.
+     *
+     * @return CliFactory
+     *
+     */
     public function getCliFactory()
     {
         if (! $this->cliFactory) {
@@ -85,6 +177,13 @@ class Container
         return $this->cliFactory;
     }
 
+    /**
+     *
+     * Returns the shared logger instance.
+     *
+     * @return LoggerInterface
+     *
+     */
     public function getLogger()
     {
         if (! $this->logger) {
@@ -94,6 +193,13 @@ class Container
         return $this->logger;
     }
 
+    /**
+     *
+     * Returns the shared filesystem I/O object.
+     *
+     * @return Fsio
+     *
+     */
     public function getFsio()
     {
         if (! $this->fsio) {

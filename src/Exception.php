@@ -10,7 +10,7 @@ namespace Bookdown\Bookdown;
 
 /**
  *
- *
+ * Package-specific exception.
  *
  * @package bookdown/bookdown
  *

@@ -13,7 +13,7 @@ use Psr\Log\LogLevel;
 
 /**
  *
- *
+ * Logs to stdout/stderr.
  *
  * @package bookdown/bookdown
  *
@@ -77,7 +77,7 @@ class Stdlog extends AbstractLogger
      *
      * @param array $context
      *
-     * @return null
+     * @return void
      *
      */
     public function log($level, $message, array $context = [])

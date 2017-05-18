@@ -71,11 +71,11 @@ class Stdlog extends AbstractLogger
      *
      * Logs with an arbitrary level.
      *
-     * @param mixed $level
+     * @param mixed $level The log level.
      *
-     * @param string $message
+     * @param string $message The log message.
      *
-     * @param array $context
+     * @param array $context Data to interpolate into the message.
      *
      * @return void
      *

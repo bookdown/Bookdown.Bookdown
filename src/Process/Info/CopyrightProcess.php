@@ -1,4 +1,11 @@
 <?php
+/**
+ *
+ * This file is part of Bookdown for PHP.
+ *
+ * @license http://opensource.org/licenses/MIT MIT
+ *
+ */
 namespace Bookdown\Bookdown\Process\Info;
 
 use Bookdown\Bookdown\Config\RootConfig;
@@ -7,6 +14,13 @@ use Bookdown\Bookdown\Content\Page;
 use Bookdown\Bookdown\Fsio;
 use Bookdown\Bookdown\Process\ProcessInterface;
 
+/**
+ *
+ *
+ *
+ * @package bookdown/bookdown
+ *
+ */
 class CopyrightProcess implements ProcessInterface
 {
     /**

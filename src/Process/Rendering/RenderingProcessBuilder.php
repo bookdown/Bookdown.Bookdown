@@ -1,4 +1,11 @@
 <?php
+/**
+ *
+ * This file is part of Bookdown for PHP.
+ *
+ * @license http://opensource.org/licenses/MIT MIT
+ *
+ */
 namespace Bookdown\Bookdown\Process\Rendering;
 
 use Psr\Log\LoggerInterface;
@@ -10,6 +17,13 @@ use Bookdown\Bookdown\Exception;
 use Bookdown\Bookdown\Fsio;
 use Bookdown\Bookdown\Process\ProcessBuilderInterface;
 
+/**
+ *
+ *
+ *
+ * @package bookdown/bookdown
+ *
+ */
 class RenderingProcessBuilder implements ProcessBuilderInterface
 {
     public function newInstance(RootConfig $config, LoggerInterface $logger, Fsio $fsio)

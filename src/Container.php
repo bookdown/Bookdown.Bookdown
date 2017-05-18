@@ -1,8 +1,22 @@
 <?php
+/**
+ *
+ * This file is part of Bookdown for PHP.
+ *
+ * @license http://opensource.org/licenses/MIT MIT
+ *
+ */
 namespace Bookdown\Bookdown;
 
 use Aura\Cli\CliFactory;
 
+/**
+ *
+ *
+ *
+ * @package bookdown/bookdown
+ *
+ */
 class Container
 {
     protected $stdout;

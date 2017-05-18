@@ -1,4 +1,11 @@
 <?php
+/**
+ *
+ * This file is part of Bookdown for PHP.
+ *
+ * @license http://opensource.org/licenses/MIT MIT
+ *
+ */
 namespace Bookdown\Bookdown\Process\Index;
 
 use Bookdown\Bookdown\Content\Heading;
@@ -10,6 +17,13 @@ use Bookdown\Bookdown\Process\ProcessInterface;
 use Bookdown\Bookdown\Config\RootConfig;
 use Bookdown\Bookdown\Content\HeadingFactory;
 
+/**
+ *
+ *
+ *
+ * @package bookdown/bookdown
+ *
+ */
 class IndexProcess implements ProcessInterface
 {
     /**

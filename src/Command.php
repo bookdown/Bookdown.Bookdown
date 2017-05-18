@@ -1,4 +1,11 @@
 <?php
+/**
+ *
+ * This file is part of Bookdown for PHP.
+ *
+ * @license http://opensource.org/licenses/MIT MIT
+ *
+ */
 namespace Bookdown\Bookdown;
 
 use Psr\Log\LoggerInterface;
@@ -6,6 +13,13 @@ use Aura\Cli\Context;
 use Bookdown\Bookdown\Service\Service;
 use Exception as AnyException;
 
+/**
+ *
+ *
+ *
+ * @package bookdown/bookdown
+ *
+ */
 class Command
 {
     protected $context;

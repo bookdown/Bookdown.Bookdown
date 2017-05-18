@@ -1,8 +1,22 @@
 <?php
+/**
+ *
+ * This file is part of Bookdown for PHP.
+ *
+ * @license http://opensource.org/licenses/MIT MIT
+ *
+ */
 namespace Bookdown\Bookdown\Content;
 
 use Bookdown\Bookdown\Config\IndexConfig;
 
+/**
+ *
+ *
+ *
+ * @package bookdown/bookdown
+ *
+ */
 class IndexPage extends Page
 {
     protected $children;

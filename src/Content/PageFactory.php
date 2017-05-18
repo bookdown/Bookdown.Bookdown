@@ -1,9 +1,23 @@
 <?php
+/**
+ *
+ * This file is part of Bookdown for PHP.
+ *
+ * @license http://opensource.org/licenses/MIT MIT
+ *
+ */
 namespace Bookdown\Bookdown\Content;
 
 use Bookdown\Bookdown\Config\IndexConfig;
 use Bookdown\Bookdown\Config\RootConfig;
 
+/**
+ *
+ *
+ *
+ * @package bookdown/bookdown
+ *
+ */
 class PageFactory
 {
     public function newPage($origin, $name, $parent, $count)

@@ -1,4 +1,11 @@
 <?php
+/**
+ *
+ * This file is part of Bookdown for PHP.
+ *
+ * @license http://opensource.org/licenses/MIT MIT
+ *
+ */
 namespace Bookdown\Bookdown\Process\Conversion;
 
 use Psr\Log\LoggerInterface;
@@ -8,6 +15,13 @@ use Bookdown\Bookdown\Fsio;
 use Bookdown\Bookdown\Process\ProcessInterface;
 use League\CommonMark\Converter;
 
+/**
+ *
+ *
+ *
+ * @package bookdown/bookdown
+ *
+ */
 class ConversionProcess implements ProcessInterface
 {
     protected $page;

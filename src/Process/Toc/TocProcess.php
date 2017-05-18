@@ -1,4 +1,11 @@
 <?php
+/**
+ *
+ * This file is part of Bookdown for PHP.
+ *
+ * @license http://opensource.org/licenses/MIT MIT
+ *
+ */
 namespace Bookdown\Bookdown\Process\Toc;
 
 use Psr\Log\LoggerInterface;
@@ -6,6 +13,13 @@ use Bookdown\Bookdown\Content\Page;
 use Bookdown\Bookdown\Content\IndexPage;
 use Bookdown\Bookdown\Process\ProcessInterface;
 
+/**
+ *
+ *
+ *
+ * @package bookdown/bookdown
+ *
+ */
 class TocProcess implements ProcessInterface
 {
     protected $logger;

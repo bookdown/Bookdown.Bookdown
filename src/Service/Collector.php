@@ -1,4 +1,11 @@
 <?php
+/**
+ *
+ * This file is part of Bookdown for PHP.
+ *
+ * @license http://opensource.org/licenses/MIT MIT
+ *
+ */
 namespace Bookdown\Bookdown\Service;
 
 use Psr\Log\LoggerInterface;
@@ -8,6 +15,13 @@ use Bookdown\Bookdown\Content\PageFactory;
 use Bookdown\Bookdown\Content\Page;
 use Bookdown\Bookdown\Fsio;
 
+/**
+ *
+ *
+ *
+ * @package bookdown/bookdown
+ *
+ */
 class Collector
 {
     protected $pages = array();

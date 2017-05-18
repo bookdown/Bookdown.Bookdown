@@ -1,4 +1,11 @@
 <?php
+/**
+ *
+ * This file is part of Bookdown for PHP.
+ *
+ * @license http://opensource.org/licenses/MIT MIT
+ *
+ */
 namespace Bookdown\Bookdown\Process\Headings;
 
 use Psr\Log\LoggerInterface;
@@ -12,6 +19,13 @@ use DomNodeList;
 use DomText;
 use DomXpath;
 
+/**
+ *
+ *
+ *
+ * @package bookdown/bookdown
+ *
+ */
 class HeadingsProcess implements ProcessInterface
 {
     protected $page;

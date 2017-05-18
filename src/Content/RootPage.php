@@ -1,8 +1,22 @@
 <?php
+/**
+ *
+ * This file is part of Bookdown for PHP.
+ *
+ * @license http://opensource.org/licenses/MIT MIT
+ *
+ */
 namespace Bookdown\Bookdown\Content;
 
 use Bookdown\Bookdown\Config\RootConfig;
 
+/**
+ *
+ *
+ *
+ * @package bookdown/bookdown
+ *
+ */
 class RootPage extends IndexPage
 {
     public function __construct(RootConfig $config)

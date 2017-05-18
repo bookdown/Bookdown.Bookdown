@@ -1,9 +1,23 @@
 <?php
+/**
+ *
+ * This file is part of Bookdown for PHP.
+ *
+ * @license http://opensource.org/licenses/MIT MIT
+ *
+ */
 namespace Bookdown\Bookdown;
 
 use Psr\Log\AbstractLogger;
 use Psr\Log\LogLevel;
 
+/**
+ *
+ *
+ *
+ * @package bookdown/bookdown
+ *
+ */
 class Stdlog extends AbstractLogger
 {
     /**

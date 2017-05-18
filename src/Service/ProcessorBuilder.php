@@ -1,4 +1,11 @@
 <?php
+/**
+ *
+ * This file is part of Bookdown for PHP.
+ *
+ * @license http://opensource.org/licenses/MIT MIT
+ *
+ */
 namespace Bookdown\Bookdown\Service;
 
 use Psr\Log\LoggerInterface;
@@ -6,6 +13,13 @@ use Bookdown\Bookdown\Config\RootConfig;
 use Bookdown\Bookdown\Exception;
 use Bookdown\Bookdown\Fsio;
 
+/**
+ *
+ *
+ *
+ * @package bookdown/bookdown
+ *
+ */
 class ProcessorBuilder
 {
     protected $logger;

@@ -1,4 +1,11 @@
 <?php
+/**
+ *
+ * This file is part of Bookdown for PHP.
+ *
+ * @license http://opensource.org/licenses/MIT MIT
+ *
+ */
 namespace Bookdown\Bookdown\Process\Resource;
 
 use Bookdown\Bookdown\Config\RootConfig;
@@ -10,6 +17,13 @@ use DomDocument;
 use DomNode;
 use DomXpath;
 
+/**
+ *
+ *
+ *
+ * @package bookdown/bookdown
+ *
+ */
 class CopyImageProcess implements ProcessInterface
 {
     /**

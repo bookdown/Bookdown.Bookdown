@@ -41,7 +41,7 @@ class TocProcess implements ProcessInterface
 
         $this->logger->info("    Adding TOC entries for {$page->getTarget()}");
 
-        $this->tocEntries = array();
+        $this->tocEntries = [];
         $this->tocDepth = $page->getConfig()->getTocDepth();
         $this->maxLevel = $this->tocDepth + $page->getLevel();
 

@@ -74,6 +74,17 @@ class Container
      */
     protected $fsio;
 
+    /**
+     *
+     * Constructor.
+     *
+     * @param resource $stdout A stream to STDOUT.
+     *
+     * @param resource $stderr A stream to STDERR.
+     *
+     * @param string $fsioClass A filesystem I/O class name.
+     *
+     */
     public function __construct(
         $stdout = STDOUT,
         $stderr = STDERR,

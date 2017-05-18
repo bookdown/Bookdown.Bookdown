@@ -19,25 +19,130 @@ use Bookdown\Bookdown\Exception;
  */
 class RootConfig extends IndexConfig
 {
+    /**
+     *
+     * The target directory for Bookdown output.
+     *
+     * @var string
+     *
+     */
     protected $target;
+
+    /**
+     *
+     * The conversion-process builder class name.
+     *
+     * @var string
+     *
+     */
     protected $conversionProcess;
+
+    /**
+     *
+     * The rendering-process builder class name.
+     *
+     * @var string
+     *
+     */
     protected $renderingProcess;
+
+    /**
+     *
+     * The index-process builder class name.
+     *
+     * @var string
+     *
+     */
     protected $indexProcess;
+
+    /**
+     *
+     * The toc-process builder class name.
+     *
+     * @var string
+     *
+     */
     protected $tocProcess;
+
+    /**
+     *
+     * The headings-process builder class name.
+     *
+     * @var string
+     *
+     */
     protected $headingsProcess;
+
+    /**
+     *
+     * The copy-image-process builder class name.
+     *
+     * @var string
+     *
+     */
     protected $copyImageProcess;
+
+    /**
+     *
+     * The copyright-process builder class name.
+     *
+     * @var string
+     *
+     */
     protected $copyrightProcess;
+
+    /**
+     *
+     * The path to the master output template.
+     *
+     * @var string
+     *
+     */
     protected $template;
+
+    /**
+     *
+     * The root for generated HREF links.
+     *
+     * @var string
+     *
+     */
     protected $rootHref;
-    protected $tocDepth;
+
+    /**
+     *
+     * The copyright text.
+     *
+     * @var string
+     *
+     */
     protected $copyright;
+
+    /**
+     *
+     * The type of TOC numbering to use.
+     *
+     * @var string
+     *
+     */
     protected $numbering;
 
     /**
+     *
+     * An array of CommonMark extension class names.
+     *
      * @var array
+     *
      */
-    protected $commonMarkExtensions = array();
+    protected $commonMarkExtensions = [];
 
+    /**
+     *
+     * Sets all override values from the command-line options.
+     *
+     * @param array $overrides The override values.
+     *
+     */
     public function setOverrides(array $overrides)
     {
         foreach ($overrides as $key => $val) {
@@ -45,6 +150,15 @@ class RootConfig extends IndexConfig
         }
     }
 
+    /**
+     *
+     * Sets one override value.
+     *
+     * @param string $key The config element to override.
+     *
+     * @param string $val The override value.
+     *
+     */
     protected function setOverride($key, $val)
     {
         $val = trim($val);
@@ -70,6 +184,11 @@ class RootConfig extends IndexConfig
         }
     }
 
+    /**
+     *
+     * Initializes this config object.
+     *
+     */
     protected function init()
     {
         parent::init();
@@ -89,6 +208,13 @@ class RootConfig extends IndexConfig
         $this->initNumbering();
     }
 
+    /**
+     *
+     * Initializes the $target property.
+     *
+     * @throws Exception on error.
+     *
+     */
     protected function initTarget()
     {
         if (empty($this->json->target)) {
@@ -100,6 +226,11 @@ class RootConfig extends IndexConfig
         $this->target = $target . DIRECTORY_SEPARATOR;
     }
 
+    /**
+     *
+     * Initializes the $rootHref property.
+     *
+     */
     protected function initRootHref()
     {
         $this->rootHref = empty($this->json->rootHref)
@@ -107,6 +238,13 @@ class RootConfig extends IndexConfig
             : $this->json->rootHref;
     }
 
+    /**
+     *
+     * Initializes the $commonMarkExtensions property.
+     *
+     * @throws Exception on error.
+     *
+     */
     protected function initCommonMarkExtensions()
     {
         if (empty($this->json->extensions)
@@ -115,7 +253,7 @@ class RootConfig extends IndexConfig
             return;
         }
 
-        if (!is_array($this->json->extensions->commonmark)) {
+        if (! is_array($this->json->extensions->commonmark)) {
             throw new \InvalidArgumentException(
                 sprintf('The extension parameter "commonmark" must be of type "array".')
             );
@@ -126,6 +264,11 @@ class RootConfig extends IndexConfig
         }
     }
 
+    /**
+     *
+     * Initializes the $template property.
+     *
+     */
     protected function initTemplate()
     {
         $this->template = empty($this->json->template)
@@ -133,13 +276,11 @@ class RootConfig extends IndexConfig
             : $this->fixPath($this->json->template);
     }
 
-    protected function initTocDepth()
-    {
-        $this->tocDepth = empty($this->json->tocDepth)
-            ? 0
-            : (int) $this->json->tocDepth;
-    }
-
+    /**
+     *
+     * Initializes the $copyright property.
+     *
+     */
     protected function initCopyright()
     {
         $this->copyright = empty($this->json->copyright)
@@ -147,6 +288,11 @@ class RootConfig extends IndexConfig
             : $this->json->copyright;
     }
 
+    /**
+     *
+     * Initializes the $numbering property.
+     *
+     */
     protected function initNumbering()
     {
         $this->numbering = !isset($this->json->numbering)
@@ -154,6 +300,11 @@ class RootConfig extends IndexConfig
             : $this->json->numbering;
     }
 
+    /**
+     *
+     * Initializes the $conversionProcess property.
+     *
+     */
     protected function initConversionProcess()
     {
         $this->conversionProcess = empty($this->json->conversionProcess)
@@ -161,6 +312,11 @@ class RootConfig extends IndexConfig
             : $this->json->conversionProcess;
     }
 
+    /**
+     *
+     * Initializes the $headingsProcess property.
+     *
+     */
     protected function initHeadingsProcess()
     {
         $this->headingsProcess = empty($this->json->headingsProcess)
@@ -168,6 +324,11 @@ class RootConfig extends IndexConfig
             : $this->json->headingsProcess;
     }
 
+    /**
+     *
+     * Initializes the $copyImageProcess property.
+     *
+     */
     protected function initCopyImageProcess()
     {
         $this->copyImageProcess = empty($this->json->copyImageProcess)
@@ -175,6 +336,11 @@ class RootConfig extends IndexConfig
             : $this->json->copyImageProcess;
     }
 
+    /**
+     *
+     * Initializes the $copyrightProcess property.
+     *
+     */
     protected function initCopyrightProcess()
     {
         $this->copyrightProcess = empty($this->json->copyrightProcess)
@@ -182,6 +348,11 @@ class RootConfig extends IndexConfig
             : $this->json->copyrightProcess;
     }
 
+    /**
+     *
+     * Initializes the $tocProcess property.
+     *
+     */
     protected function initTocProcess()
     {
         $this->tocProcess = empty($this->json->tocProcess)
@@ -189,6 +360,11 @@ class RootConfig extends IndexConfig
             : $this->json->tocProcess;
     }
 
+    /**
+     *
+     * Initializes the $renderingProcess property.
+     *
+     */
     protected function initRenderingProcess()
     {
         $this->renderingProcess = empty($this->json->renderingProcess)
@@ -196,6 +372,11 @@ class RootConfig extends IndexConfig
             : $this->json->renderingProcess;
     }
 
+    /**
+     *
+     * Initializes the $indexProcess property.
+     *
+     */
     protected function initIndexProcess()
     {
         $this->indexProcess = empty($this->json->indexProcess)
@@ -203,72 +384,173 @@ class RootConfig extends IndexConfig
             : $this->json->indexProcess;
     }
 
+    /**
+     *
+     * Returns the conversion process builder class name.
+     *
+     * @return string
+     *
+     */
     public function getConversionProcess()
     {
         return $this->conversionProcess;
     }
 
+    /**
+     *
+     * Returns the headings process builder class name.
+     *
+     * @return string
+     *
+     */
     public function getHeadingsProcess()
     {
         return $this->headingsProcess;
     }
 
+    /**
+     *
+     * Returns the copy-image process builder class name.
+     *
+     * @return string
+     *
+     */
     public function getCopyImageProcess()
     {
         return $this->copyImageProcess;
     }
 
+    /**
+     *
+     * Returns the copyright process builder class name.
+     *
+     * @return string
+     *
+     */
     public function getCopyrightProcess()
     {
         return $this->copyrightProcess;
     }
 
+    /**
+     *
+     * Returns the TOC process builder class name.
+     *
+     * @return string
+     *
+     */
     public function getTocProcess()
     {
         return $this->tocProcess;
     }
 
+    /**
+     *
+     * Returns the rendering process builder class name.
+     *
+     * @return string
+     *
+     */
     public function getRenderingProcess()
     {
         return $this->renderingProcess;
     }
 
+    /**
+     *
+     * Returns the index process builder class name.
+     *
+     * @return string
+     *
+     */
     public function getIndexProcess()
     {
         return $this->indexProcess;
     }
 
+    /**
+     *
+     * Returns the target directory for Bookdown output.
+     *
+     * @return string
+     *
+     */
     public function getTarget()
     {
         return $this->target;
     }
 
+    /**
+     *
+     * Returns the root HREF for links.
+     *
+     * @return string
+     *
+     */
     public function getRootHref()
     {
         return $this->rootHref;
     }
 
+    /**
+     *
+     * Returns the master template path.
+     *
+     * @return string
+     *
+     */
     public function getTemplate()
     {
         return $this->template;
     }
 
+    /**
+     *
+     * Returns the TOC depth value.
+     *
+     * @return string
+     *
+     */
     public function getTocDepth()
     {
         return $this->tocDepth;
     }
 
+    /**
+     *
+     * Returns the copyright string.
+     *
+     * @return string
+     *
+     */
     public function getCopyright()
     {
         return $this->copyright;
     }
 
+    /**
+     *
+     * Returns the TOC numbering style.
+     *
+     * @return string
+     *
+     */
     public function getNumbering()
     {
         return $this->numbering;
     }
 
-
+    /**
+     *
+     * Returns a value from the JSON object, or an alternate default value.
+     *
+     * @param string $key The JSON key.
+     *
+     * @param mixed $alt The default to use when the key does not exist.
+     *
+     * @return mixed
+     *
+     */
     public function get($key, $alt = null)
     {
         if (isset($this->json->$key)) {
@@ -278,7 +560,11 @@ class RootConfig extends IndexConfig
     }
 
     /**
+     *
+     * Returns the array of CommonMark extension class names.
+     *
      * @return array
+     *
      */
     public function getCommonMarkExtensions()
     {

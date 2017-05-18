@@ -77,8 +77,6 @@ class Stdlog extends AbstractLogger
      *
      * @param array $context Data to interpolate into the message.
      *
-     * @return void
-     *
      */
     public function log($level, $message, array $context = [])
     {

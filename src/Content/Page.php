@@ -10,7 +10,7 @@ namespace Bookdown\Bookdown\Content;
 
 /**
  *
- *
+ * A generic content page.
  *
  * @package bookdown/bookdown
  *

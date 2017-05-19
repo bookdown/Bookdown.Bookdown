@@ -16,7 +16,7 @@ use Bookdown\Bookdown\Process\ProcessBuilderInterface;
 
 /**
  *
- *
+ * Builds a CopyImageProcess object.
  *
  * @package bookdown/bookdown
  *

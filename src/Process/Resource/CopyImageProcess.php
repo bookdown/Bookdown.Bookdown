@@ -15,11 +15,12 @@ use Bookdown\Bookdown\Fsio;
 use Bookdown\Bookdown\Process\ProcessInterface;
 use DomDocument;
 use DomNode;
+use DomNodeList;
 use DomXpath;
 
 /**
  *
- *
+ * Copies image files from a Page to the target rendering location.
  *
  * @package bookdown/bookdown
  *
@@ -36,17 +37,29 @@ class CopyImageProcess implements ProcessInterface
     protected $page;
 
     /**
+     *
+     * The root-level config object.
+     *
      * @var RootConfig
+     *
      */
     protected $config;
 
     /**
+     *
+     * The HTML from the rendered page.
+     *
      * @var string
+     *
      */
     protected $html;
 
     /**
+     *
+     * A DomDocument of the HTML.
+     *
      * @var DomDocument
+     *
      */
     protected $doc;
 
@@ -70,9 +83,13 @@ class CopyImageProcess implements ProcessInterface
 
     /**
      *
+     * Constructor.
+     *
      * @param LoggerInterface $logger A logger implementation.
      *
      * @param Fsio $fsio A filesystem I/O object.
+     *
+     * @param RootConfig $config The root-level config object.
      *
      */
     public function __construct(
@@ -106,6 +123,13 @@ class CopyImageProcess implements ProcessInterface
         }
     }
 
+    /**
+     *
+     * Resets the processor for the Page to be processed.
+     *
+     * @param Page $page The page to be processed.
+     *
+     */
     protected function reset(Page $page)
     {
         $this->page = $page;
@@ -113,23 +137,46 @@ class CopyImageProcess implements ProcessInterface
         $this->doc = null;
     }
 
+    /**
+     *
+     * Loads the HTML from the rendered page.
+     *
+     */
     protected function loadHtml()
     {
         $this->html = $this->fsio->get($this->page->getTarget());
     }
 
+    /**
+     *
+     * Save the modified HTML back to the rendered page.
+     *
+     */
     protected function saveHtml()
     {
         $this->fsio->put($this->page->getTarget(), $this->html);
     }
 
+    /**
+     *
+     * Creates a DomDocument from the page HTML.
+     *
+     */
     protected function loadDomDocument()
     {
         $this->doc = new DomDocument();
         $this->doc->formatOutput = true;
-        $this->doc->loadHtml(mb_convert_encoding($this->html, 'HTML-ENTITIES', 'UTF-8'), LIBXML_HTML_NODEFDTD);
+        $this->doc->loadHtml(
+            mb_convert_encoding($this->html, 'HTML-ENTITIES', 'UTF-8'),
+            LIBXML_HTML_NODEFDTD
+        );
     }
 
+    /**
+     *
+     * Finds and retains all images in the DomDocument.
+     *
+     */
     protected function processImageNodes()
     {
         $nodes = $this->getImageNodes();
@@ -137,6 +184,13 @@ class CopyImageProcess implements ProcessInterface
         $this->setHtmlFromDomDocument();
     }
 
+    /**
+     *
+     * Gets all the images nodes in the DomDocument.
+     *
+     * @return DomNodeList
+     *
+     */
     protected function getImageNodes()
     {
         $xpath = new DomXpath($this->doc);
@@ -144,13 +198,27 @@ class CopyImageProcess implements ProcessInterface
         return $xpath->query($query);
     }
 
-    protected function addImages($nodes)
+    /**
+     *
+     * Retains all the image nodes.
+     *
+     * @param DomNodeList $nodes The image nodes.
+     *
+     */
+    protected function addImages(DomNodeList $nodes)
     {
         foreach ($nodes as $node) {
             $this->addImage($node);
         }
     }
 
+    /**
+     *
+     * Adds one image.
+     *
+     * @param DomNode $node The image node.
+     *
+     */
     protected function addImage(DomNode $node)
     {
         if ($src = $this->downloadImage($node)) {
@@ -158,12 +226,21 @@ class CopyImageProcess implements ProcessInterface
         }
     }
 
+    /**
+     *
+     * Copies the image to the rendering location.
+     *
+     * @param DomNode $node The image node.
+     *
+     * @throws Exception on error.
+     *
+     */
     protected function downloadImage(DomNode $node)
     {
         $image = $node->attributes->getNamedItem('src')->nodeValue;
 
-        # no image or absolute URI
-        if (!$image || preg_match('#^(http(s)?|//)#', $image)) {
+        // no image or absolute URI
+        if (! $image || preg_match('#^(http(s)?|//)#', $image)) {
             return '';
         }
         $imageName = basename($image);
@@ -184,6 +261,11 @@ class CopyImageProcess implements ProcessInterface
         return $this->config->getRootHref() . (str_replace($this->config->getTarget(), '', $dir)) . $imageName;
     }
 
+    /**
+     *
+     * Retains the modified DomDocument HTML.
+     *
+     */
     protected function setHtmlFromDomDocument()
     {
         // retain the modified html

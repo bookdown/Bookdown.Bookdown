@@ -19,7 +19,7 @@ use Bookdown\Bookdown\Process\ProcessBuilderInterface;
 
 /**
  *
- *
+ * Builds a RenderingProcess object.
  *
  * @package bookdown/bookdown
  *
@@ -48,6 +48,15 @@ class RenderingProcessBuilder implements ProcessBuilderInterface
         );
     }
 
+    /**
+     *
+     * Returns a new View object.
+     *
+     * @param RootConfig $config The root-level config object.
+     *
+     * @return View
+     *
+     */
     protected function newView(RootConfig $config)
     {
         $helpersFactory = new HelperLocatorFactory();
@@ -61,6 +70,15 @@ class RenderingProcessBuilder implements ProcessBuilderInterface
         return $view;
     }
 
+    /**
+     *
+     * Sets the main template into a View object.
+     *
+     * @param View $view The View object.
+     *
+     * @param RootConfig $config The root-level config object.
+     *
+     */
     protected function setTemplate(View $view, RootConfig $config)
     {
         $template = $config->getTemplate();

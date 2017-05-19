@@ -16,7 +16,7 @@ use Bookdown\Bookdown\Process\ProcessInterface;
 
 /**
  *
- *
+ * Renders the origin Markdown of a Page to an HTML file.
  *
  * @package bookdown/bookdown
  *
@@ -41,13 +41,24 @@ class RenderingProcess implements ProcessInterface
      */
     protected $fsio;
 
+    /**
+     *
+     * A template view object.
+     *
+     * @param View
+     *
+     */
     protected $view;
 
     /**
      *
+     * Constructor.
+     *
      * @param LoggerInterface $logger A logger implementation.
      *
      * @param Fsio $fsio A filesystem I/O object.
+     *
+     * @param View $view A template view object.
      *
      */
     public function __construct(

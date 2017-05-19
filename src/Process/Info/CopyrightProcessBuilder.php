@@ -15,7 +15,7 @@ use Bookdown\Bookdown\Process\ProcessBuilderInterface;
 
 /**
  *
- *
+ * Builds a CopyrightProcess object.
  *
  * @package bookdown/bookdown
  *

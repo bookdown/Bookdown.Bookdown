@@ -16,7 +16,7 @@ use Bookdown\Bookdown\Process\ProcessInterface;
 
 /**
  *
- *
+ * Processes each Page to set its copyright information.
  *
  * @package bookdown/bookdown
  *
@@ -24,7 +24,11 @@ use Bookdown\Bookdown\Process\ProcessInterface;
 class CopyrightProcess implements ProcessInterface
 {
     /**
+     *
+     * The root-level config object.
+     *
      * @var RootConfig
+     *
      */
     protected $config;
 
@@ -47,17 +51,14 @@ class CopyrightProcess implements ProcessInterface
     protected $fsio;
 
     /**
-     * Process already executed
      *
-     * @var bool
-     */
-    protected $processExecuted = false;
-
-    /**
+     * Constructor.
      *
      * @param LoggerInterface $logger A logger implementation.
      *
      * @param Fsio $fsio A filesystem I/O object.
+     *
+     * @param RootConfig The root-level config object.
      *
      */
     public function __construct(

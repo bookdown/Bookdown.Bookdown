@@ -21,7 +21,7 @@ use DomXpath;
 
 /**
  *
- *
+ * Processes Page objects to add Heading objects.
  *
  * @package bookdown/bookdown
  *
@@ -37,14 +37,49 @@ class HeadingsProcess implements ProcessInterface
      */
     protected $page;
 
+    /**
+     *
+     * The HTML from the page being processed.
+     *
+     * @var string
+     *
+     */
     protected $html;
 
+    /**
+     *
+     * A DomDocument of the page HTML.
+     *
+     * @var DomDocument
+     *
+     */
     protected $doc;
 
-    protected $counts = array();
+    /**
+     *
+     * The count of h2, h3, etc. headings on the page.
+     *
+     * @var array
+     *
+     */
+    protected $counts = [];
 
-    protected $headings = array();
+    /**
+     *
+     * Heading objects collected from parsing the page.
+     *
+     * @var array
+     *
+     */
+    protected $headings = [];
 
+    /**
+     *
+     * A factory for Heading objects.
+     *
+     * @var HeadingFactory
+     *
+     */
     protected $headingFactory;
 
     /**
@@ -67,7 +102,7 @@ class HeadingsProcess implements ProcessInterface
 
     /**
      *
-     * The numbering style to use.
+     * The numbering style to use for headings.
      *
      * @param string
      *
@@ -76,9 +111,15 @@ class HeadingsProcess implements ProcessInterface
 
     /**
      *
+     * Constructor.
+     *
      * @param LoggerInterface $logger A logger implementation.
      *
      * @param Fsio $fsio A filesystem I/O object.
+     *
+     * @param HeadingFactory A factory for heading objects.
+     *
+     * @param string $numbering The numbering style to use for headings.
      *
      */
     public function __construct(
@@ -116,6 +157,13 @@ class HeadingsProcess implements ProcessInterface
         $page->setHeadings($this->headings);
     }
 
+    /**
+     *
+     * Resets this processor for a new Page.
+     *
+     * @param Page $page The page to process.
+     *
+     */
     protected function reset(Page $page)
     {
         $this->page = $page;
@@ -139,23 +187,46 @@ class HeadingsProcess implements ProcessInterface
         }
     }
 
+    /**
+     *
+     * Loads the $html property from the rendered page.
+     *
+     */
     protected function loadHtml()
     {
         $this->html = $this->fsio->get($this->page->getTarget());
     }
 
+    /**
+     *
+     * Saves the processed HTML back to the rendered page.
+     *
+     */
     protected function saveHtml()
     {
         $this->fsio->put($this->page->getTarget(), $this->html);
     }
 
+    /**
+     *
+     * Loads the HTML into a DomDocument.
+     *
+     */
     protected function loadDomDocument()
     {
         $this->doc = new DomDocument();
         $this->doc->formatOutput = true;
-        $this->doc->loadHtml(mb_convert_encoding($this->html, 'HTML-ENTITIES', 'UTF-8'), LIBXML_HTML_NODEFDTD);
+        $this->doc->loadHtml(
+            mb_convert_encoding($this->html, 'HTML-ENTITIES', 'UTF-8'),
+            LIBXML_HTML_NODEFDTD
+        );
     }
 
+    /**
+     *
+     * Adds heading objects from Dom nodes.
+     *
+     */
     protected function processHeadingNodes()
     {
         $nodes = $this->getHeadingNodes();
@@ -164,6 +235,13 @@ class HeadingsProcess implements ProcessInterface
         $this->setHtmlFromDomDocument();
     }
 
+    /**
+     *
+     * Gets heading nodes from the DomDocument.
+     *
+     * @return DomNodeList
+     *
+     */
     protected function getHeadingNodes()
     {
         $xpath = new DomXpath($this->doc);
@@ -172,6 +250,13 @@ class HeadingsProcess implements ProcessInterface
         return $xpath->query($query);
     }
 
+    /**
+     *
+     * Sets the page title from the first DomNode.
+     *
+     * @param DomNodeList $nodes The heading nodes.
+     *
+     */
     protected function setPageTitle(DomNodeList $nodes)
     {
         $node = $nodes->item(0);
@@ -180,13 +265,28 @@ class HeadingsProcess implements ProcessInterface
         }
     }
 
-    protected function addHeadings($nodes)
+    /**
+     *
+     * Adds all DomNodeList nodes as Heading objects.
+     *
+     * @param DomNodeList $nodes The heading nodes.
+     *
+     */
+    protected function addHeadings(DomNodeList $nodes)
     {
         foreach ($nodes as $node) {
             $this->addHeading($node);
         }
     }
 
+    /**
+     *
+     * Adds one DomNode as a Heading object, and sets the heading number and ID
+     * on the DomNode.
+     *
+     * @param DomNode $node The heading node.
+     *
+     */
     protected function addHeading(DomNode $node)
     {
         $heading = $this->newHeading($node);
@@ -209,6 +309,15 @@ class HeadingsProcess implements ProcessInterface
         $node->setAttribute('id', $heading->getAnchor());
     }
 
+    /**
+     *
+     * Creates a new Heading object from a DomNode.
+     *
+     * @param DomNode $node The heading node.
+     *
+     * @return Heading
+     *
+     */
     protected function newHeading(DomNode $node)
     {
         // the full heading number
@@ -229,6 +338,15 @@ class HeadingsProcess implements ProcessInterface
         );
     }
 
+    /**
+     *
+     * Gets the heading number from a DomNode.
+     *
+     * @param DomNode $node The heading node.
+     *
+     * @return string
+     *
+     */
     protected function getHeadingNumber(DomNode $node)
     {
         $this->setCounts($node);
@@ -242,6 +360,13 @@ class HeadingsProcess implements ProcessInterface
         return $this->page->getNumber() . $string;
     }
 
+    /**
+     *
+     * Given a DomNode, increment or reset the h2/h3/etc counts.
+     *
+     * @param DomNode $node The heading node.
+     *
+     */
     protected function setCounts(DomNode $node)
     {
         foreach ($this->counts as $level => $count) {
@@ -254,6 +379,11 @@ class HeadingsProcess implements ProcessInterface
         }
     }
 
+    /**
+     *
+     * Retains modified HTML from the DomDocument manipulations.
+     *
+     */
     protected function setHtmlFromDomDocument()
     {
         // retain the modified html

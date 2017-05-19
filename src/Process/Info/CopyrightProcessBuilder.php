@@ -26,7 +26,7 @@ class CopyrightProcessBuilder implements ProcessBuilderInterface
      *
      * Returns a new CopyrightProcess object.
      *
-     * @param RootConfig $rootConfig The root-level config object.
+     * @param RootConfig $config The root-level config object.
      *
      * @param LoggerInterface $logger A logger implementation.
      *

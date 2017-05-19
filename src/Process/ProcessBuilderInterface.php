@@ -25,7 +25,7 @@ interface ProcessBuilderInterface
      *
      * Returns a new Process object.
      *
-     * @param RootConfig $rootConfig The root-level config object.
+     * @param RootConfig $config The root-level config object.
      *
      * @param LoggerInterface $logger A logger implementation.
      *

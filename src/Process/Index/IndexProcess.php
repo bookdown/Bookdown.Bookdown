@@ -19,7 +19,7 @@ use Bookdown\Bookdown\Content\HeadingFactory;
 
 /**
  *
- *
+ * Processes a page to build a search index for it.
  *
  * @package bookdown/bookdown
  *
@@ -27,17 +27,28 @@ use Bookdown\Bookdown\Content\HeadingFactory;
 class IndexProcess implements ProcessInterface
 {
     /**
+     *
+     * Heading information for the search index.
+     *
      * @var array
      */
     protected $headings;
 
     /**
+     *
+     * Contents for the search index.
+     *
      * @var array
+     *
      */
     protected $contents;
 
     /**
+     *
+     * The search index JSON array.
+     *
      * @var array
+     *
      */
     protected $searchIndex;
 
@@ -69,23 +80,30 @@ class IndexProcess implements ProcessInterface
     protected $page;
 
     /**
+     *
+     * The root-level config object.
+     *
      * @var RootConfig
+     *
      */
     protected $config;
 
     /**
      *
+     * Constructor.
+     *
      * @param LoggerInterface $logger A logger implementation.
      *
      * @param Fsio $fsio A filesystem I/O object.
+     *
+     * @param RootConfig $config The root-level config object.
      *
      */
     public function __construct(
         LoggerInterface $logger,
         Fsio $fsio,
         RootConfig $config
-    )
-    {
+    ) {
         $this->logger = $logger;
         $this->fsio = $fsio;
         $this->config = $config;
@@ -108,11 +126,15 @@ class IndexProcess implements ProcessInterface
     }
 
     /**
-     * Write json index.
      *
-     * @param Page $page
-     * @param string $file
-     * @throws \Bookdown\Bookdown\Exception
+     * Writes page search data to the JSON search index file.
+     *
+     * @param Page $page The page being processed.
+     *
+     * @param string $file The search index file.
+     *
+     * @throws Exception on error.
+     *
      */
     protected function writeIndex(Page $page, $file)
     {
@@ -134,10 +156,13 @@ class IndexProcess implements ProcessInterface
     }
 
     /**
+     *
      * Create the heading and content array with related keys.
      *
-     * @param string $html
-     * @param Page $page
+     * @param string $html The HTML from the page.
+     *
+     * @param Page $page The page being processed.
+     *
      */
     protected function processHtml($html, Page $page)
     {
@@ -172,7 +197,9 @@ class IndexProcess implements ProcessInterface
     }
 
     /**
-     * Create the content index entries related to the correct title.
+     *
+     * Creates the content index entries related to the correct title.
+     *
      */
     protected function buildRelatedContent()
     {
@@ -190,10 +217,13 @@ class IndexProcess implements ProcessInterface
     }
 
     /**
-     * Get the html dom body children list.
      *
-     * @param \DOMDocument $domDocument
+     * Gets the html dom body children list.
+     *
+     * @param \DOMDocument $domDocument The DomDocument for the page.
+     *
      * @return \DOMNodeList
+     *
      */
     protected function getHtmlDomBody(\DOMDocument $domDocument)
     {
@@ -203,10 +233,13 @@ class IndexProcess implements ProcessInterface
     }
 
     /**
-     * Create dom document from html string.
      *
-     * @param string $html
+     * Creates a DomDocument from the page HTML.
+     *
+     * @param string $html The Page HTML.
+     *
      * @return \DOMDocument
+     *
      */
     protected function createDomDocument($html)
     {
@@ -224,10 +257,13 @@ class IndexProcess implements ProcessInterface
     }
 
     /**
-     * Load html from source file
      *
-     * @param Page $page
+     * Returns HTML from the rendered Page file.
+     *
+     * @param Page $page The page being processed.
+     *
      * @return string
+     *
      */
     protected function loadHtml(Page $page)
     {
@@ -235,10 +271,13 @@ class IndexProcess implements ProcessInterface
     }
 
     /**
-     * Read in the file and return json data as array.
      *
-     * @param $file
+     * Read in the search index file and returns JSON data as array.
+     *
+     * @param string $file The search index JSON file.
+     *
      * @return array
+     *
      */
     protected function readJson($file)
     {
@@ -247,10 +286,13 @@ class IndexProcess implements ProcessInterface
     }
 
     /**
-     * Write the content array to file as json.
      *
-     * @param array $content
-     * @param $file
+     * Writes the content array to the search index JSON file.
+     *
+     * @param array $content The content to put into the JSON file.
+     *
+     * @param string $file The file to write to.
+     *
      */
     protected function writeJson(array $content, $file)
     {
@@ -262,7 +304,11 @@ class IndexProcess implements ProcessInterface
     }
 
     /**
+     *
+     * Returns the search index headings.
+     *
      * @return array
+     *
      */
     protected function getHeadings()
     {
@@ -270,7 +316,11 @@ class IndexProcess implements ProcessInterface
     }
 
     /**
+     *
+     * Returns the new search index contents.
+     *
      * @return array
+     *
      */
     protected function getContents()
     {
@@ -278,7 +328,9 @@ class IndexProcess implements ProcessInterface
     }
 
     /**
-     * Reset class member.
+     *
+     * Resets the processor for a new page.
+     *
      */
     protected function reset()
     {

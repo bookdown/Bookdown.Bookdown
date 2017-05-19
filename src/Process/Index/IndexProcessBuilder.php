@@ -15,7 +15,7 @@ use Bookdown\Bookdown\Process\ProcessBuilderInterface;
 
 /**
  *
- *
+ * Builds an IndexProcess object.
  *
  * @package bookdown/bookdown
  *
@@ -26,7 +26,7 @@ class IndexProcessBuilder implements ProcessBuilderInterface
      *
      * Returns a new IndexProcess object.
      *
-     * @param RootConfig $rootConfig The root-level config object.
+     * @param RootConfig $config The root-level config object.
      *
      * @param LoggerInterface $logger A logger implementation.
      *

@@ -68,7 +68,7 @@ class ConversionProcess implements ProcessInterface
      *
      * @param Fsio $fsio A filesystem I/O object.
      *
-     * @param Converter $converter A CommonMark-to-HTML converter.
+     * @param Converter $commonMarkConverter A CommonMark-to-HTML converter.
      *
      */
     public function __construct(

@@ -16,7 +16,7 @@ use Bookdown\Bookdown\Process\ProcessBuilderInterface;
 
 /**
  *
- *
+ * Builds a HeadingsProcess object.
  *
  * @package bookdown/bookdown
  *
@@ -27,7 +27,7 @@ class HeadingsProcessBuilder implements ProcessBuilderInterface
      *
      * Returns a new HeadingsProcess object.
      *
-     * @param RootConfig $rootConfig The root-level config object.
+     * @param RootConfig $config The root-level config object.
      *
      * @param LoggerInterface $logger A logger implementation.
      *
@@ -46,6 +46,13 @@ class HeadingsProcessBuilder implements ProcessBuilderInterface
         );
     }
 
+    /**
+     *
+     * Returns a new HeadingFactory object.
+     *
+     * @return HeadingFactory
+     *
+     */
     protected function newHeadingFactory()
     {
         return new HeadingFactory();

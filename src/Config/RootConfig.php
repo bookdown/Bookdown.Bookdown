@@ -332,7 +332,7 @@ class RootConfig extends IndexConfig
     protected function initCopyImageProcess()
     {
         $this->copyImageProcess = empty($this->json->copyImageProcess)
-            ? 'Bookdown\Bookdown\Process\Resource\CopyImageProcessBuilder'
+            ? 'Bookdown\Bookdown\Process\CopyImage\CopyImageProcessBuilder'
             : $this->json->copyImageProcess;
     }
 

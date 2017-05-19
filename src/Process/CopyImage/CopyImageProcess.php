@@ -6,7 +6,7 @@
  * @license http://opensource.org/licenses/MIT MIT
  *
  */
-namespace Bookdown\Bookdown\Process\Resource;
+namespace Bookdown\Bookdown\Process\CopyImage;
 
 use Bookdown\Bookdown\Config\RootConfig;
 use Psr\Log\LoggerInterface;

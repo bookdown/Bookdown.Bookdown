@@ -344,7 +344,7 @@ class RootConfig extends IndexConfig
     protected function initCopyrightProcess()
     {
         $this->copyrightProcess = empty($this->json->copyrightProcess)
-            ? 'Bookdown\Bookdown\Process\Info\CopyrightProcessBuilder'
+            ? 'Bookdown\Bookdown\Process\Copyright\CopyrightProcessBuilder'
             : $this->json->copyrightProcess;
     }
 

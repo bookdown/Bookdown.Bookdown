@@ -12,21 +12,40 @@ use Psr\Log\LoggerInterface;
 
 /**
  *
- *
+ * Keeps track of execution time.
  *
  * @package bookdown/bookdown
  *
  */
 class Timer
 {
+    /**
+     *
+     * The starting time.
+     *
+     * @var int
+     *
+     */
     protected $start;
 
+    /**
+     *
+     * Constructor.
+     *
+     * @param LoggerInterface $logger A logger implementation.
+     *
+     */
     public function __construct(LoggerInterface $logger)
     {
         $this->logger = $logger;
         $this->start = microtime(true);
     }
 
+    /**
+     *
+     * Reports the run time to the logger.
+     *
+     */
     public function report()
     {
         $seconds = microtime(true) - $this->start;

@@ -15,22 +15,55 @@ use Bookdown\Bookdown\Fsio;
 
 /**
  *
- *
+ * Builds the Processor object.
  *
  * @package bookdown/bookdown
  *
  */
 class ProcessorBuilder
 {
+    /**
+     *
+     * A logger implementation.
+     *
+     * @var LoggerInterface
+     *
+     */
     protected $logger;
+
+    /**
+     *
+     * A filesystem I/O object.
+     *
+     * @var Fsio
+     *
+     */
     protected $fsio;
 
+    /**
+     *
+     * Constructor.
+     *
+     * @param LoggerInterface $logger A logger implementation.
+     *
+     * @param Fsio $fsio A filesystem I/O object.
+     *
+     */
     public function __construct(LoggerInterface $logger, Fsio $fsio)
     {
         $this->logger = $logger;
         $this->fsio = $fsio;
     }
 
+    /**
+     *
+     * Returns a new Processor object.
+     *
+     * @param RootConfig $config The root-level config object.
+     *
+     * @return Processor
+     *
+     */
     public function newProcessor(RootConfig $config)
     {
         return new Processor(
@@ -47,6 +80,17 @@ class ProcessorBuilder
         );
     }
 
+    /**
+     *
+     * Returns a new Process object.
+     *
+     * @param RootConfig $config The root-level config object.
+     *
+     * @param string $name The process name.
+     *
+     * @return ProcessInterface
+     *
+     */
     public function newProcess(RootConfig $config, $name)
     {
         $method = "get{$name}Process";

@@ -1,7 +1,5 @@
 # Bookdown
 
-> **WARNING:** This project is incomplete and still under heavy development. Use at your own risk.
-
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/bookdown/Bookdown.Bookdown/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/bookdown/Bookdown.Bookdown/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/bookdown/Bookdown.Bookdown/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/bookdown/Bookdown.Bookdown/?branch=master)
 [![Build Status](https://scrutinizer-ci.com/g/bookdown/Bookdown.Bookdown/badges/build.png?b=master)](https://scrutinizer-ci.com/g/bookdown/Bookdown.Bookdown/build-status/master)
@@ -13,6 +11,7 @@ Bookdown is especially well-suited for publishing project documentation to GitHu
 Read more about it at <http://bookdown.io>.
 
 ## Templates
+
 This is a list of custom bookdown.io templates
 
 * [tobiju/bookdown-bootswatch-templates](https://github.com/tobiju/bookdown-bootswatch-templates "Bootswatch styles and syntax highlighting")
@@ -20,7 +19,7 @@ This is a list of custom bookdown.io templates
 
 ## Tests
 
-Bookdown has 100% test coverage. To run the tests after `composer install`, issue `./vendor/bin/phpunit` at the package root.
+To run the tests after `composer install`, issue `./vendor/bin/phpunit` at the package root.
 
 ## Todo
 

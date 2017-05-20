@@ -15,7 +15,7 @@ use Bookdown\Bookdown\Process\ProcessBuilderInterface;
 
 /**
  *
- *
+ * Builds a TocProcess object.
  *
  * @package bookdown/bookdown
  *

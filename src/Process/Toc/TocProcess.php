@@ -9,13 +9,14 @@
 namespace Bookdown\Bookdown\Process\Toc;
 
 use Psr\Log\LoggerInterface;
+use Bookdown\Bookdown\Content\Heading;
 use Bookdown\Bookdown\Content\Page;
 use Bookdown\Bookdown\Content\IndexPage;
 use Bookdown\Bookdown\Process\ProcessInterface;
 
 /**
  *
- *
+ * Adds TOC entries to index pages.
  *
  * @package bookdown/bookdown
  *
@@ -31,11 +32,38 @@ class TocProcess implements ProcessInterface
      */
     protected $logger;
 
+    /**
+     *
+     * The TOC entries for the index page.
+     *
+     * @var array
+     *
+     */
     protected $tocEntries;
+
+    /**
+     *
+     * Only process entries to this depth past the current level.
+     *
+     * A depth of 0 means render all headings.
+     *
+     * @var int
+     *
+     */
     protected $tocDepth;
+
+    /**
+     *
+     * The maximum (deepest) level to process through.
+     *
+     * @var int
+     *
+     */
     protected $maxLevel;
 
     /**
+     *
+     * Constructor.
      *
      * @param LoggerInterface $logger A logger implementation.
      *
@@ -71,7 +99,10 @@ class TocProcess implements ProcessInterface
 
     /**
      *
+     * Adds TOC entries to the index page.
+     *
      * @param IndexPage $index
+     *
      */
     protected function addTocEntries(IndexPage $index)
     {
@@ -87,12 +118,13 @@ class TocProcess implements ProcessInterface
     }
 
     /**
-     * A toc depth of 0 means render all headings.
      *
-     * @param IndexPage $index
-     * @param int $level
+     * Adds a single TOC entry, as long as it's before the max level allowed.
+     *
+     * @param Heading $heading A Heading for a TOC entry.
+     *
      */
-    protected function addTocEntry($heading)
+    protected function addTocEntry(Heading $heading)
     {
         if (! $this->tocDepth || $heading->getLevel() <= $this->maxLevel) {
             $this->tocEntries[] = $heading;

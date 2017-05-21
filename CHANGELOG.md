@@ -1,8 +1,46 @@
-This is the first beta release, with numerous fixes, improvements, and additions. It is a "Google Beta" release; this means we are paying special attention to avoiding BC breaks, but one or two may be necessary.
+# Changelog
 
-- Override values in bookdown.json are no longer relative to the bookdown.json directory.
+All notable changes to this project will be documented in this file.
 
-- International and multibyte characters are now rendered correctly (cf. #12, #13, #34, et al.).
+The format is based on [Keep a Changelog](http://keepachangelog.com/).
+
+Thanks to all [contributors](https://github.com/bookdown/Bookdown.Bookdown/graphs/contributors)!
+
+## 1.0.0
+
+- Now buids a JSON search index file for Lunr, et al.
+
+- Fixed error with toc-depth headings on single pages.
+
+- Removed tocDepth=1 as a special case, and added Page::getLevel().
+
+- Does not stop build process if some images are missing.
+
+- Fixed #48 by wrapping html content in special div.
+
+- Added support to disable numbering.
+
+- Replaced Monolog with an internal psr/log implementation (Stdlog).
+
+- Updated commonmark and webuni dependencies.
+
+- Dropped support for PHP 5.5.x and earlier.
+
+- Now complies with pds/skeleton.
+
+- Updated tests and docs.
+
+## 1.0.0-beta1
+
+This is the first beta release, with numerous fixes, improvements, and
+additions. It is a "Google Beta" release; this means we are paying special
+attention to avoiding BC breaks, but one or two may be necessary.
+
+- Override values in bookdown.json are no longer relative to the bookdown.json
+  directory.
+
+- International and multibyte characters are now rendered correctly (cf. #12,
+  #13, #34, et al.).
 
 - Add UTF8 meta in the template header.
 
@@ -18,10 +56,10 @@ This is the first beta release, with numerous fixes, improvements, and additions
 
 - Added "copyright" as a bookdown.json entry.
 
-- Fixed header id attributes to be valid for href anchors, making them compatible with Javascript and CSS.
+- Fixed header id attributes to be valid for href anchors, making them
+  compatible with Javascript and CSS.
 
 - Various updates to the README and other documentation.
 
-Thanks, as always, to all our contributors; special thanks to Sandro Keil, who delivered several important features in this release.
-
-<https://github.com/bookdown/Bookdown.Bookdown/graphs/contributors>
+Thanks, as always, to all our contributors; special thanks to Sandro Keil, who
+delivered several important features in this release.

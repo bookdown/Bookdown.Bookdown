@@ -83,7 +83,7 @@ class RenderingProcessBuilder implements ProcessBuilderInterface
     {
         $template = $config->getTemplate();
         if (! $template) {
-            $template = dirname(dirname(dirname(__DIR__))) . '/templates/main.php';
+            $template = dirname(dirname(dirname(__DIR__))) . '/vendor/bookdown/themes/templates/main.php';
         }
 
         if (! file_exists($template) && ! is_readable($template)) {

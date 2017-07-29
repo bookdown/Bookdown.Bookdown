@@ -17,21 +17,13 @@
             "homepage": "https://github.com/bookdown/Bookdown.Bookdown/contributors"
         }
     ],
-    "repositories": [
-        {
-            "type": "vcs",
-            "url":  "https://github.com/bookdown/Bookdown.Themes.git"
-        }
-    ],
-    "minimum-stability": "dev",
     "require": {
         "php": ">=5.6.0",
         "aura/cli": "~2.0",
         "aura/html": "~2.0",
         "aura/view": "~2.0",
         "league/commonmark": "~0.0",
-        "psr/log": "~1.0",
-        "bookdown/themes": "dev-master"
+        "psr/log": "~1.0"
     },
     "require-dev": {
         "webuni/commonmark-table-extension": "~0.6",

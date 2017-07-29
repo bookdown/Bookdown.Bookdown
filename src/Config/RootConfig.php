@@ -19,6 +19,8 @@ use Bookdown\Bookdown\Exception;
  */
 class RootConfig extends IndexConfig
 {
+    const BOOKDOWN_THEMES_DEFAULT = 'bookdown/themes';
+
     /**
      *
      * The target directory for Bookdown output.
@@ -271,9 +273,13 @@ class RootConfig extends IndexConfig
      */
     protected function initTemplate()
     {
-        $this->template = empty($this->json->template)
-            ? null
-            : $this->fixPath($this->json->template);
+        if (empty($this->json->template)) {
+            $this->template = null;
+        } elseif (self::BOOKDOWN_THEMES_DEFAULT === $this->json->template) {
+            $this->template = self::BOOKDOWN_THEMES_DEFAULT;
+        } else {
+            $this->template = $this->fixPath($this->json->template);
+        }
     }
 
     /**

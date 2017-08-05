@@ -38,6 +38,11 @@ class IndexPage extends Page
     protected $tocEntries;
 
     /**
+     * @var array
+     */
+    protected $nestedTocEntries;
+
+    /**
      *
      * The config object for this index.
      *
@@ -174,6 +179,31 @@ class IndexPage extends Page
     public function getTocEntries()
     {
         return $this->tocEntries;
+    }
+
+
+    /**
+     * @param array $nestedTocEntries
+     */
+    public function setNestedTocEntries(array $nestedTocEntries)
+    {
+        $this->nestedTocEntries = $nestedTocEntries;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasNestedTocEntries()
+    {
+        return (bool)$this->nestedTocEntries;
+    }
+
+    /**
+     * @return array
+     */
+    public function getNestedTocEntries()
+    {
+        return $this->nestedTocEntries;
     }
 
     /**

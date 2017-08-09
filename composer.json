@@ -23,7 +23,8 @@
         "aura/html": "~2.0",
         "aura/view": "~2.0",
         "league/commonmark": "~0.0",
-        "psr/log": "~1.0"
+        "psr/log": "~1.0",
+        "bookdown/themes": "~1.0"
     },
     "require-dev": {
         "webuni/commonmark-table-extension": "~0.6",

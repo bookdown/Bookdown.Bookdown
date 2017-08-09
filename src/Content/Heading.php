@@ -130,8 +130,10 @@ class Heading
     public function getHref()
     {
         $href = $this->href;
-        if ($this->id) {
-            $href .= $this->getHrefAnchor();
+        $hrefAnchor = $this->getHrefAnchor();
+
+        if (null !== $this->getId() && null !== $hrefAnchor) {
+            $href .= $hrefAnchor;
         }
         return $href;
     }
@@ -140,14 +142,14 @@ class Heading
      *
      * Creates a complete anchor href attribute for links.
      *
-     * @return string
+     * @return string|null
      *
      */
     public function getHrefAnchor()
     {
-        $hrefAnchor = null;
+        $hrefAnchor = $this->getAnchor();
 
-        if ($this->id) {
+        if (null !== $hrefAnchor) {
             return '#' . $this->getAnchor();
         }
         return $hrefAnchor;
@@ -157,15 +159,15 @@ class Heading
      *
      * Return a valid anchor string tag to use as html id attribute.
      *
-     * @return string
+     * @return string|null
      *
      */
     public function getAnchor()
     {
         $anchor = null;
 
-        if ($this->id) {
-            $anchor = str_replace('.', '-', $this->getId());
+        if (null !== $this->getNumber()) {
+            $anchor = str_replace('.', '-', trim($this->getNumber(), '.'));
         }
         return $anchor;
     }

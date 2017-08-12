@@ -38,7 +38,7 @@ class IndexPage extends Page
     protected $tocEntries;
 
     /**
-     * @var array
+     * @var TocHeadingIterator
      */
     protected $nestedTocEntries;
 
@@ -183,9 +183,9 @@ class IndexPage extends Page
 
 
     /**
-     * @param array $nestedTocEntries
+     * @param TocHeadingIterator $nestedTocEntries
      */
-    public function setNestedTocEntries(array $nestedTocEntries)
+    public function setNestedTocEntries(TocHeadingIterator $nestedTocEntries)
     {
         $this->nestedTocEntries = $nestedTocEntries;
     }
@@ -199,7 +199,7 @@ class IndexPage extends Page
     }
 
     /**
-     * @return array
+     * @return TocHeadingIterator
      */
     public function getNestedTocEntries()
     {

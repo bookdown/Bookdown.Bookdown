@@ -141,38 +141,4 @@ class TocProcess implements ProcessInterface
     {
         $index->setNestedTocEntries(new TocHeadingIterator($this->tocEntries));
     }
-
-    /**
-     * @param IndexPage $index
-     * @return array
-     */
-    protected function getNestedTocEntries(IndexPage $index)
-    {
-        $return = array();
-
-        /** @var  IndexPage $child */
-        foreach ($index->getChildren() as $child) {
-
-            if ($this->tocDepth > 0 && $child->getLevel() > $this->maxLevel) {
-                return $return;
-            }
-
-            $childData = array(
-                'headings' => $child->getHeadings(),
-            );
-
-            if ($child->isIndex()) {
-                $nestedChildren = $this->getNestedTocEntries($child);
-
-                if (count($nestedChildren) > 0) {
-                    $childData['children'] = $nestedChildren;
-                }
-            }
-
-            $return[] = $childData;
-
-        }
-
-        return $return;
-    }
 }

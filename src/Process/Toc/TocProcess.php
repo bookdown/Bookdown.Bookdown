@@ -11,6 +11,7 @@ namespace Bookdown\Bookdown\Process\Toc;
 use Bookdown\Bookdown\Content\Heading;
 use Bookdown\Bookdown\Content\IndexPage;
 use Bookdown\Bookdown\Content\Page;
+use Bookdown\Bookdown\Content\TocHeading;
 use Bookdown\Bookdown\Content\TocHeadingIterator;
 use Bookdown\Bookdown\Process\ProcessInterface;
 use Psr\Log\LoggerInterface;
@@ -139,6 +140,27 @@ class TocProcess implements ProcessInterface
      */
     protected function addNestedTocEntries(IndexPage $index)
     {
-        $index->setNestedTocEntries(new TocHeadingIterator($this->tocEntries));
+        $index->setNestedTocEntries(new TocHeadingIterator($this->createTocHeadingList($this->tocEntries)));
+    }
+
+    /**
+     * @param Heading[] $headings
+     * @return TocHeading[]
+     */
+    protected function createTocHeadingList(array $headings)
+    {
+        $tocHeading = array();
+
+        foreach ($headings as $heading) {
+            $tocHeading[] = new TocHeading(
+                $heading->getNumber(),
+                $heading->getTitle(),
+                $heading->getHref(),
+                $heading->getHrefAnchor(),
+                $heading->getId()
+            );
+        }
+
+        return $tocHeading;
     }
 }

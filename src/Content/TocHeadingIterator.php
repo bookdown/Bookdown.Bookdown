@@ -100,15 +100,7 @@ class TocHeadingIterator implements \Iterator, \Countable
         $result = array();
 
         foreach ($headings as $heading) {
-            $tocHeading = new TocHeading(
-                $heading->getNumber(),
-                $heading->getTitle(),
-                $heading->getHref(),
-                $heading->getHrefAnchor(),
-                $heading->getId()
-            );
-
-            $result[trim($heading->getNumber(), '.')] = $tocHeading;
+             $result[trim($heading->getNumber(), '.')] = $heading;
         }
 
         return $result;

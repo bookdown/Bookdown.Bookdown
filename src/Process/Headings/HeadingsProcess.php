@@ -334,6 +334,7 @@ class HeadingsProcess implements ProcessInterface
             $number,
             $title,
             $this->page->getHref(),
+            null,
             $id
         );
     }

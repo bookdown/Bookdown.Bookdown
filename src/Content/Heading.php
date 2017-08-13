@@ -6,6 +6,7 @@
  * @license http://opensource.org/licenses/MIT MIT
  *
  */
+
 namespace Bookdown\Bookdown\Content;
 
 /**
@@ -54,6 +55,13 @@ class Heading
     protected $href;
 
     /**
+     * The number anchor attribute added to the href
+     *
+     * @var string
+     */
+    protected $hrefAnchor;
+
+    /**
      *
      * The TOC depth level for the heading.
      *
@@ -72,16 +80,19 @@ class Heading
      *
      * @param string $href The href attribute value.
      *
+     * @param string $hrefAnchor The hrefAnchor attribute value.
+     *
      * @param string $id The id attribute value.
      *
      */
-    public function __construct($number, $title, $href, $id = null)
+    public function __construct($number, $title, $href, $hrefAnchor = null, $id = null)
     {
         $this->number = $number;
         $this->title = $title;
         $this->href = $href;
         $this->id = $id;
         $this->level = substr_count($number, '.');
+        $this->hrefAnchor = $hrefAnchor;
     }
 
     /**
@@ -130,29 +141,24 @@ class Heading
     public function getHref()
     {
         $href = $this->href;
-        $hrefAnchor = $this->getHrefAnchor();
 
-        if (null !== $this->getId() && null !== $hrefAnchor) {
-            $href .= $hrefAnchor;
+        if (null !== $this->getId() && !strstr($href, '#')) {
+            $href .= $this->getHrefAnchor();
         }
+
         return $href;
     }
 
     /**
-     *
-     * Creates a complete anchor href attribute for links.
-     *
-     * @return string|null
-     *
+     * @return string
      */
     public function getHrefAnchor()
     {
-        $hrefAnchor = $this->getAnchor();
-
-        if (null !== $hrefAnchor) {
-            return '#' . $this->getAnchor();
+        if (null === $this->hrefAnchor) {
+            $this->hrefAnchor = '#' . $this->getAnchor();
         }
-        return $hrefAnchor;
+
+        return $this->hrefAnchor;
     }
 
     /**

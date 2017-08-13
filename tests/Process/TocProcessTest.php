@@ -87,6 +87,7 @@ class TocProcessTest extends \PHPUnit_Framework_TestCase
                 'title' => 'Title',
                 'id' => '1.1',
                 'href' => '/chapter/section.html',
+                'hrefAnchor' => '#1-1',
                 'level' => 2,
             ),
             array(
@@ -94,6 +95,7 @@ class TocProcessTest extends \PHPUnit_Framework_TestCase
                 'title' => 'Subtitle <code>code</code> A',
                 'id' => '1.1.1',
                 'href' => '/chapter/section.html',
+                'hrefAnchor' => '#1-1-1',
                 'level' => 3,
             ),
             array(
@@ -101,6 +103,7 @@ class TocProcessTest extends \PHPUnit_Framework_TestCase
                 'title' => 'Sub-subtitle',
                 'id' => '1.1.1.1',
                 'href' => '/chapter/section.html',
+                'hrefAnchor' => '#1-1-1-1',
                 'level' => 4,
             ),
             array(
@@ -108,6 +111,7 @@ class TocProcessTest extends \PHPUnit_Framework_TestCase
                 'title' => 'Subtitle B',
                 'id' => '1.1.2',
                 'href' => '/chapter/section.html',
+                'hrefAnchor' => '#1-1-2',
                 'level' => 3,
             ),
         );
@@ -132,6 +136,7 @@ class TocProcessTest extends \PHPUnit_Framework_TestCase
               'title' => 'Chapter',
               'id' => null,
               'href' => '/chapter/',
+                'hrefAnchor' => '#1',
               'level' => 1,
             ),
             array(
@@ -139,6 +144,7 @@ class TocProcessTest extends \PHPUnit_Framework_TestCase
                 'title' => 'Title',
                 'id' => '1.1',
                 'href' => '/chapter/section.html',
+                'hrefAnchor' => '#1-1',
                 'level' => 2,
             ),
             array(
@@ -146,6 +152,7 @@ class TocProcessTest extends \PHPUnit_Framework_TestCase
                 'title' => 'Subtitle <code>code</code> A',
                 'id' => '1.1.1',
                 'href' => '/chapter/section.html',
+                'hrefAnchor' => '#1-1-1',
                 'level' => 3,
             ),
             array(
@@ -153,6 +160,7 @@ class TocProcessTest extends \PHPUnit_Framework_TestCase
                 'title' => 'Sub-subtitle',
                 'id' => '1.1.1.1',
                 'href' => '/chapter/section.html',
+                'hrefAnchor' => '#1-1-1-1',
                 'level' => 4,
             ),
             array(
@@ -160,6 +168,7 @@ class TocProcessTest extends \PHPUnit_Framework_TestCase
                 'title' => 'Subtitle B',
                 'id' => '1.1.2',
                 'href' => '/chapter/section.html',
+                'hrefAnchor' => '#1-1-2',
                 'level' => 3,
             ),
         );
@@ -199,6 +208,7 @@ class TocProcessTest extends \PHPUnit_Framework_TestCase
                         'title' => 'Index Page',
                         'id' => null,
                         'href' => '/chapter/',
+                        'hrefAnchor' => '#1',
                         'level' => 1,
                     ],
                 ],
@@ -211,6 +221,7 @@ class TocProcessTest extends \PHPUnit_Framework_TestCase
                         'title' => 'Index Page',
                         'id' => null,
                         'href' => '/chapter/',
+                        'hrefAnchor' => '#1',
                         'level' => 1,
                     ],
                     [
@@ -218,6 +229,7 @@ class TocProcessTest extends \PHPUnit_Framework_TestCase
                         'title' => 'Title',
                         'id' => '1.1',
                         'href' => '/chapter/section.html',
+                        'hrefAnchor' => '#1-1',
                         'level' => 2,
                     ],
                 ],
@@ -230,6 +242,7 @@ class TocProcessTest extends \PHPUnit_Framework_TestCase
                         'title' => 'Index Page',
                         'id' => null,
                         'href' => '/chapter/',
+                        'hrefAnchor' => '#1',
                         'level' => 1,
                     ],
                     [
@@ -237,6 +250,7 @@ class TocProcessTest extends \PHPUnit_Framework_TestCase
                         'title' => 'Title',
                         'id' => '1.1',
                         'href' => '/chapter/section.html',
+                        'hrefAnchor' => '#1-1',
                         'level' => 2,
                     ],
                     [
@@ -244,6 +258,7 @@ class TocProcessTest extends \PHPUnit_Framework_TestCase
                         'title' => 'Subtitle <code>code</code> A',
                         'id' => '1.1.1',
                         'href' => '/chapter/section.html',
+                        'hrefAnchor' => '#1-1-1',
                         'level' => 3,
                     ],
                     [
@@ -251,6 +266,7 @@ class TocProcessTest extends \PHPUnit_Framework_TestCase
                         'title' => 'Subtitle B',
                         'id' => '1.1.2',
                         'href' => '/chapter/section.html',
+                        'hrefAnchor' => '#1-1-2',
                         'level' => 3,
                     ],
                 ],
@@ -286,6 +302,7 @@ class TocProcessTest extends \PHPUnit_Framework_TestCase
                         'title' => 'Title',
                         'id' => '1.1',
                         'href' => '/chapter/section.html',
+                        'hrefAnchor' => '#1-1',
                         'level' => 2,
                     ],
                 ],
@@ -298,6 +315,7 @@ class TocProcessTest extends \PHPUnit_Framework_TestCase
                         'title' => 'Title',
                         'id' => '1.1',
                         'href' => '/chapter/section.html',
+                        'hrefAnchor' => '#1-1',
                         'level' => 2,
                     ],
                     [
@@ -305,6 +323,7 @@ class TocProcessTest extends \PHPUnit_Framework_TestCase
                         'title' => 'Subtitle <code>code</code> A',
                         'id' => '1.1.1',
                         'href' => '/chapter/section.html',
+                        'hrefAnchor' => '#1-1-1',
                         'level' => 3,
                     ],
                     [
@@ -312,6 +331,7 @@ class TocProcessTest extends \PHPUnit_Framework_TestCase
                         'title' => 'Subtitle B',
                         'id' => '1.1.2',
                         'href' => '/chapter/section.html',
+                        'hrefAnchor' => '#1-1-2',
                         'level' => 3,
                     ],
                 ],
@@ -324,6 +344,7 @@ class TocProcessTest extends \PHPUnit_Framework_TestCase
                         'title' => 'Title',
                         'id' => '1.1',
                         'href' => '/chapter/section.html',
+                        'hrefAnchor' => '#1-1',
                         'level' => 2,
                     ],
                     [
@@ -331,6 +352,7 @@ class TocProcessTest extends \PHPUnit_Framework_TestCase
                         'title' => 'Subtitle <code>code</code> A',
                         'id' => '1.1.1',
                         'href' => '/chapter/section.html',
+                        'hrefAnchor' => '#1-1-1',
                         'level' => 3,
                     ],
                     [
@@ -338,6 +360,7 @@ class TocProcessTest extends \PHPUnit_Framework_TestCase
                         'title' => 'Sub-subtitle A',
                         'id' => '1.1.1.1',
                         'href' => '/chapter/section.html',
+                        'hrefAnchor' => '#1-1-1-1',
                         'level' => 4,
                     ],
                     [
@@ -345,6 +368,7 @@ class TocProcessTest extends \PHPUnit_Framework_TestCase
                         'title' => 'Subtitle B',
                         'id' => '1.1.2',
                         'href' => '/chapter/section.html',
+                        'hrefAnchor' => '#1-1-2',
                         'level' => 3,
                     ],
                     [
@@ -352,6 +376,7 @@ class TocProcessTest extends \PHPUnit_Framework_TestCase
                         'title' => 'Sub-subtitle B',
                         'id' => '1.1.2.1',
                         'href' => '/chapter/section.html',
+                        'hrefAnchor' => '#1-1-2-1',
                         'level' => 4,
                     ],
                 ],

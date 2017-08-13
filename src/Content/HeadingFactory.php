@@ -27,13 +27,15 @@ class HeadingFactory
      *
      * @param string $href The href attribute value.
      *
+     * @param string $hrefAnchor The hrefAnchor attribute value.
+     *
      * @param string $id The id attribute value.
      *
      * @return Heading
      *
      */
-    public function newInstance($number, $title, $href, $id = null)
+    public function newInstance($number, $title, $href ,$hrefAnchor = null, $id = null)
     {
-        return new Heading($number, $title, $href, $id);
+        return new Heading($number, $title, $href, $hrefAnchor, $id);
     }
 }

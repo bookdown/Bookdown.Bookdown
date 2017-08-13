@@ -54,6 +54,7 @@ class HeadingsProcessTest extends \PHPUnit_Framework_TestCase
                 'title' => 'Title',
                 'id' => '1.1',
                 'href' => '/chapter/section.html',
+                'hrefAnchor' => null,
                 'level' => 2,
             ),
             array(
@@ -61,6 +62,7 @@ class HeadingsProcessTest extends \PHPUnit_Framework_TestCase
                 'title' => 'Subtitle <code>code</code> A',
                 'id' => '1.1.1',
                 'href' => '/chapter/section.html',
+                'hrefAnchor' => null,
                 'level' => 3,
             ),
             array(
@@ -68,6 +70,7 @@ class HeadingsProcessTest extends \PHPUnit_Framework_TestCase
                 'title' => 'Sub-subtitle',
                 'id' => '1.1.1.1',
                 'href' => '/chapter/section.html',
+                'hrefAnchor' => null,
                 'level' => 4,
             ),
             array(
@@ -75,6 +78,7 @@ class HeadingsProcessTest extends \PHPUnit_Framework_TestCase
                 'title' => 'Subtitle B',
                 'id' => '1.1.2',
                 'href' => '/chapter/section.html',
+                'hrefAnchor' => null,
                 'level' => 3,
             ),
         );
@@ -104,6 +108,7 @@ class HeadingsProcessTest extends \PHPUnit_Framework_TestCase
                 'title' => 'Chapter',
                 'id' => null,
                 'href' => '/chapter/',
+                'hrefAnchor' => null,
                 'level' => 1,
             )
         );

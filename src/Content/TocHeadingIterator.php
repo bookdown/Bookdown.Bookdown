@@ -104,6 +104,7 @@ class TocHeadingIterator implements \Iterator, \Countable
                 $heading->getNumber(),
                 $heading->getTitle(),
                 $heading->getHref(),
+                $heading->getHrefAnchor(),
                 $heading->getId()
             );
 

@@ -43,7 +43,7 @@ class TocHeadingIterator implements \Iterator, \Countable
     }
 
     /**
-     * @return mixed
+     * @inheritdoc
      */
     public function current()
     {
@@ -52,18 +52,15 @@ class TocHeadingIterator implements \Iterator, \Countable
     }
 
     /**
-     * @return mixed
+     * @inheritdoc
      */
     public function next()
     {
-        $heading = $this->rootHeadings[$this->current];
-
         ++$this->current;
-        return $this->decorateHeading($heading, $this->findChildren($heading));
     }
 
     /**
-     * @return mixed
+     * @inheritdoc
      */
     public function key()
     {
@@ -71,20 +68,23 @@ class TocHeadingIterator implements \Iterator, \Countable
     }
 
     /**
-     * @return mixed
+     * @inheritdoc
      */
     public function valid()
     {
         return array_key_exists($this->current, $this->rootHeadings);
     }
 
+    /**
+     * @inheritdoc
+     */
     public function rewind()
     {
         $this->current = 1;
     }
 
     /**
-     * @return mixed
+     * @inheritdoc
      */
     public function count()
     {

@@ -16,6 +16,7 @@ class HeadingTest extends \PHPUnit_Framework_TestCase
             '1.2.3.',
             'Example Heading',
             '/foo/bar/baz',
+            '#1-2-3',
             '1.2.3'
         );
 
@@ -33,7 +34,8 @@ class HeadingTest extends \PHPUnit_Framework_TestCase
         $heading = $this->headingFactory->newInstance(
             '1.2.3.',
             'Example Heading',
-            '/foo/bar/baz'
+            '/foo/bar/baz',
+            '#1-2-3'
         );
 
         $this->assertSame($heading->getNumber(), '1.2.3.');
@@ -41,6 +43,24 @@ class HeadingTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($heading->getId(), null);
         $this->assertSame($heading->getLevel(), 3);
         $this->assertSame($heading->getHref(), '/foo/bar/baz');
+        $this->assertSame($heading->getHrefAnchor(), '#1-2-3');
+        $this->assertSame($heading->getAnchor(), '1-2-3');
+    }
+
+    public function testHeadingWithAnchoredHref()
+    {
+        $heading = $this->headingFactory->newInstance(
+            '1.2.3.',
+            'Example Heading',
+            '/foo/bar/baz/test.html#7-8-9',
+            '#1-2-3'
+        );
+
+        $this->assertSame($heading->getNumber(), '1.2.3.');
+        $this->assertSame($heading->getTitle(), 'Example Heading');
+        $this->assertSame($heading->getId(), null);
+        $this->assertSame($heading->getLevel(), 3);
+        $this->assertSame($heading->getHref(), '/foo/bar/baz/test.html#7-8-9');
         $this->assertSame($heading->getHrefAnchor(), '#1-2-3');
         $this->assertSame($heading->getAnchor(), '1-2-3');
     }

@@ -8,11 +8,13 @@
  */
 namespace Bookdown\Bookdown\Process\Toc;
 
-use Psr\Log\LoggerInterface;
 use Bookdown\Bookdown\Content\Heading;
-use Bookdown\Bookdown\Content\Page;
 use Bookdown\Bookdown\Content\IndexPage;
+use Bookdown\Bookdown\Content\Page;
+use Bookdown\Bookdown\Content\TocHeading;
+use Bookdown\Bookdown\Content\TocHeadingIterator;
 use Bookdown\Bookdown\Process\ProcessInterface;
+use Psr\Log\LoggerInterface;
 
 /**
  *
@@ -95,6 +97,8 @@ class TocProcess implements ProcessInterface
 
         $this->addTocEntries($page);
         $page->setTocEntries($this->tocEntries);
+
+        $this->addNestedTocEntries($page);
     }
 
     /**
@@ -129,5 +133,34 @@ class TocProcess implements ProcessInterface
         if (! $this->tocDepth || $heading->getLevel() <= $this->maxLevel) {
             $this->tocEntries[] = $heading;
         }
+    }
+
+    /**
+     * @param IndexPage $index
+     */
+    protected function addNestedTocEntries(IndexPage $index)
+    {
+        $index->setNestedTocEntries(new TocHeadingIterator($this->createTocHeadingList($this->tocEntries)));
+    }
+
+    /**
+     * @param Heading[] $headings
+     * @return TocHeading[]
+     */
+    protected function createTocHeadingList(array $headings)
+    {
+        $tocHeading = array();
+
+        foreach ($headings as $heading) {
+            $tocHeading[] = new TocHeading(
+                $heading->getNumber(),
+                $heading->getTitle(),
+                $heading->getHref(),
+                $heading->getHrefAnchor(),
+                $heading->getId()
+            );
+        }
+
+        return $tocHeading;
     }
 }

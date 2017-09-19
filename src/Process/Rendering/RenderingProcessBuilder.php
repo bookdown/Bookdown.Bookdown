@@ -82,10 +82,17 @@ class RenderingProcessBuilder implements ProcessBuilderInterface
     protected function setTemplate(View $view, RootConfig $config)
     {
         $template = $config->getTemplate();
+        $projectRoot = dirname(dirname(dirname(__DIR__)));
+
         if (!$template) {
-            $template = dirname(dirname(dirname(__DIR__))) . '/templates/main.php';
+            $template = $projectRoot . '/templates/main.php';
         } elseif (RootConfig::BOOKDOWN_THEMES_DEFAULT === $template) {
-            $template = dirname(dirname(dirname(__DIR__))) . '/vendor/bookdown/themes/templates/main.php';
+            $templateFilePath = '/themes/templates/main.php';
+
+            $template = realpath(dirname($projectRoot) . $templateFilePath);
+            if (!file_exists($template)) {
+                $template = realpath($projectRoot . '/vendor/bookdown' . $templateFilePath);
+            }
         }
 
         if (! file_exists($template) && ! is_readable($template)) {

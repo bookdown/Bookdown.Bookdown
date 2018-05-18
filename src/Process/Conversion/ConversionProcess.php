@@ -14,10 +14,11 @@ use Bookdown\Bookdown\Exception;
 use Bookdown\Bookdown\Fsio;
 use Bookdown\Bookdown\Process\ProcessInterface;
 use League\CommonMark\Converter;
+use DomDocument;
 
 /**
  *
- * Converts CommandMark Markdown to HTML.
+ * Converts CommonMark Markdown to HTML.
  *
  * @package bookdown/bookdown
  *
@@ -93,6 +94,7 @@ class ConversionProcess implements ProcessInterface
         $this->page = $page;
         $text = $this->readOrigin();
         $html = $this->commonMarkConverter->convertToHtml($text);
+        $html = $this->convertMdHrefsToHtml($html);
         $this->saveTarget($html);
     }
 
@@ -113,6 +115,51 @@ class ConversionProcess implements ProcessInterface
 
         $this->logger->info("    Reading origin {$file}");
         return $this->fsio->get($file);
+    }
+
+    /**
+     *
+     * Converts relative `.md` anchor hrefs to `.html` hrefs.
+     *
+     * @param string $html
+     *
+     * @return string
+     *
+     */
+    protected function convertMdHrefsToHtml($html)
+    {
+        if (! $html) {
+            return $html;
+        }
+
+        $doc = new DomDocument();
+        $doc->formatOutput = true;
+        $doc->loadHtml(
+            mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'),
+            LIBXML_HTML_NODEFDTD
+        );
+
+        $elems = $doc->getElementsByTagName('a');
+        foreach ($elems as $elem) {
+            $href = $elem->getAttribute('href');
+            if (
+                strpos($href, "://") === false
+                && substr($href, -3) === '.md'
+            ) {
+                $href = substr($href, 0, -3) . '.html';
+            }
+            $elem->setAttribute('href', $href);
+        }
+
+        $html = trim($doc->saveHtml($doc->documentElement));
+
+        $html = substr(
+            $html,
+            strlen('<html><body>'),
+            -1 * strlen('</body></html>')
+        );
+
+        return trim($html) . PHP_EOL;
     }
 
     /**

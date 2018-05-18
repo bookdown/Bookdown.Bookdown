@@ -292,7 +292,7 @@ class HeadingsProcess implements ProcessInterface
         $heading = $this->newHeading($node);
         $this->headings[] = $heading;
 
-        $number = new DOMText();
+        $number = new DomText();
 
         switch ($this->numbering) {
             case false:

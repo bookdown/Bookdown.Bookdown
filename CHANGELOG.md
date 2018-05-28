@@ -76,3 +76,4 @@ attention to avoiding BC breaks, but one or two may be necessary.
 
 Thanks, as always, to all our contributors; special thanks to Sandro Keil, who
 delivered several important features in this release.
+

@@ -1,10 +1,23 @@
-# Changelog
+# Change Log
 
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 Thanks to all [contributors](https://github.com/bookdown/Bookdown.Bookdown/graphs/contributors)!
+
+## 1.1.0
+
+- Added "bookdown/themes" as a Composer dependency. This makes it easy to theme
+  your Bookdown pages.
+
+- Improvements to how "href" and "id" attributed are handled.
+
+- Improvements to nested TOC lists.
+
+- Convert relative .md hrefs to .html, so that links to .md files will work in
+  un-converted Markdown sources, but when converted to HTML by Bookdown the same
+  links will point to the rendered HTML file.
 
 ## 1.0.0
 

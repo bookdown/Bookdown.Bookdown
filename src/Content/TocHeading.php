@@ -44,6 +44,6 @@ class TocHeading extends Heading
      */
     public function hasChildren()
     {
-        return count($this->getChildren()) > 0;
+        return $this->getChildren() && count($this->getChildren()) > 0;
     }
 }

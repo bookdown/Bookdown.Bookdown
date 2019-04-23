@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/).
 
 Thanks to all [contributors](https://github.com/bookdown/Bookdown.Bookdown/graphs/contributors)!
 
+## 1.1.1
+
+- Fixed a warning in TocHeading
+
+- ConversionProcess::readOrigin() now returns string, not null, when no origin;
+  this soothes strictness in CommonMark.
+
 ## 1.1.0
 
 - Added "bookdown/themes" as a Composer dependency. This makes it easy to theme

@@ -110,7 +110,7 @@ class ConversionProcess implements ProcessInterface
         $file = $this->page->getOrigin();
         if (! $file) {
             $this->logger->info("    No origin for {$this->page->getTarget()}");
-            return;
+            return '';
         }
 
         $this->logger->info("    Reading origin {$file}");

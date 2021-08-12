@@ -282,13 +282,15 @@ class IndexConfig
             return $path;
         }
 
-        if ($this->isRemote() && $path{0} === DIRECTORY_SEPARATOR) {
+        $lead = substr($path, 0, 1);
+
+        if ($this->isRemote() && $lead === DIRECTORY_SEPARATOR) {
             throw new Exception(
                 "Cannot handle absolute content path '{$path}' in remote '{$this->file}'."
             );
         }
 
-        if ($path{0} === DIRECTORY_SEPARATOR) {
+        if ($lead === DIRECTORY_SEPARATOR) {
             return $path;
         }
 

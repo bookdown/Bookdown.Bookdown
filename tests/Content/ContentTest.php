@@ -5,15 +5,16 @@ use Bookdown\Bookdown\BookFixture;
 use Bookdown\Bookdown\FakeFsio;
 use Bookdown\Bookdown\Config\IndexConfig;
 use Bookdown\Bookdown\Config\RootConfig;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
-class ContentTest extends \PHPUnit_Framework_TestCase
+class ContentTest extends TestCase
 {
     protected $pageFactory;
     protected $root;
     protected $index;
     protected $page;
 
-    protected function setUp()
+    protected function set_up()
     {
         $bookFixture = new BookFixture(new FakeFsio());
         $this->root = $bookFixture->rootPage;

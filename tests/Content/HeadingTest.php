@@ -1,11 +1,13 @@
 <?php
 namespace Bookdown\Bookdown\Content;
 
-class HeadingTest extends \PHPUnit_Framework_TestCase
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+
+class HeadingTest extends TestCase
 {
     protected $headingFactory;
 
-    protected function setUp()
+    protected function set_up()
     {
         $this->headingFactory = new HeadingFactory();
     }

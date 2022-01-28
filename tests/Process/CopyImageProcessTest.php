@@ -4,8 +4,9 @@ namespace Bookdown\Bookdown\Process;
 use Bookdown\Bookdown\BookImageFixture;
 use Bookdown\Bookdown\Container;
 use Bookdown\Bookdown\FakeFsio;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
-class CopyImageProcessTest extends \PHPUnit_Framework_TestCase
+class CopyImageProcessTest extends TestCase
 {
     /**
      * @var FakeFsio

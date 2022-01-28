@@ -8,9 +8,9 @@
  */
 namespace Bookdown\Bookdown\Process\Conversion;
 
-use League\CommonMark\Converter;
+use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\DocParser;
-use League\CommonMark\Environment;
+use League\CommonMark\Environment\Environment;
 use League\CommonMark\HtmlRenderer;
 use Psr\Log\LoggerInterface;
 use Bookdown\Bookdown\Config\RootConfig;
@@ -50,7 +50,7 @@ class ConversionProcessBuilder implements ProcessBuilderInterface
 
     /**
      *
-     * Returns a new Converter object.
+     * Returns a new CommonMarkConverter object.
      *
      * @param RootConfig $config The root-level config object.
      *
@@ -73,9 +73,6 @@ class ConversionProcessBuilder implements ProcessBuilderInterface
             $environment->addExtension(new $extension());
         }
 
-        return new Converter(
-            new DocParser($environment),
-            new HtmlRenderer($environment)
-        );
+        return new CommonMarkConverter([]);
     }
 }

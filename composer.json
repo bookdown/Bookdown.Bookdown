@@ -27,9 +27,7 @@
         "bookdown/themes": "~1.0"
     },
     "require-dev": {
-        "webuni/commonmark-table-extension": "~0.6",
-        "webuni/commonmark-attributes-extension": "~0.5",
-        "phpunit/phpunit": "~5.0",
+        "yoast/phpunit-polyfills": "~1.0",
         "pds/skeleton": "~1.0"
     },
     "autoload": {

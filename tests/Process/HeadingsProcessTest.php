@@ -5,15 +5,16 @@ namespace Bookdown\Bookdown\Process;
 use Bookdown\Bookdown\BookFixture;
 use Bookdown\Bookdown\BookNumberingFixture;
 use Bookdown\Bookdown\Container;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
-class HeadingsProcessTest extends \PHPUnit_Framework_TestCase
+class HeadingsProcessTest extends TestCase
 {
     protected $fsio;
     protected $fixture;
     protected $process;
     protected $builder;
 
-    protected function setUp()
+    protected function set_up()
     {
         $container = new Container(
             fopen('php://memory', 'w+'),

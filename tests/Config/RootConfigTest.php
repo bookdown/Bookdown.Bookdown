@@ -1,7 +1,9 @@
 <?php
 namespace Bookdown\Bookdown\Config;
 
-class RootConfigTest extends \PHPUnit_Framework_TestCase
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+
+class RootConfigTest extends TestCase
 {
     protected $config;
 
@@ -20,13 +22,7 @@ class RootConfigTest extends \PHPUnit_Framework_TestCase
         "renderingProcess": "My\\\\Rendering\\\\Builder",
         "extra": "whatever",
         "rootHref": "http://awesome.io/docs/",
-        "numbering": "decimal",
-        "extensions": {
-            "commonmark": [
-                "Webuni\\\\CommonMark\\\\TableExtension\\\\TableExtension",
-                "Webuni\\\\CommonMark\\\\AttributesExtension\\\\AttributesExtension"
-            ]
-        }
+        "numbering": "decimal"
     }';
 
     protected $minRootJson = '{
@@ -68,14 +64,6 @@ class RootConfigTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('none', $config->get('no-such-key', 'none'));
         $this->assertSame('http://awesome.io/docs/', $config->getRootHref());
         $this->assertSame('decimal', $config->getNumbering());
-
-        $extensions = $config->getCommonMarkExtensions();
-
-        $this->assertContains('Webuni\\CommonMark\\TableExtension\\TableExtension', $extensions);
-        $this->assertContains(
-            'Webuni\\CommonMark\\AttributesExtension\\AttributesExtension',
-            $extensions
-        );
     }
 
     protected function assertBasics($config)
@@ -118,7 +106,7 @@ class RootConfigTest extends \PHPUnit_Framework_TestCase
 
     public function testMissingTitle()
     {
-        $this->setExpectedException(
+        $this->expectException(
             'Bookdown\Bookdown\Exception',
             "No target set in '/path/to/bookdown.json'."
         );

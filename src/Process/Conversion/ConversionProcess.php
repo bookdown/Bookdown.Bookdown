@@ -13,7 +13,7 @@ use Bookdown\Bookdown\Content\Page;
 use Bookdown\Bookdown\Exception;
 use Bookdown\Bookdown\Fsio;
 use Bookdown\Bookdown\Process\ProcessInterface;
-use League\CommonMark\Converter;
+use League\CommonMark\CommonMarkConverter;
 use DomDocument;
 
 /**

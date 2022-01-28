@@ -2,8 +2,9 @@
 namespace Bookdown\Bookdown\Config;
 
 use Bookdown\Bookdown\FakeFsio;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
-class ConfigFactoryTest extends \PHPUnit_Framework_TestCase
+class ConfigFactoryTest extends TestCase
 {
     protected $factory;
 
@@ -19,7 +20,7 @@ class ConfigFactoryTest extends \PHPUnit_Framework_TestCase
         "target": "/_site"
     }';
 
-    protected function setUp()
+    protected function set_up()
     {
         $this->factory = new ConfigFactory();
     }

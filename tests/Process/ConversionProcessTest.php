@@ -4,13 +4,14 @@ namespace Bookdown\Bookdown\Process;
 use Bookdown\Bookdown\BookFixture;
 use Bookdown\Bookdown\Container;
 use Bookdown\Bookdown\FakeFsio;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
-class ConversionProcessTest extends \PHPUnit_Framework_TestCase
+class ConversionProcessTest extends TestCase
 {
     protected $fsio;
     protected $fixture;
 
-    protected function setUp()
+    protected function set_up()
     {
         $container = new Container(
             fopen('php://memory', 'w+'),

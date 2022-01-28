@@ -3,8 +3,9 @@ namespace Bookdown\Bookdown\Service;
 
 use Bookdown\Bookdown\BookFixture;
 use Bookdown\Bookdown\Container;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
-class CollectorTest extends \PHPUnit_Framework_TestCase
+class CollectorTest extends TestCase
 {
     protected $root;
     protected $index;
@@ -12,7 +13,7 @@ class CollectorTest extends \PHPUnit_Framework_TestCase
     protected $collector;
     protected $fsio;
 
-    protected function setUp()
+    protected function set_up()
     {
         $container = new Container(
             fopen('php://memory', 'w+'),

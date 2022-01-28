@@ -17,12 +17,6 @@ class BookNumberingFixture
         "templates": {
             "foo": "/foo.php"
         },
-        "extensions": {
-            "commonmark": [
-                "Webuni\\\\CommonMark\\\\TableExtension\\\\TableExtension",
-                "Webuni\\\\CommonMark\\\\AttributesExtension\\\\AttributesExtension"
-            ]
-        },
         "copyright": "Copyright (c) 2016 <a href=\"http://bookdown.io/\">Bokdown.io</a>",
         "numbering": false
     }';

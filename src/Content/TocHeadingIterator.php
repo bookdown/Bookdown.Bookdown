@@ -45,6 +45,7 @@ class TocHeadingIterator implements \Iterator, \Countable
     /**
      * @inheritdoc
      */
+    #[\ReturnTypeWillChange]
     public function current()
     {
         $heading = $this->rootHeadings[$this->current];
@@ -54,6 +55,7 @@ class TocHeadingIterator implements \Iterator, \Countable
     /**
      * @inheritdoc
      */
+    #[\ReturnTypeWillChange]
     public function next()
     {
         ++$this->current;
@@ -62,6 +64,7 @@ class TocHeadingIterator implements \Iterator, \Countable
     /**
      * @inheritdoc
      */
+    #[\ReturnTypeWillChange]
     public function key()
     {
         return $this->current;
@@ -70,6 +73,7 @@ class TocHeadingIterator implements \Iterator, \Countable
     /**
      * @inheritdoc
      */
+    #[\ReturnTypeWillChange]
     public function valid()
     {
         return array_key_exists($this->current, $this->rootHeadings);
@@ -78,6 +82,7 @@ class TocHeadingIterator implements \Iterator, \Countable
     /**
      * @inheritdoc
      */
+    #[\ReturnTypeWillChange]
     public function rewind()
     {
         $this->current = 1;
@@ -86,6 +91,7 @@ class TocHeadingIterator implements \Iterator, \Countable
     /**
      * @inheritdoc
      */
+    #[\ReturnTypeWillChange]
     public function count()
     {
         return count($this->rootHeadings);

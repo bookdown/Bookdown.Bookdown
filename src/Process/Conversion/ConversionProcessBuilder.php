@@ -11,10 +11,12 @@ namespace Bookdown\Bookdown\Process\Conversion;
 use League\CommonMark\MarkdownConverter;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
+use League\CommonMark\Extension\Attributes\AttributesExtension;
 use Psr\Log\LoggerInterface;
 use Bookdown\Bookdown\Config\RootConfig;
 use Bookdown\Bookdown\Fsio;
 use Bookdown\Bookdown\Process\ProcessBuilderInterface;
+use League\CommonMark\Extension\Table\TableExtension;
 
 /**
  *
@@ -74,6 +76,8 @@ class ConversionProcessBuilder implements ProcessBuilderInterface
 
         // Finally add common mark extension
         $environment->addExtension(new CommonMarkCoreExtension());
+        $environment->addExtension(new AttributesExtension());
+        $environment->addExtension(new TableExtension());
 
         return new MarkdownConverter($environment);
     }

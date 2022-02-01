@@ -4,8 +4,9 @@ namespace Bookdown\Bookdown\Process;
 use Bookdown\Bookdown\BookImageFixture;
 use Bookdown\Bookdown\Container;
 use Bookdown\Bookdown\FakeFsio;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
-class CopyImageProcessTest extends \PHPUnit_Framework_TestCase
+class CopyImageProcessTest extends TestCase
 {
     /**
      * @var FakeFsio
@@ -58,12 +59,12 @@ class CopyImageProcessTest extends \PHPUnit_Framework_TestCase
         $actual = $this->fsio->get($this->fixture->page->getTarget());
 
         // test absolute URI, nothing changed
-        $this->assertContains('<img src="http://test.dev/img/test1.jpg" alt="Build Status">', $actual);
-        $this->assertContains('<img src="https://test.dev/test2.jpg" alt="Build Status">', $actual);
-        $this->assertContains('<img src="//test.dev/img/test3.jpg" alt="Build Status">', $actual);
+        $this->assertStringContainsString('<img src="http://test.dev/img/test1.jpg" alt="Build Status">', $actual);
+        $this->assertStringContainsString('<img src="https://test.dev/test2.jpg" alt="Build Status">', $actual);
+        $this->assertStringContainsString('<img src="//test.dev/img/test3.jpg" alt="Build Status">', $actual);
 
         // test replacement
-        $this->assertContains('<img src="/chapter/img/test4.jpg" alt="Build Status">', $actual);
-        $this->assertContains('<img src="/chapter/img/test5.jpg" alt="Build Status">', $actual);
+        $this->assertStringContainsString('<img src="/chapter/img/test4.jpg" alt="Build Status">', $actual);
+        $this->assertStringContainsString('<img src="/chapter/img/test5.jpg" alt="Build Status">', $actual);
     }
 }

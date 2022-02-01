@@ -1,7 +1,9 @@
 <?php
 namespace Bookdown\Bookdown;
 
-class CommandTest extends \PHPUnit_Framework_TestCase
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+
+class CommandTest extends TestCase
 {
     protected $container;
     protected $fixture;
@@ -9,7 +11,7 @@ class CommandTest extends \PHPUnit_Framework_TestCase
     protected $stdout;
     protected $stderr;
 
-    protected function setUp()
+    protected function set_up()
     {
         $this->stdout = fopen('php://memory', 'a+');
         $this->stderr = fopen('php://memory', 'a+');

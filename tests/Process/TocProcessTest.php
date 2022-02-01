@@ -4,8 +4,9 @@ namespace Bookdown\Bookdown\Process;
 use Bookdown\Bookdown\BookFixture;
 use Bookdown\Bookdown\BookTocFixture;
 use Bookdown\Bookdown\Container;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
-class TocProcessTest extends \PHPUnit_Framework_TestCase
+class TocProcessTest extends TestCase
 {
     protected $fsio;
     protected $stdout;
@@ -17,7 +18,7 @@ class TocProcessTest extends \PHPUnit_Framework_TestCase
      */
     protected $fixture;
 
-    protected function setUp()
+    protected function set_up()
     {
         $this->stdout = fopen('php://memory', 'a+');
         $this->stderr = fopen('php://memory', 'a+');

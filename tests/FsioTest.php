@@ -1,12 +1,14 @@
 <?php
 namespace Bookdown\Bookdown;
 
-class FsioTest extends \PHPUnit_Framework_TestCase
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+
+class FsioTest extends TestCase
 {
     protected $fsio;
     protected $base;
 
-    protected function setUp()
+    protected function set_up()
     {
         $this->fsio = new Fsio();
         $this->base = __DIR__ . DIRECTORY_SEPARATOR . 'tmp';
@@ -36,7 +38,7 @@ class FsioTest extends \PHPUnit_Framework_TestCase
         rmdir($dir);
         $this->assertFalse($this->fsio->isDir($dir));
 
-        $this->setExpectedException(
+        $this->expectException(
             'Bookdown\Bookdown\Exception',
             'mkdir(): File exists'
         );
@@ -48,7 +50,7 @@ class FsioTest extends \PHPUnit_Framework_TestCase
         $text = $this->fsio->get(__FILE__);
         $this->assertSame('<?php', substr($text, 0, 5));
 
-        $this->setExpectedException(
+        $this->expectException(
             'Bookdown\Bookdown\Exception',
             'No such file or directory'
         );
@@ -69,7 +71,7 @@ class FsioTest extends \PHPUnit_Framework_TestCase
         unlink($file);
 
         $file = $this->getPath('no-such-directory/fakefile');
-        $this->setExpectedException(
+        $this->expectException(
             'Bookdown\Bookdown\Exception',
             'No such file or directory'
         );

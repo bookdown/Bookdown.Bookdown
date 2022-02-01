@@ -4,13 +4,13 @@ namespace Bookdown\Bookdown\Service;
 use Bookdown\Bookdown\BookFixture;
 use Bookdown\Bookdown\Config\RootConfig;
 use Bookdown\Bookdown\Container;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
-
-class ProcessorBuilderTest extends \PHPUnit_Framework_TestCase
+class ProcessorBuilderTest extends TestCase
 {
     protected $container;
 
-    protected function setUp()
+    protected function set_up()
     {
         $container = new Container();
         $this->builder = $container->newProcessorBuilder();
@@ -43,7 +43,7 @@ class ProcessorBuilderTest extends \PHPUnit_Framework_TestCase
             "tocProcess": "Bookdown\\\\Bookdown\\\\Process\\\\Fake\\\\FakeProcessUnimplementedBuilder"
         }');
 
-        $this->setExpectedException(
+        $this->expectException(
             'Bookdown\Bookdown\Exception',
             "Bookdown\Bookdown\Process\Fake\FakeProcessUnimplementedBuilder' does not implement ProcessBuilderInterface"
         );

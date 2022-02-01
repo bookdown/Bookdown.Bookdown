@@ -6,8 +6,9 @@ use Bookdown\Bookdown\Container;
 use Bookdown\Bookdown\FakeFsio;
 use Bookdown\Bookdown\Process\Headings\HeadingsProcess;
 use Bookdown\Bookdown\Process\Index\IndexProcess;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
-class IndexProcessTest extends \PHPUnit_Framework_TestCase
+class IndexProcessTest extends TestCase
 {
     /**
      * @var FakeFsio
@@ -24,7 +25,7 @@ class IndexProcessTest extends \PHPUnit_Framework_TestCase
      */
     protected $process;
 
-    protected function setUp()
+    protected function set_up()
     {
         $container = new Container(
             fopen('php://memory', 'w+'),

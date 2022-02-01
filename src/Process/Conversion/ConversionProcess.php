@@ -13,7 +13,7 @@ use Bookdown\Bookdown\Content\Page;
 use Bookdown\Bookdown\Exception;
 use Bookdown\Bookdown\Fsio;
 use Bookdown\Bookdown\Process\ProcessInterface;
-use League\CommonMark\Converter;
+use League\CommonMark\MarkdownConverter;
 use DomDocument;
 
 /**
@@ -75,7 +75,7 @@ class ConversionProcess implements ProcessInterface
     public function __construct(
         LoggerInterface $logger,
         Fsio $fsio,
-        Converter $commonMarkConverter
+        MarkdownConverter $commonMarkConverter
     ) {
         $this->logger = $logger;
         $this->fsio = $fsio;
@@ -93,7 +93,7 @@ class ConversionProcess implements ProcessInterface
     {
         $this->page = $page;
         $text = $this->readOrigin();
-        $html = $this->commonMarkConverter->convertToHtml($text);
+        $html = (string) $this->commonMarkConverter->convert($text);
         $html = $this->convertMdHrefsToHtml($html);
         $this->saveTarget($html);
     }

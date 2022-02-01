@@ -1,7 +1,9 @@
 <?php
 namespace Bookdown\Bookdown\Config;
 
-class IndexConfigTest extends \PHPUnit_Framework_TestCase
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
+
+class IndexConfigTest extends TestCase
 {
     protected $config;
 
@@ -90,7 +92,7 @@ class IndexConfigTest extends \PHPUnit_Framework_TestCase
 
     public function testMalformedJson()
     {
-        $this->setExpectedException(
+        $this->expectException(
             'Bookdown\Bookdown\Exception',
             "Malformed JSON in '/path/to/bookdown.json'."
         );
@@ -99,7 +101,7 @@ class IndexConfigTest extends \PHPUnit_Framework_TestCase
 
     public function testMissingTitle()
     {
-        $this->setExpectedException(
+        $this->expectException(
             'Bookdown\Bookdown\Exception',
             "No title set in '/path/to/bookdown.json'."
         );
@@ -108,7 +110,7 @@ class IndexConfigTest extends \PHPUnit_Framework_TestCase
 
     public function testMissingContent()
     {
-        $this->setExpectedException(
+        $this->expectException(
             'Bookdown\Bookdown\Exception',
             "No content listed in '/path/to/bookdown.json'."
         );
@@ -117,7 +119,7 @@ class IndexConfigTest extends \PHPUnit_Framework_TestCase
 
     public function testContentNotArray()
     {
-        $this->setExpectedException(
+        $this->expectException(
             'Bookdown\Bookdown\Exception',
             "Content must be an array in '/path/to/bookdown.json'."
         );
@@ -126,7 +128,7 @@ class IndexConfigTest extends \PHPUnit_Framework_TestCase
 
     public function testContentItemNotStringOrObject()
     {
-        $this->setExpectedException(
+        $this->expectException(
             'Bookdown\Bookdown\Exception',
             "Content origin must be object or string in '/path/to/bookdown.json'."
         );
@@ -135,7 +137,7 @@ class IndexConfigTest extends \PHPUnit_Framework_TestCase
 
     public function testContentIndex()
     {
-        $this->setExpectedException(
+        $this->expectException(
             'Bookdown\Bookdown\Exception',
             "Disallowed 'index' content name in '/path/to/bookdown.json'."
         );
@@ -144,7 +146,7 @@ class IndexConfigTest extends \PHPUnit_Framework_TestCase
 
     public function testDuplicateName()
     {
-        $this->setExpectedException(
+        $this->expectException(
             'Bookdown\Bookdown\Exception',
             "Content name 'master' already set in '/path/to/bookdown.json'."
         );
@@ -205,7 +207,7 @@ class IndexConfigTest extends \PHPUnit_Framework_TestCase
 
     public function testReusedContentName()
     {
-        $this->setExpectedException(
+        $this->expectException(
             'Bookdown\Bookdown\Exception',
             "Content name 'foo' already set in '/path/to/bookdown.json'."
         );
@@ -217,7 +219,7 @@ class IndexConfigTest extends \PHPUnit_Framework_TestCase
 
     public function testInvalidRemote()
     {
-        $this->setExpectedException(
+        $this->expectException(
             'Bookdown\Bookdown\Exception',
             "Cannot handle absolute content path '/bar.md' in remote 'http://example.net/path/to/bookdown.json'."
         );

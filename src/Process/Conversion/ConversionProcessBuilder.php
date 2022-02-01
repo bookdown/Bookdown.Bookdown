@@ -8,14 +8,15 @@
  */
 namespace Bookdown\Bookdown\Process\Conversion;
 
-use League\CommonMark\Converter;
-use League\CommonMark\DocParser;
-use League\CommonMark\Environment;
-use League\CommonMark\HtmlRenderer;
+use League\CommonMark\MarkdownConverter;
+use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
+use League\CommonMark\Extension\Attributes\AttributesExtension;
 use Psr\Log\LoggerInterface;
 use Bookdown\Bookdown\Config\RootConfig;
 use Bookdown\Bookdown\Fsio;
 use Bookdown\Bookdown\Process\ProcessBuilderInterface;
+use League\CommonMark\Extension\Table\TableExtension;
 
 /**
  *
@@ -50,7 +51,7 @@ class ConversionProcessBuilder implements ProcessBuilderInterface
 
     /**
      *
-     * Returns a new Converter object.
+     * Returns a new CommonMarkConverter object.
      *
      * @param RootConfig $config The root-level config object.
      *
@@ -62,7 +63,7 @@ class ConversionProcessBuilder implements ProcessBuilderInterface
      */
     protected function newCommonMarkConverter(RootConfig $config)
     {
-        $environment = Environment::createCommonMarkEnvironment();
+        $environment = new Environment();
 
         foreach ($config->getCommonMarkExtensions() as $extension) {
             if (! class_exists($extension)) {
@@ -73,9 +74,11 @@ class ConversionProcessBuilder implements ProcessBuilderInterface
             $environment->addExtension(new $extension());
         }
 
-        return new Converter(
-            new DocParser($environment),
-            new HtmlRenderer($environment)
-        );
+        // Finally add common mark extension
+        $environment->addExtension(new CommonMarkCoreExtension());
+        $environment->addExtension(new AttributesExtension());
+        $environment->addExtension(new TableExtension());
+
+        return new MarkdownConverter($environment);
     }
 }

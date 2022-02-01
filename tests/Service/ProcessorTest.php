@@ -4,15 +4,16 @@ namespace Bookdown\Bookdown\Service;
 use Bookdown\Bookdown\BookFixture;
 use Bookdown\Bookdown\Container;
 use Bookdown\Bookdown\Process\Fake\FakeProcess;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
-class ProcessorTest extends \PHPUnit_Framework_TestCase
+class ProcessorTest extends TestCase
 {
     protected $root;
     protected $collector;
     protected $logger;
     protected $fsio;
 
-    protected function setUp()
+    protected function set_up()
     {
         $container = new Container(
             fopen('php://memory', 'w+'),

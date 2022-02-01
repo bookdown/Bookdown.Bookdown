@@ -2,12 +2,13 @@
 namespace Bookdown\Bookdown;
 
 use Bookdown\Bookdown\Config\RootConfig;
+use Yoast\PHPUnitPolyfills\TestCases\TestCase;
 
-class ContainerTest extends \PHPUnit_Framework_TestCase
+class ContainerTest extends TestCase
 {
     protected $container;
 
-    protected function setUp()
+    protected function set_up()
     {
         $this->container = new Container();
     }

@@ -1,5 +1,6 @@
 .DS_Store
-composer.lock
-vendor/
-_site/
-tests/tmp
+/composer.lock
+/vendor/
+/_site/
+/tests/tmp
+/.phpunit.result.cache

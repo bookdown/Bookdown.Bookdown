@@ -11,12 +11,10 @@ namespace Bookdown\Bookdown\Process\Conversion;
 use League\CommonMark\MarkdownConverter;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
-use League\CommonMark\Extension\Attributes\AttributesExtension;
 use Psr\Log\LoggerInterface;
 use Bookdown\Bookdown\Config\RootConfig;
 use Bookdown\Bookdown\Fsio;
 use Bookdown\Bookdown\Process\ProcessBuilderInterface;
-use League\CommonMark\Extension\Table\TableExtension;
 
 /**
  *
@@ -64,8 +62,10 @@ class ConversionProcessBuilder implements ProcessBuilderInterface
     protected function newCommonMarkConverter(RootConfig $config)
     {
         $environment = new Environment();
+        $environment->addExtension(new CommonMarkCoreExtension());
+        $extensions = $config->getCommonMarkExtensions();
 
-        foreach ($config->getCommonMarkExtensions() as $extension) {
+        foreach ($extensions as $extension) {
             if (! class_exists($extension)) {
                 throw new \RuntimeException(
                     sprintf('CommonMark extension class "%s" does not exists. You must use a FCQN!', $extension)
@@ -73,11 +73,6 @@ class ConversionProcessBuilder implements ProcessBuilderInterface
             }
             $environment->addExtension(new $extension());
         }
-
-        // Finally add common mark extension
-        $environment->addExtension(new CommonMarkCoreExtension());
-        $environment->addExtension(new AttributesExtension());
-        $environment->addExtension(new TableExtension());
 
         return new MarkdownConverter($environment);
     }

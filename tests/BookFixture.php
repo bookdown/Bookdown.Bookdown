@@ -17,6 +17,12 @@ class BookFixture
         "templates": {
             "foo": "/foo.php"
         },
+        "extensions": {
+            "commonmark": [
+                "League\\\\CommonMark\\\\Extension\\\\Table\\\\TableExtension",
+                "League\\\\CommonMark\\\\Extension\\\\Attributes\\\\AttributesExtension"
+            ]
+        },
         "copyright": "Copyright (c) 2016 <a href=\"http://bookdown.io/\">Bokdown.io</a>"
     }';
     public $rootConfig;

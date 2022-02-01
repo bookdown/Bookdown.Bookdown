@@ -18,17 +18,17 @@
         }
     ],
     "require": {
-        "php": ">=5.6.0",
-        "aura/cli": "~2.0",
-        "aura/html": "~2.0",
-        "aura/view": "~2.0",
-        "league/commonmark": "~2.0",
-        "psr/log": "~1.0",
-        "bookdown/themes": "~1.0"
+        "php": "^7.4||^8.0",
+        "aura/cli": "^2.0",
+        "aura/html": "^2.0",
+        "aura/view": "^2.0",
+        "league/commonmark": "^2.0",
+        "psr/log": "^1.0||^2.0",
+        "bookdown/themes": "^1.0"
     },
     "require-dev": {
-        "yoast/phpunit-polyfills": "~1.0",
-        "pds/skeleton": "~1.0"
+        "yoast/phpunit-polyfills": "^1.0",
+        "pds/skeleton": "^1.0"
     },
     "autoload": {
         "psr-4": {
